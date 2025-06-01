@@ -19,6 +19,16 @@ Smarter WooCommerce pre-orders. Charge upfront, later or both (via deposits), ad
 3. Ensure WooCommerce is installed and activated
 4. You'll then be able to access the PreProduct admin via the WooCommerce menu in your WordPress admin
 
+## Development
+
+You can add a symlink to your test stores wp-content/plugins/ directory to test the plugin. W
+Example below where the first string is the dir you pulled the repo in to.
+
+```bash
+ln -s "/Users/oli/Mac/Apps/woo-preproduct" "/Users/oli/Local Sites/preproduct-test/app/public/wp-content/plugins/woo-preproduct"
+```
+
+
 ## Environment Configuration
 
 The plugin automatically detects development environments and switches endpoints accordingly:
