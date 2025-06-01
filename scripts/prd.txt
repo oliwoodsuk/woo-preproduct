@@ -1,0 +1,66 @@
+# WooCommerce Plugin Development Project
+
+## Project Overview
+To build a WooCommerce app (same as a Wordpress app) that can launch our SaaS app: PreProduct.
+
+## Core Requirements
+- Be installable on Wordpress.
+- Should load the following URL when visited (in an iframe if needed) (production?) ? "https://api.preproduct.io/woocommerce" : "https://preproduct.ngrok.io/woocommerce" 
+(this will show an option for the user to redirect to our proper web app)
+- Add support for adding <script> tag via wp_enqueue_scripts Wordpress hook
+    • Should be added to footer with defer
+    • should have a src to production/dev URL appropriately ((production?) ? "https://api.preproduct.io/preproduct-embed.js" : "https://preproduct.ngrok.io/preproduct-embed.js")
+- Add support for the `register_activation_hook` which will add data-attributes to catalogue 'quick-buy' buttons via `woocommerce_template_loop_add_to_cart` (product page buttons are handled automatically via JS)
+    • `data-native-pre-order-btn data-quick-pre-order data-id="<?php echo esc_attr( $product->get_id() ); ?>"`
+    • Should not error if the buttons/file isn't where it expects it to be. Just continue without tagging
+- Add support for the `register_deactivation_hook` which will do the opposite of the previous point. i.e. safely remove the data-attributes by checking for an exact match.
+- Add support for the `register_deactivation_hook` to remove enququed script
+- Add support for the `register_uninstall_hook` to do the same tasks as `register_deactivation_hook`, but also fire a Webhook POST request to ((production?) ? "https://api.preproduct.io/webhooks/woocommerce" : "https://preproduct.ngrok.io/webhooks/woocommerce") with a woo compatible payload i.e. containing a secret
+
+### Plugin Structure
+- Create a properly structured WordPress plugin with standard file organization
+- Implement activation and deactivation hooks
+- Follow WordPress coding standards and best practices
+- implement a correctly formatted changelog.txt file for woocommerce
+
+### Technical Requirements
+- PHP 7.4+ compatibility
+- Modern WordPress compatibility
+- Modern WooCommerce compatible
+- Proper sanitization and validation
+- Internationalization support
+
+## Deliverables
+- Complete WordPress plugin with proper file structure and headers
+- PreProduct iframe integration page/interface
+- Script enqueuing system with production/dev environment detection
+- WooCommerce hook integration for product button data attributes
+- Activation hook implementation for button attribute addition
+- Deactivation hook implementation for attribute removal and script cleanup
+- Uninstall hook with webhook notification functionality
+- Changelog.txt file following WooCommerce standards
+- Installation and setup documentation
+- Code documentation and inline comments
+
+## Success Criteria
+- Plugin can be installed and activated on WordPress without errors
+- Plugin successfully loads PreProduct iframe interface at correct URL based on environment
+- Script tag is properly enqueued to footer with defer attribute and correct src URL
+- Product catalog quick-buy buttons receive correct data attributes on activation
+- Data attributes are safely removed on deactivation without breaking existing functionality
+- Enqueued scripts are properly removed on deactivation
+- Uninstall hook successfully fires webhook POST request with proper payload
+- Plugin handles missing files/buttons gracefully without throwing errors
+- Plugin integrates properly with WooCommerce template hooks
+- Be compliant with WordPress plugin guidelines (https://developer.wordpress.org/plugins/plugin-basics/best-practices/)
+- Be compliant with WooCommerce marketplace guidelines (https://woocommerce.com/document/submitting-your-product-to-the-woo-marketplace/#:~:text=Compatibility%20with%20the,with%20WooCommerce%20features)
+- Code follows WordPress coding standards and best practices
+- Environment detection works correctly for production vs development URLs
+
+-----
+
+## Resources
+- WooCommerce Plugin Developer Handbook URL: `https://woocommerce.com/document/create-a-plugin/`
+
+
+

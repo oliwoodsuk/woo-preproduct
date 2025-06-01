@@ -31,7 +31,6 @@ tasks/
 # AI
 .cursor/
 .roo/
-scripts/
 .env.example
 .roomodes
 .taskmasterconfig
