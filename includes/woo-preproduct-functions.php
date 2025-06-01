@@ -164,3 +164,41 @@ function woo_preproduct_get_script_handle()
 	}
 	return 'preproduct-embed';
 }
+
+/**
+ * Get the Admin Page instance
+ *
+ * @return WooPreProduct_Admin_Page|null
+ */
+function woo_preproduct_admin_page()
+{
+	return woo_preproduct()->admin_page;
+}
+
+/**
+ * Get the admin page URL
+ *
+ * @return string
+ */
+function woo_preproduct_get_admin_page_url()
+{
+	$admin_page = woo_preproduct_admin_page();
+	if ($admin_page && method_exists($admin_page, 'get_admin_page_url')) {
+		return $admin_page->get_admin_page_url();
+	}
+	return admin_url('admin.php?page=woo-preproduct');
+}
+
+/**
+ * Check if we're currently on the PreProduct admin page
+ *
+ * @return bool
+ */
+function woo_preproduct_is_admin_page()
+{
+	$admin_page = woo_preproduct_admin_page();
+	if ($admin_page && method_exists($admin_page, 'is_preproduct_admin_page')) {
+		return $admin_page->is_preproduct_admin_page();
+	}
+	return false;
+}

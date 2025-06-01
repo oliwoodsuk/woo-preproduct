@@ -1,0 +1,160 @@
+/**
+ * PreProduct Admin Styles
+ * 
+ * @package WooPreProduct
+ * @since 1.0.0
+ */
+
+/* Admin Page Container */
+.preproduct-admin-wrap {
+	max-width: 100%;
+	margin: 0;
+}
+
+.preproduct-admin-wrap h1 {
+	margin-bottom: 1em;
+	color: #23282d;
+}
+
+/* Header Section */
+.preproduct-admin-header {
+	background: #f9f9f9;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+	padding: 15px 20px;
+	margin-bottom: 20px;
+}
+
+.preproduct-admin-header p {
+	margin: 0;
+	color: #555;
+	font-size: 14px;
+}
+
+/* Iframe Container */
+.preproduct-iframe-container {
+	background: #fff;
+	border: 1px solid #e1e1e1;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	overflow: hidden;
+	position: relative;
+	height: 800px;
+	min-height: 600px;
+}
+
+/* Iframe Styling */
+.preproduct-iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+	display: block;
+	background: #f9f9f9;
+}
+
+/* Loading State */
+.preproduct-iframe-container::before {
+	content: "Loading PreProduct interface...";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #666;
+	font-size: 16px;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.preproduct-iframe[src] + .preproduct-iframe-container::before {
+	display: none;
+}
+
+/* Footer Section */
+.preproduct-admin-footer {
+	margin-top: 20px;
+	padding-top: 15px;
+	border-top: 1px solid #e5e5e5;
+}
+
+.preproduct-admin-footer .description {
+	color: #666;
+	font-style: italic;
+}
+
+.preproduct-admin-footer a {
+	color: #0073aa;
+	text-decoration: none;
+}
+
+.preproduct-admin-footer a:hover {
+	color: #005177;
+	text-decoration: underline;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+	.preproduct-iframe-container {
+		height: 700px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.preproduct-iframe-container {
+		height: 600px;
+		min-height: 500px;
+	}
+	
+	.preproduct-admin-header {
+		padding: 10px 15px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.preproduct-iframe-container {
+		height: 500px;
+		min-height: 400px;
+	}
+	
+	.preproduct-admin-wrap h1 {
+		font-size: 1.5em;
+	}
+}
+
+/* WordPress Admin Color Scheme Integration */
+.wp-admin .preproduct-admin-wrap {
+	background: transparent;
+}
+
+/* Error State Styling */
+.preproduct-iframe-error {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	background: #f9f9f9;
+	color: #d54e21;
+	font-size: 16px;
+	text-align: center;
+	padding: 20px;
+}
+
+/* Success/Info Notices */
+.preproduct-notice {
+	background: #fff;
+	border-left: 4px solid #00a0d2;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+	margin: 5px 0 15px;
+	padding: 1px 12px;
+}
+
+.preproduct-notice.notice-success {
+	border-left-color: #46b450;
+}
+
+.preproduct-notice.notice-warning {
+	border-left-color: #ffb900;
+}
+
+.preproduct-notice.notice-error {
+	border-left-color: #dc3232;
+} 

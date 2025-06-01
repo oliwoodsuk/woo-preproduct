@@ -53,6 +53,13 @@ class WooPreProduct
     public $script_manager = null;
 
     /**
+     * Admin Page instance
+     *
+     * @var WooPreProduct_Admin_Page
+     */
+    public $admin_page = null;
+
+    /**
      * Main WooPreProduct Instance
      *
      * Ensures only one instance of WooPreProduct is loaded or can be loaded.
@@ -109,6 +116,7 @@ class WooPreProduct
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-debug-info.php';
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-button-tagger.php';
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-script-manager.php';
+        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-admin-page.php';
         
         // Initialize Environment Manager
         $this->environment_manager = WooPreProduct_Environment_Manager::get_instance();
@@ -121,6 +129,11 @@ class WooPreProduct
         // Initialize Script Manager (only if WooCommerce is active)
         if ($this->isWoocommerceActive()) {
             $this->script_manager = new WooPreProduct_Script_Manager();
+        }
+        
+        // Initialize Admin Page (only if WooCommerce is active)
+        if ($this->isWoocommerceActive()) {
+            $this->admin_page = new WooPreProduct_Admin_Page();
         }
         
         // Additional includes will be added here as the plugin develops
