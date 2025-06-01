@@ -47,11 +47,12 @@ Administrators can view environment detection information by visiting:
 
 ## Features
 
-- Seamless integration with PreProduct platform
-- Pre-order functionality for WooCommerce products
-- Automatic environment detection
-- Secure and performant codebase
-- Translation ready
+- **Environment Detection**: Automatically switches between development and production endpoints
+- **Button Tagging**: Adds PreProduct data attributes to simple product add-to-cart buttons on collection pages (shop, category pages)
+- **WooCommerce Integration**: Seamless integration with WooCommerce product loops and collection pages
+- **Simple Product Focus**: Only tags simple products, excluding variable, grouped, and external products
+- **Safe Implementation**: Graceful handling of edge cases and invalid data
+- **Extensible**: Filter hooks for customizing PreProduct integration per product
 
 ## Support
 

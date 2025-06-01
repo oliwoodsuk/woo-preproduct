@@ -101,3 +101,28 @@ function woo_preproduct_get_all_urls()
 {
     return woo_preproduct_environment()->get_all_urls();
 }
+
+/**
+ * Get the Button Tagger instance
+ *
+ * @return WooPreProduct_Button_Tagger|null
+ */
+function woo_preproduct_button_tagger()
+{
+	return woo_preproduct()->button_tagger;
+}
+
+/**
+ * Check if PreProduct should be enabled for a specific product
+ *
+ * @param WC_Product $product The product object
+ * @return bool
+ */
+function woo_preproduct_is_enabled_for_product($product)
+{
+	$button_tagger = woo_preproduct_button_tagger();
+	if ($button_tagger && method_exists($button_tagger, 'shouldEnablePreproduct')) {
+		return $button_tagger->shouldEnablePreproduct($product);
+	}
+	return false;
+}

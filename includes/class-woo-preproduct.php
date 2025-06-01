@@ -39,6 +39,13 @@ class WooPreProduct
     public $environment_manager = null;
 
     /**
+     * Button Tagger instance
+     *
+     * @var WooPreProduct_Button_Tagger
+     */
+    public $button_tagger = null;
+
+    /**
      * Main WooPreProduct Instance
      *
      * Ensures only one instance of WooPreProduct is loaded or can be loaded.
@@ -93,10 +100,16 @@ class WooPreProduct
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/woo-preproduct-functions.php';
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-debug-info.php';
+        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-button-tagger.php';
 
         // Initialize Environment Manager
         $this->environment_manager = WooPreProduct_Environment_Manager::get_instance();
-
+        
+        // Initialize Button Tagger (only if WooCommerce is active)
+        if ($this->isWoocommerceActive()) {
+            $this->button_tagger = new WooPreProduct_Button_Tagger();
+        }
+        
         // Additional includes will be added here as the plugin develops
     }
 
@@ -167,5 +180,36 @@ class WooPreProduct
     public function environment()
     {
         return $this->environment_manager;
+    }
+
+    /**
+     * Get plugin path
+     *
+     * @return string
+     */
+    public function pluginPath()
+    {
+        return untrailingslashit(plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE));
+    }
+
+    /**
+     * Check if WooCommerce is active
+     *
+     * @return bool
+     */
+    private function isWoocommerceActive()
+    {
+        // Check if WooCommerce class exists
+        if (class_exists('WooCommerce')) {
+            return true;
+        }
+        
+        // Check if WooCommerce plugin is active
+        if (function_exists('is_plugin_active')) {
+            return is_plugin_active('woocommerce/woocommerce.php');
+        }
+        
+        // Fallback check for WC functions
+        return function_exists('WC');
     }
 }
