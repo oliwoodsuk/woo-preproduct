@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       PreProduct
  * Plugin URI:        https://preproduct.io/woocommerce-pre-orders/
@@ -17,15 +18,30 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/*
+ * Environment Configuration
+ *
+ * The plugin automatically detects development environments based on domain patterns
+ * (localhost, .test, .local, staging, dev), but you can also manually override
+ * the environment detection by defining the following constant in wp-config.php:
+ *
+ * // Force development mode (use ngrok endpoints)
+ * define('PREPRODUCT_DEV_MODE', true);
+ *
+ * // Force production mode (use production endpoints)
+ * define('PREPRODUCT_DEV_MODE', false);
+ */
+
 // Plugin constants
-define('WOO_PREPRODUCT_VERSION', '1.0.0');
+define('WOO_PREPRODUCT_VERSION', '0.0.1');
 define('WOO_PREPRODUCT_PLUGIN_FILE', __FILE__);
 define('WOO_PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WOO_PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WOO_PREPRODUCT_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Check if WooCommerce is active
-function woo_preproduct_check_woocommerce() {
+function woo_preproduct_check_woocommerce()
+{
     if (!class_exists('WooCommerce')) {
         add_action('admin_notices', 'woo_preproduct_woocommerce_missing_notice');
         return false;
@@ -34,7 +50,8 @@ function woo_preproduct_check_woocommerce() {
 }
 
 // Admin notice for missing WooCommerce
-function woo_preproduct_woocommerce_missing_notice() {
+function woo_preproduct_woocommerce_missing_notice()
+{
     echo '<div class="notice notice-error"><p>';
     echo esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'woo-preproduct');
     echo '</p></div>';
@@ -43,7 +60,8 @@ function woo_preproduct_woocommerce_missing_notice() {
 // Plugin activation hook
 register_activation_hook(__FILE__, 'woo_preproduct_activate');
 
-function woo_preproduct_activate() {
+function woo_preproduct_activate()
+{
     if (!woo_preproduct_check_woocommerce()) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(
@@ -57,17 +75,18 @@ function woo_preproduct_activate() {
 // Initialize plugin
 add_action('plugins_loaded', 'woo_preproduct_init');
 
-function woo_preproduct_init() {
+function woo_preproduct_init()
+{
     if (!woo_preproduct_check_woocommerce()) {
         return;
     }
-    
+
     // Load text domain for translations
     load_plugin_textdomain('woo-preproduct', false, dirname(plugin_basename(__FILE__)) . '/languages');
-    
+
     // Include main plugin class
     require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-woo-preproduct.php';
-    
+
     // Initialize the plugin
     WooPreProduct::instance();
 }

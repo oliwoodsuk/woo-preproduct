@@ -18,10 +18,38 @@ Smarter WooCommerce pre-orders. Charge upfront, later or both (via deposits), ad
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Ensure WooCommerce is installed and activated
 
+## Environment Configuration
+
+The plugin automatically detects development environments and switches endpoints accordingly:
+
+### Automatic Detection
+Development environments are detected when your site URL contains:
+- `localhost`
+- `.test`
+- `.local`
+- `staging`
+- `dev`
+
+### Manual Override
+You can manually set the environment by adding one of these constants to your `wp-config.php` file:
+
+```php
+// Force development mode (uses ngrok endpoints)
+define('PREPRODUCT_DEV_MODE', true);
+
+// Force production mode (uses production endpoints)
+define('PREPRODUCT_DEV_MODE', false);
+```
+
+### Debug Information
+Administrators can view environment detection information by visiting:
+`https://yoursite.com/?woo_preproduct_debug=environment`
+
 ## Features
 
 - Seamless integration with PreProduct platform
 - Pre-order functionality for WooCommerce products
+- Automatic environment detection
 - Secure and performant codebase
 - Translation ready
 
