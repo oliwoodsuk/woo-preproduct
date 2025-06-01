@@ -40,12 +40,12 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         if ($event === 'uninstalled') {
             // Check if we're in the uninstall context
             if (defined('WP_UNINSTALL_PLUGIN')) {
-                $event = 'plugin_uninstalled';
+                $event = 'plugin.uninstalled';
             } else {
-                $event = 'plugin_deactivated'; // Likely called from deactivation hook
+                $event = 'plugin.deactivated'; // Likely called from deactivation hook
             }
         } else {
-            $event = 'plugin_' . $event;
+            $event = 'plugin.' . $event;
         }
         
         // Prepare plugin data for the webhook
@@ -74,19 +74,32 @@ class WooPreProduct_Plugin_Uninstall_Webhook
                 return $payload;
             };
             
-            $headers_filter = function($headers, $payload, $resource, $id) use ($webhook_id, $event) {
-                // Only modify headers for our specific webhook
-                if ($id === $webhook_id) {
-                    // Use the event type in the topic header
-                    $topic = ($event === 'plugin_uninstalled') ? 'plugin.uninstalled' : 'plugin.deactivated';
-                    $headers['X-WC-Webhook-Topic'] = $topic;
+            // Use WordPress HTTP API filter to modify headers before request is sent
+            $http_request_filter = function($parsed_args, $url) use ($event, $webhook) {
+                // Only modify requests to our webhook URL
+                if ($url === $webhook->get_delivery_url()) {
+                    if (!isset($parsed_args['headers'])) {
+                        $parsed_args['headers'] = array();
+                    }
+                    // Override the webhook topic header
+                    $parsed_args['headers']['X-WC-Webhook-Topic'] = $event;
+                    
+                    if (function_exists('error_log')) {
+                        error_log('PreProduct: Modified HTTP request headers for URL: ' . $url);
+                        error_log('PreProduct: Set X-WC-Webhook-Topic to: ' . $event);
+                    }
                 }
-                return $headers;
+                return $parsed_args;
             };
             
-            // Add the filters
+            // Add filters
             add_filter('woocommerce_webhook_payload', $payload_filter, 10, 4);
-            add_filter('woocommerce_webhook_headers', $headers_filter, 10, 4);
+            add_filter('http_request_args', $http_request_filter, 10, 2);
+            
+            if (function_exists('error_log')) {
+                error_log('PreProduct: About to deliver webhook with event: ' . $event);
+                error_log('PreProduct: Webhook ID: ' . $webhook_id);
+            }
             
             // Deliver the webhook immediately using a dummy product ID
             // This bypasses the enqueue system and delivers right away
@@ -94,7 +107,11 @@ class WooPreProduct_Plugin_Uninstall_Webhook
             
             // Clean up filters immediately after delivery
             remove_filter('woocommerce_webhook_payload', $payload_filter, 10);
-            remove_filter('woocommerce_webhook_headers', $headers_filter, 10);
+            remove_filter('http_request_args', $http_request_filter, 10);
+            
+            if (function_exists('error_log')) {
+                error_log('PreProduct: Webhook delivery completed');
+            }
         }
     }
     
