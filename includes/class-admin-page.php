@@ -104,7 +104,7 @@ class WooPreProduct_Admin_Page
 					<?php 
 					printf(
 						esc_html__('Having issues? Contact PreProduct support at %s', 'woo-preproduct'),
-						'<a href="mailto:support@preproduct.io">support@preproduct.io</a>'
+						'<a href="mailto:hello@preproduct.io">hello@preproduct.io</a>'
 					); 
 					?>
 				</p>
