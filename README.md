@@ -25,23 +25,26 @@ The plugin automatically detects development environments and switches endpoints
 
 ### Automatic Detection
 Development environments are detected when your site URL contains:
-- `localhost`
-- `.test`
-- `.local`
-- `staging`
-- `dev`
+- `localhost` (including subdomains like `mystore.localhost`)
+
+All other domains are treated as production, including:
+- `.test` domains (e.g., `mystore.test`)
+- `.local` domains (e.g., `mystore.local`) 
+- Staging subdomains (e.g., `staging.mystore.com`)
+- Dev subdomains (e.g., `dev.mystore.com`)
+- IP addresses (e.g., `127.0.0.1`, `192.168.1.100`)
 
 ### Manual Override
-You can manually set the environment by adding one of these constants to your `wp-config.php` file:
+You can manually set the environment by adding this constant to your `wp-config.php` file:
 
 ```php
 // Force development mode (uses ngrok endpoints)
 define('PREPRODUCT_DEV_MODE', true);
-
-// Force production mode (uses production endpoints)
-define('PREPRODUCT_DEV_MODE', false);
 ```
 
+### Environment Endpoints
+- **Development**: Uses `https://preproduct.ngrok.io` for all API endpoints
+- **Production**: Uses `https://api.preproduct.io` for all API endpoints
 
 ## Features
 
@@ -59,7 +62,6 @@ To run tests, you can use the following command from within the plugin directory
 ```bash
  ./test
 ```
-
 
 ## Support
 

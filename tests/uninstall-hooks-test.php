@@ -113,9 +113,9 @@ class UninstallHooksTest {
         
         $this->reset_test_environment();
         
-        // Mock development environment
+        // Mock development environment (localhost-only)
         global $test_site_url;
-        $test_site_url = 'https://mysite.test';
+        $test_site_url = 'http://localhost:8000';
         
         // Reset singleton for fresh environment detection
         $this->reset_environment_manager();
@@ -181,8 +181,8 @@ class UninstallHooksTest {
             $this->assert_true(false, "❌ Production webhook URL incorrect: " . $webhook_url);
         }
         
-        // Test development environment
-        $test_site_url = 'https://dev.example.com';
+        // Test development environment (localhost-only)
+        $test_site_url = 'http://localhost';
         $this->reset_environment_manager();
         
         $env_manager = WooPreProduct_Environment_Manager::get_instance();

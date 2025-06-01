@@ -71,11 +71,7 @@ class WooPreProduct_Environment_Manager
         // Check for development domains
         $site_url = site_url();
         if (
-            strpos($site_url, 'localhost') !== false ||
-            strpos($site_url, '.test') !== false ||
-            strpos($site_url, '.local') !== false ||
-            strpos($site_url, 'staging') !== false ||
-            strpos($site_url, 'dev') !== false
+            strpos($site_url, 'localhost') !== false
         ) {
             $this->environment = 'development';
             return;
