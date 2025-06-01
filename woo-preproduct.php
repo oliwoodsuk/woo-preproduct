@@ -89,9 +89,7 @@ function woo_preproduct_deactivate()
 {
     // Flush rewrite rules
     flush_rewrite_rules();
-    
-    // TEMPORARY: Trigger webhook for testing (normally this would only happen on uninstall)
-    
+        
     // Ensure the webhook class is loaded
     if (!class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
         require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
