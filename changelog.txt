@@ -1,0 +1,10 @@
+== Changelog ==
+
+= 1.0.0 =
+* Initial release
+* Basic plugin structure and WordPress/WooCommerce integration
+* Security measures and proper plugin headers implemented
+* Directory structure established for future development
+* WooCommerce dependency checking
+* Translation ready with proper text domain setup
+* Plugin activation and deactivation hooks implemented 
