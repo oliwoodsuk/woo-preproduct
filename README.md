@@ -17,6 +17,7 @@ Smarter WooCommerce pre-orders. Charge upfront, later or both (via deposits), ad
 1. Upload the plugin files to the `/wp-content/plugins/woo-preproduct` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Ensure WooCommerce is installed and activated
+4. You'll then be able to access the PreProduct admin via the WooCommerce menu in your WordPress admin
 
 ## Environment Configuration
 
@@ -41,9 +42,6 @@ define('PREPRODUCT_DEV_MODE', true);
 define('PREPRODUCT_DEV_MODE', false);
 ```
 
-### Debug Information
-Administrators can view environment detection information by visiting:
-`https://yoursite.com/?woo_preproduct_debug=environment`
 
 ## Features
 
@@ -53,6 +51,15 @@ Administrators can view environment detection information by visiting:
 - **Simple Product Focus**: Only tags simple products, excluding variable, grouped, and external products
 - **Safe Implementation**: Graceful handling of edge cases and invalid data
 - **Extensible**: Filter hooks for customizing PreProduct integration per product
+
+## Running Tests
+
+To run tests, you can use the following command from within the plugin directory:
+
+```bash
+ ./test
+```
+
 
 ## Support
 

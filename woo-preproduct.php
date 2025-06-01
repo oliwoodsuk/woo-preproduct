@@ -72,6 +72,12 @@ function woo_preproduct_activate()
         );
     }
     
+    // Include logger for activation logging
+    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
+    
+    // Log activation
+    WooPreProduct_Logger::log_activation();
+    
     // Flush rewrite rules
     flush_rewrite_rules();
     
@@ -87,34 +93,30 @@ register_deactivation_hook(__FILE__, 'woo_preproduct_deactivate');
 
 function woo_preproduct_deactivate()
 {
+    // Include logger for deactivation logging
+    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
+    
+    // Log deactivation
+    WooPreProduct_Logger::log_deactivation();
+    
     // Flush rewrite rules
     flush_rewrite_rules();
-        
+    
+    // TEMPORARY: Trigger webhook for testing (normally this would only happen on uninstall)
     // Ensure the webhook class is loaded
     if (!class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
         require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
     }
     
-    // Log to debug what's happening
-    if (function_exists('error_log')) {
-        error_log('PreProduct: Deactivation hook running, attempting webhook trigger...');
-    }
-    
     try {
         if (class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
             WooPreProduct_Plugin_Uninstall_Webhook::trigger_uninstall_webhook();
-            if (function_exists('error_log')) {
-                error_log('PreProduct: Webhook trigger completed successfully');
-            }
+            WooPreProduct_Logger::info('Deactivation webhook sent successfully');
         } else {
-            if (function_exists('error_log')) {
-                error_log('PreProduct: Webhook class not available during deactivation');
-            }
+            WooPreProduct_Logger::warning('Webhook class not available during deactivation');
         }
     } catch (Exception $e) {
-        if (function_exists('error_log')) {
-            error_log('PreProduct: Webhook trigger failed: ' . $e->getMessage());
-        }
+        WooPreProduct_Logger::error('Webhook trigger failed during deactivation: ' . $e->getMessage());
     }
 }
 
@@ -147,6 +149,9 @@ function woo_preproduct_init()
     // Load text domain for translations
     load_plugin_textdomain('woo-preproduct', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
+    // Include logger class
+    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
+
     // Include main plugin class
     require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-woo-preproduct.php';
 
@@ -155,4 +160,18 @@ function woo_preproduct_init()
 
     // Initialize the plugin
     WooPreProduct::instance();
+}
+
+// Add plugin action links (Settings link on plugins page)
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'woo_preproduct_action_links');
+
+function woo_preproduct_action_links($links)
+{
+    $plugin_links = array(
+        '<a href="' . admin_url('admin.php?page=woo-preproduct') . '">' . __('Settings', 'woo-preproduct') . '</a>',
+        '<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . __('Documentation', 'woo-preproduct') . '</a>',
+        '<a href="https://preproduct.io/support" target="_blank">' . __('Support', 'woo-preproduct') . '</a>',
+    );
+    
+    return array_merge($plugin_links, $links);
 }
