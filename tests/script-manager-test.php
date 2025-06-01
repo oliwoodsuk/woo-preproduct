@@ -2,66 +2,11 @@
 /**
  * Script Manager Test Script
  * 
- * Run this with: php test-script-manager.php
+ * Run this with: php tests/script-manager-test.php
  */
 
-// Define ABSPATH to prevent WordPress security check from exiting
-define('ABSPATH', '/fake/wordpress/path/');
-define('WOO_PREPRODUCT_VERSION', '1.0.0');
-
-// Mock WordPress functions
-function is_admin() {
-    global $mock_is_admin;
-    return $mock_is_admin ?? false;
-}
-
-function apply_filters($hook, $value, ...$args) {
-    return $value;
-}
-
-function add_action($hook, $callback, $priority = 10, $accepted_args = 1) {
-    return true;
-}
-
-function add_filter($hook, $callback, $priority = 10, $accepted_args = 1) {
-    return true;
-}
-
-function wp_register_script($handle, $src, $deps = array(), $ver = false, $in_footer = false) {
-    global $mock_registered_scripts;
-    $mock_registered_scripts[$handle] = array(
-        'src' => $src,
-        'deps' => $deps,
-        'ver' => $ver,
-        'in_footer' => $in_footer
-    );
-    return true;
-}
-
-function wp_enqueue_script($handle) {
-    global $mock_enqueued_scripts;
-    $mock_enqueued_scripts[] = $handle;
-    return true;
-}
-
-// Mock WordPress site_url function
-function site_url($path = '', $scheme = null) {
-    return 'https://example.test' . $path;
-}
-
-// Mock WordPress get_option function 
-function get_option($option, $default = false) {
-    // For environment detection
-    if ($option === 'siteurl' || $option === 'home') {
-        return 'https://example.test';
-    }
-    return $default;
-}
-
-// Mock WooCommerce function
-function WC() {
-    return new stdClass();
-}
+// Include shared bootstrap
+require_once __DIR__ . '/bootstrap.php';
 
 // Include required classes
 require_once 'includes/class-environment-manager.php';

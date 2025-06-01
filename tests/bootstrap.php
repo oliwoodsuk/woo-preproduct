@@ -1,0 +1,151 @@
+<?php
+/**
+ * Test Bootstrap File
+ * 
+ * Contains shared WordPress function mocks and setup code
+ * to prevent function redeclaration errors across multiple test files
+ */
+
+// Only declare functions if they haven't been declared yet
+if (!function_exists('is_admin')) {
+    // Define ABSPATH to prevent WordPress security check from exiting
+    define('ABSPATH', '/fake/wordpress/path/');
+    define('WOO_PREPRODUCT_VERSION', '1.0.0');
+    define('WOO_PREPRODUCT_PLUGIN_FILE', dirname(__DIR__) . '/woo-preproduct.php');
+    define('WOO_PREPRODUCT_PLUGIN_DIR', dirname(__DIR__) . '/');
+
+    // Mock WordPress functions
+    function is_admin() {
+        global $mock_is_admin;
+        return $mock_is_admin ?? false;
+    }
+
+    function current_user_can($capability) {
+        global $mock_current_user_can;
+        return $mock_current_user_can ?? true;
+    }
+
+    function apply_filters($hook, $value, ...$args) {
+        return $value;
+    }
+
+    function add_action($hook, $callback, $priority = 10, $accepted_args = 1) {
+        return true;
+    }
+
+    function add_filter($hook, $callback, $priority = 10, $accepted_args = 1) {
+        return true;
+    }
+
+    function wp_register_script($handle, $src, $deps = array(), $ver = false, $in_footer = false) {
+        global $mock_registered_scripts;
+        $mock_registered_scripts[$handle] = array(
+            'src' => $src,
+            'deps' => $deps,
+            'ver' => $ver,
+            'in_footer' => $in_footer
+        );
+        return true;
+    }
+
+    function wp_enqueue_script($handle) {
+        global $mock_enqueued_scripts;
+        $mock_enqueued_scripts[] = $handle;
+        return true;
+    }
+
+    function wp_enqueue_style($handle, $src, $deps = array(), $ver = false, $media = 'all') {
+        global $mock_enqueued_styles;
+        $mock_enqueued_styles[$handle] = array(
+            'src' => $src,
+            'deps' => $deps,
+            'ver' => $ver,
+            'media' => $media
+        );
+        return true;
+    }
+
+    function add_submenu_page($parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function) {
+        global $mock_menu_pages;
+        $mock_menu_pages[] = array(
+            'parent_slug' => $parent_slug,
+            'page_title' => $page_title,
+            'menu_title' => $menu_title,
+            'capability' => $capability,
+            'menu_slug' => $menu_slug,
+            'function' => $function
+        );
+        return 'woocommerce_page_' . $menu_slug;
+    }
+
+    function plugin_dir_url($file) {
+        return 'https://example.test/wp-content/plugins/woo-preproduct/';
+    }
+
+    function admin_url($path) {
+        return 'https://example.test/wp-admin/' . $path;
+    }
+
+    function site_url($path = '', $scheme = null) {
+        global $test_site_url;
+        $base_url = $test_site_url ?? 'https://example.test';
+        return $base_url . $path;
+    }
+
+    function get_option($option, $default = false) {
+        if ($option === 'siteurl' || $option === 'home') {
+            return 'https://example.test';
+        }
+        return $default;
+    }
+
+    function __($text, $domain = 'default') {
+        return $text;
+    }
+
+    function esc_html__($text, $domain = 'default') {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
+    function esc_attr__($text, $domain = 'default') {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
+    function esc_html($text) {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
+    function esc_attr($text) {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
+    function esc_url($url) {
+        return filter_var($url, FILTER_SANITIZE_URL);
+    }
+
+    // Mock WooCommerce function
+    function WC() {
+        return new stdClass();
+    }
+
+    // Mock is_shop, is_product_category functions for WooCommerce
+    function is_shop() {
+        global $mock_is_shop;
+        return $mock_is_shop ?? false;
+    }
+
+    function is_product_category() {
+        global $mock_is_product_category;
+        return $mock_is_product_category ?? false;
+    }
+
+    function is_product_tag() {
+        global $mock_is_product_tag;
+        return $mock_is_product_tag ?? false;
+    }
+
+    function is_product() {
+        global $mock_is_product;
+        return $mock_is_product ?? false;
+    }
+} 

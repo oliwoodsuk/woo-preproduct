@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# WooPreProduct Test Runner Script
+# 
+# Usage:
+#   ./test                    - Run all tests
+#   ./test EnvironmentTest    - Run specific test
+#   ./test --help             - Show help
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    echo "WooPreProduct Test Runner"
+    echo "========================"
+    echo ""
+    echo "Usage:"
+    echo "  ./test                    - Run all tests"
+    echo "  ./test EnvironmentTest    - Run environment tests only"
+    echo "  ./test ScriptManagerTest  - Run script manager tests only"
+    echo "  ./test ButtonTaggerTest   - Run button tagger tests only"
+    echo "  ./test AdminPageTest      - Run admin page tests only"
+    echo "  ./test --help             - Show this help"
+    echo ""
+    echo "Direct PHP usage:"
+    echo "  php tests/run-tests.php"
+    echo "  php tests/run-tests.php EnvironmentTest"
+    echo ""
+    exit 0
+fi
+
+# Run the PHP test runner with any arguments passed
+php tests/run-tests.php "$@" 

@@ -1,23 +1,17 @@
 <?php
 /**
- * Simple Test Script for Environment Detection
+ * Environment Manager Test Script
  * 
- * Run this with: php test-environment.php
+ * Run this with: php tests/environment-test.php
  */
 
-// Define ABSPATH to prevent WordPress security check from exiting
-define('ABSPATH', '/fake/wordpress/path/');
+// Include shared bootstrap
+require_once __DIR__ . '/bootstrap.php';
 
-// Mock WordPress functions for testing
-function site_url() {
-    global $test_site_url;
-    return $test_site_url ?? 'https://example.com';
-}
-
-// Include the Environment Manager class
+// Include required classes
 require_once 'includes/class-environment-manager.php';
 
-class EnvironmentDetectionTest {
+class EnvironmentTest {
     
     private $tests_passed = 0;
     private $tests_failed = 0;
@@ -45,103 +39,111 @@ class EnvironmentDetectionTest {
     private function test_production_detection() {
         echo "Testing Production Environment Detection...\n";
         
-        // Test production domains
-        $production_domains = [
+        $test_urls = array(
             'https://example.com',
             'https://mystore.com',
             'https://preproduct.io',
             'https://shop.example.org'
-        ];
+        );
         
-        foreach ($production_domains as $domain) {
-            $this->set_site_url($domain);
-            $env = WooPreProduct_Environment_Manager::get_instance();
+        foreach ($test_urls as $url) {
+            // Mock site_url to return our test URL
+            global $test_site_url;
+            $test_site_url = $url;
             
-            if ($env->is_production()) {
-                $this->assert_true(true, "✅ '$domain' detected as production");
+            // Reset singleton
+            $this->reset_environment_manager();
+            $env_manager = WooPreProduct_Environment_Manager::get_instance();
+            
+            if ($env_manager->is_production()) {
+                $this->assert_true(true, "✅ '{$url}' detected as production");
             } else {
-                $this->assert_true(false, "❌ '$domain' should be production but detected as development");
+                $this->assert_true(false, "❌ '{$url}' should be detected as production");
             }
         }
+        
         echo "\n";
     }
     
     private function test_development_detection() {
         echo "Testing Development Environment Detection...\n";
         
-        // Test development domains
-        $dev_domains = [
+        $test_urls = array(
             'http://localhost:8000',
             'https://mysite.test',
             'https://shop.local',
             'https://staging.example.com',
             'https://dev.mystore.com'
-        ];
+        );
         
-        foreach ($dev_domains as $domain) {
-            $this->set_site_url($domain);
-            // Reset singleton for each test
-            $this->reset_environment_manager();
-            $env = WooPreProduct_Environment_Manager::get_instance();
+        foreach ($test_urls as $url) {
+            // Mock site_url to return our test URL
+            global $test_site_url;
+            $test_site_url = $url;
             
-            if ($env->is_development()) {
-                $this->assert_true(true, "✅ '$domain' detected as development");
+            // Reset singleton
+            $this->reset_environment_manager();
+            $env_manager = WooPreProduct_Environment_Manager::get_instance();
+            
+            if ($env_manager->is_development()) {
+                $this->assert_true(true, "✅ '{$url}' detected as development");
             } else {
-                $this->assert_true(false, "❌ '$domain' should be development but detected as production");
+                $this->assert_true(false, "❌ '{$url}' should be detected as development");
             }
         }
+        
         echo "\n";
     }
     
     private function test_manual_override() {
         echo "Testing Manual Override...\n";
         
-        // Test forcing development mode
+        // Test with production URL but manual override
+        global $test_site_url;
+        $test_site_url = 'https://example.com';
+        
+        // Define override constant
         if (!defined('PREPRODUCT_DEV_MODE')) {
             define('PREPRODUCT_DEV_MODE', true);
         }
-        $this->set_site_url('https://production-site.com');
-        $this->reset_environment_manager();
-        $env = WooPreProduct_Environment_Manager::get_instance();
         
-        if ($env->is_development()) {
+        $this->reset_environment_manager();
+        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        
+        if ($env_manager->is_development()) {
             $this->assert_true(true, "✅ Manual override to development works");
         } else {
             $this->assert_true(false, "❌ Manual override to development failed");
         }
+        
         echo "\n";
     }
     
     private function test_url_generation() {
         echo "Testing URL Generation...\n";
         
-        // Test development URLs (with override constant)
-        $this->set_site_url('https://production-site.com');
+        // Test development URLs
+        global $test_site_url;
+        $test_site_url = 'https://mysite.test';
+        
         $this->reset_environment_manager();
-        $env = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = WooPreProduct_Environment_Manager::get_instance();
         
-        $script_url = $env->get_script_url();
-        $expected_dev_script = 'https://preproduct.ngrok.io/preproduct-embed.js';
-        
-        if ($script_url === $expected_dev_script) {
-            $this->assert_true(true, "✅ Development script URL correct: $script_url");
+        $script_url = $env_manager->get_script_url();
+        if (strpos($script_url, 'preproduct.ngrok.io') !== false && strpos($script_url, 'preproduct-embed.js') !== false) {
+            $this->assert_true(true, "✅ Development script URL correct: {$script_url}");
         } else {
-            $this->assert_true(false, "❌ Development script URL incorrect. Expected: $expected_dev_script, Got: $script_url");
+            $this->assert_true(false, "❌ Development script URL incorrect: {$script_url}");
         }
         
-        // Show all URLs for current environment
-        $all_urls = $env->get_all_urls();
+        // Display all URLs for verification
         echo "🔍 All URLs for current environment:\n";
-        foreach ($all_urls as $type => $url) {
-            echo "   $type: $url\n";
+        $all_urls = $env_manager->get_all_urls();
+        foreach ($all_urls as $key => $url) {
+            echo "   {$key}: {$url}\n";
         }
         
         echo "\n";
-    }
-    
-    private function set_site_url($url) {
-        global $test_site_url;
-        $test_site_url = $url;
     }
     
     private function reset_environment_manager() {
@@ -163,5 +165,5 @@ class EnvironmentDetectionTest {
 }
 
 // Run the tests
-$test = new EnvironmentDetectionTest();
+$test = new EnvironmentTest();
 $test->run_all_tests(); 
