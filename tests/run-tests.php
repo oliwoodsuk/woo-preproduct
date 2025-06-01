@@ -21,7 +21,9 @@ $tests = array(
     'button-tagger-test.php' => 'ButtonTaggerTest', 
     'script-manager-test.php' => 'ScriptManagerTest',
     'admin-page-test.php' => 'AdminPageTest',
-    'activation-hooks-test.php' => 'ActivationHooksTest'
+    'activation-hooks-test.php' => 'ActivationHooksTest',
+    'uninstall-hooks-test.php' => 'UninstallHooksTest',
+    'woocommerce-webhook-test.php' => 'WooCommerceWebhookTest'
 );
 
 // Check if user wants to run a specific test

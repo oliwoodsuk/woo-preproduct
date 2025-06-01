@@ -147,8 +147,8 @@ class WooPreProduct_Environment_Manager
     public function get_webhook_url()
     {
         return $this->is_development()
-            ? 'https://preproduct.ngrok.io/webhooks/woocommerce'
-            : 'https://api.preproduct.io/webhooks/woocommerce';
+            ? 'https://preproduct.ngrok.io/woocommerce/webhooks'
+            : 'https://api.preproduct.io/woocommerce/webhooks';
     }
 
     /**

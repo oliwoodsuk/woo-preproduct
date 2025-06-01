@@ -77,6 +77,9 @@ function woo_preproduct_activate()
     
     // Set a transient to redirect to the admin page on first activation
     set_transient('woo_preproduct_activation_redirect', true, 30);
+    
+    // Trigger webhook creation (will be handled by the webhook class)
+    do_action('woo_preproduct_activated');
 }
 
 // Plugin deactivation hook
@@ -86,6 +89,35 @@ function woo_preproduct_deactivate()
 {
     // Flush rewrite rules
     flush_rewrite_rules();
+    
+    // TEMPORARY: Trigger webhook for testing (normally this would only happen on uninstall)
+    
+    // Ensure the webhook class is loaded
+    if (!class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
+        require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
+    }
+    
+    // Log to debug what's happening
+    if (function_exists('error_log')) {
+        error_log('PreProduct: Deactivation hook running, attempting webhook trigger...');
+    }
+    
+    try {
+        if (class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
+            WooPreProduct_Plugin_Uninstall_Webhook::trigger_uninstall_webhook();
+            if (function_exists('error_log')) {
+                error_log('PreProduct: Webhook trigger completed successfully');
+            }
+        } else {
+            if (function_exists('error_log')) {
+                error_log('PreProduct: Webhook class not available during deactivation');
+            }
+        }
+    } catch (Exception $e) {
+        if (function_exists('error_log')) {
+            error_log('PreProduct: Webhook trigger failed: ' . $e->getMessage());
+        }
+    }
 }
 
 // Activation redirect to admin page
@@ -119,6 +151,9 @@ function woo_preproduct_init()
 
     // Include main plugin class
     require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-woo-preproduct.php';
+
+    // Include plugin uninstall webhook handler
+    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
 
     // Initialize the plugin
     WooPreProduct::instance();

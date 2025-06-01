@@ -30,6 +30,33 @@ if (!function_exists('is_admin')) {
     }
 
     function add_action($hook, $callback, $priority = 10, $accepted_args = 1) {
+        global $mock_action_hooks;
+        if (!isset($mock_action_hooks[$hook])) {
+            $mock_action_hooks[$hook] = array();
+        }
+        $mock_action_hooks[$hook][] = array(
+            'callback' => $callback,
+            'priority' => $priority,
+            'accepted_args' => $accepted_args
+        );
+        return true;
+    }
+
+    function do_action($hook, ...$args) {
+        global $mock_action_hooks;
+        if (isset($mock_action_hooks[$hook])) {
+            foreach ($mock_action_hooks[$hook] as $action) {
+                $callback = $action['callback'];
+                $accepted_args = $action['accepted_args'];
+                
+                // Limit args to accepted_args count
+                $limited_args = array_slice($args, 0, $accepted_args);
+                
+                if (is_callable($callback)) {
+                    call_user_func_array($callback, $limited_args);
+                }
+            }
+        }
         return true;
     }
 
@@ -147,5 +174,96 @@ if (!function_exists('is_admin')) {
     function is_product() {
         global $mock_is_product;
         return $mock_is_product ?? false;
+    }
+
+    // Mock WooCommerce webhook classes
+    class WC_Webhook {
+        private $data = array();
+        
+        public function set_name($name) {
+            $this->data['name'] = $name;
+        }
+        
+        public function set_status($status) {
+            $this->data['status'] = $status;
+        }
+        
+        public function set_topic($topic) {
+            $this->data['topic'] = $topic;
+        }
+        
+        public function set_delivery_url($url) {
+            $this->data['delivery_url'] = $url;
+        }
+        
+        public function set_secret($secret) {
+            $this->data['secret'] = $secret;
+        }
+        
+        public function get_topic() {
+            return $this->data['topic'] ?? '';
+        }
+        
+        public function get_delivery_url() {
+            return $this->data['delivery_url'] ?? 'https://example.test/webhook';
+        }
+        
+        public function get_status() {
+            return $this->data['status'] ?? 'active';
+        }
+        
+        public function save() {
+            global $mock_webhook_saved;
+            $mock_webhook_saved = $this->data;
+            return 123; // Mock webhook ID
+        }
+        
+        public function delete($force = false) {
+            global $mock_webhook_deleted;
+            $mock_webhook_deleted = true;
+            return true;
+        }
+    }
+    
+    function wc_get_webhook($id) {
+        if ($id === 123) {
+            $webhook = new WC_Webhook();
+            $webhook->set_topic('plugin.uninstalled');
+            return $webhook;
+        }
+        return false;
+    }
+    
+    function wp_generate_password($length = 12, $special_chars = true) {
+        return 'mock_generated_password_' . $length;
+    }
+    
+    function update_option($option, $value) {
+        global $mock_options;
+        $mock_options[$option] = $value;
+        return true;
+    }
+    
+    function delete_option($option) {
+        global $mock_options;
+        unset($mock_options[$option]);
+        return true;
+    }
+    
+    // Mock WooCommerce Data Store
+    class WC_Data_Store {
+        public static function load($type) {
+            if ($type === 'webhook') {
+                return new Mock_Webhook_Data_Store();
+            }
+            return new stdClass();
+        }
+    }
+    
+    class Mock_Webhook_Data_Store {
+        public function get_webhooks_ids() {
+            // Return some mock webhook IDs
+            return array(123, 456);
+        }
     }
 } 
