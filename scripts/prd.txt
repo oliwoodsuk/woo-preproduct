@@ -78,11 +78,6 @@ It makes onboarding seamless by handling script injection, UI embedding, and Woo
 - `changelog.txt` created using Woo standards  
 - Documentation and code comments
 
-## Future Enhancements  
-- Admin settings page for configuring environment and behavior  
-- OAuth or token-based secure linking of merchant account  
-- Dashboard UI inside WP admin for analytics or order visibility
-
 # Logical Dependency Chain  
 1. Scaffold plugin files and metadata  
 2. Build iframe redirection interface  
@@ -97,7 +92,7 @@ It makes onboarding seamless by handling script injection, UI embedding, and Woo
 - **Theme incompatibility for button targeting**  
   - Mitigation: fall back without breaking  
 - **Webhook POST failure**  
-  - Mitigation: Retry or log; send minimal required data with secret  
+  - Mitigation: Retry or log; send minimal required data with secret 
 - **Incorrect environment detection**  
   - Mitigation: Add fallback or allow override via constant or setting  
 - **Changes to WooCommerce hook behavior**  
