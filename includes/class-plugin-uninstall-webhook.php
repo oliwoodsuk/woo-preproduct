@@ -116,6 +116,23 @@ class WooPreProduct_Plugin_Uninstall_Webhook
     }
     
     /**
+     * Get the plugin directory path
+     * Works both when the constant is defined and during uninstall when it might not be
+     * 
+     * @return string
+     */
+    private static function get_plugin_dir()
+    {
+        if (defined('WOO_PREPRODUCT_PLUGIN_DIR')) {
+            return WOO_PREPRODUCT_PLUGIN_DIR;
+        }
+        
+        // Fallback: calculate from current file location
+        // This file is in includes/, so parent directory is the plugin root
+        return dirname(__DIR__) . '/';
+    }
+    
+    /**
      * Get an existing webhook to use for delivery
      * Only uses webhooks with the exact correct delivery URL (matching get_webhook_url())
      * This ensures the webhook secret will be correct for PreProduct authentication
@@ -132,7 +149,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         }
         
         // Get the exact webhook URL we need
-        require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
+        require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
         $env_manager = WooPreProduct_Environment_Manager::get_instance();
         $expected_webhook_url = $env_manager->get_webhook_url();
         
@@ -214,7 +231,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         }
         
         // Get the exact webhook URL we need
-        require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
+        require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
         $env_manager = WooPreProduct_Environment_Manager::get_instance();
         $expected_webhook_url = $env_manager->get_webhook_url();
         
@@ -244,7 +261,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
      */
     private function create_preproduct_webhook()
     {
-        require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
+        require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
         $env_manager = WooPreProduct_Environment_Manager::get_instance();
         $webhook_url = $env_manager->get_webhook_url();
         
@@ -272,7 +289,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
      */
     public function get_webhook_endpoint()
     {
-        require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
+        require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
         $env_manager = WooPreProduct_Environment_Manager::get_instance();
         return $env_manager->get_webhook_url();
     }
