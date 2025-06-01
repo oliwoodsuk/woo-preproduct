@@ -1,66 +1,119 @@
-# WooCommerce Plugin Development Project
+<context>
+# Overview  
+This project aims to develop a WooCommerce plugin that launches our SaaS app, PreProduct, within the WordPress/WooCommerce ecosystem.  
+The plugin helps WooCommerce merchants integrate with PreProduct to enable pre-orders.  
+It makes onboarding seamless by handling script injection, UI embedding, and WooCommerce hook integration.
 
-## Project Overview
-To build a WooCommerce app (same as a Wordpress app) that can launch our SaaS app: PreProduct.
+# Core Features  
+- **Iframe-based PreProduct interface**  
+  - Loads:  
+    - Production: `https://api.preproduct.io/woocommerce`  
+    - Development: `https://preproduct.ngrok.io/woocommerce`  
+  - Embedded via iframe, (the loaded page prompts user to redirect to the full PreProduct web app, where the main app will kick in)
+  - Key for onboarding and visibility.
 
-## Core Requirements
-- Be installable on Wordpress.
-- Should load the following URL when visited (in an iframe if needed) (production?) ? "https://api.preproduct.io/woocommerce" : "https://preproduct.ngrok.io/woocommerce" 
-(this will show an option for the user to redirect to our proper web app)
-- Add support for adding <script> tag via wp_enqueue_scripts Wordpress hook
-    • Should be added to footer with defer
-    • should have a src to production/dev URL appropriately ((production?) ? "https://api.preproduct.io/preproduct-embed.js" : "https://preproduct.ngrok.io/preproduct-embed.js")
-- Add support for the `register_activation_hook` which will add data-attributes to catalogue 'quick-buy' buttons via `woocommerce_template_loop_add_to_cart` (product page buttons are handled automatically via JS)
-    • `data-native-pre-order-btn data-quick-pre-order data-id="<?php echo esc_attr( $product->get_id() ); ?>"`
-    • Should not error if the buttons/file isn't where it expects it to be. Just continue without tagging
-- Add support for the `register_deactivation_hook` which will do the opposite of the previous point. i.e. safely remove the data-attributes by checking for an exact match.
-- Add support for the `register_deactivation_hook` to remove enququed script
-- Add support for the `register_uninstall_hook` to do the same tasks as `register_deactivation_hook`, but also fire a Webhook POST request to ((production?) ? "https://api.preproduct.io/webhooks/woocommerce" : "https://preproduct.ngrok.io/webhooks/woocommerce") with a woo compatible payload i.e. containing a secret
+- **Script Injection**  
+  - On plugin activation (`register_activation_hook`) Injects `<script>` tag via `wp_enqueue_scripts` in footer with `defer`.  
+  - Script src:  
+    - Production: `https://api.preproduct.io/preproduct-embed.js`  
+    - Development: `https://preproduct.ngrok.io/preproduct-embed.js`  
 
-### Plugin Structure
-- Create a properly structured WordPress plugin with standard file organization
-- Implement activation and deactivation hooks
-- Follow WordPress coding standards and best practices
-- implement a correctly formatted changelog.txt file for woocommerce
+- **Hook-based Button Tagging**  
+  - On plugin activation (`register_activation_hook`), add attributes to quick-buy buttons via `woocommerce_template_loop_add_to_cart`:  
+    ```php
+    data-native-pre-order-btn data-quick-pre-order data-id="<?php echo esc_attr( $product->get_id() ); ?>"
+    ```  
+  - Skips gracefully if expected buttons or templates aren't found.
 
-### Technical Requirements
-- PHP 7.4+ compatibility
-- Modern WordPress compatibility
-- Modern WooCommerce compatible
-- Proper sanitization and validation
-- Internationalization support
+- **Safe Teardown**  
+  - Deactivation (`register_deactivation_hook`, `register_uninstall_hook`):
+    - Removes data attributes and script tag safely
+  - Uninstall:
+    - Removes all functionality
+    - For the uninstall hook, we also sends a `POST` webhook in the usual woocommerce format to:
+      - Production: `https://api.preproduct.io/webhooks/woocommerce`
+      - Development: `https://preproduct.ngrok.io/webhooks/woocommerce`
 
-## Deliverables
-- Complete WordPress plugin with proper file structure and headers
-- PreProduct iframe integration page/interface
-- Script enqueuing system with production/dev environment detection
-- WooCommerce hook integration for product button data attributes
-- Activation hook implementation for button attribute addition
-- Deactivation hook implementation for attribute removal and script cleanup
-- Uninstall hook with webhook notification functionality
-- Changelog.txt file following WooCommerce standards
-- Installation and setup documentation
-- Code documentation and inline comments
+- **Woo + WP Compatibility**  
+  - PHP 7.4+
+  - Latest WordPress & WooCommerce compatibility
+  - WordPress coding standards, sanitization, and i18n support
 
-## Success Criteria
-- Plugin can be installed and activated on WordPress without errors
-- Plugin successfully loads PreProduct iframe interface at correct URL based on environment
-- Script tag is properly enqueued to footer with defer attribute and correct src URL
-- Product catalog quick-buy buttons receive correct data attributes on activation
-- Data attributes are safely removed on deactivation without breaking existing functionality
-- Enqueued scripts are properly removed on deactivation
-- Uninstall hook successfully fires webhook POST request with proper payload
-- Plugin handles missing files/buttons gracefully without throwing errors
-- Plugin integrates properly with WooCommerce template hooks
-- Be compliant with WordPress plugin guidelines (https://developer.wordpress.org/plugins/plugin-basics/best-practices/)
-- Be compliant with WooCommerce marketplace guidelines (https://woocommerce.com/document/submitting-your-product-to-the-woo-marketplace/#:~:text=Compatibility%20with%20the,with%20WooCommerce%20features)
-- Code follows WordPress coding standards and best practices
-- Environment detection works correctly for production vs development URLs
+# User Experience  
+- **User Persona**: WooCommerce merchants who want pre-order functionality with minimal technical setup.  
+- **Key User Flows**:
+  - Install and activate plugin
+  - Load iframe with preproduct URL on visit in WP admin
+  - Pre-order scripts load and update buttons
+  - Deactivation cleans everything up
+  - Uninstall notifies PreProduct backend
+- **UI/UX Considerations**:
+  - No template editing required
+  - Fail-safe for missing button locations
+</context>
 
------
+<PRD>
+# Technical Architecture  
+- **System Components**:
+  - WordPress plugin scaffold
+  - Hooks: `register_activation_hook`, `register_deactivation_hook`, `register_uninstall_hook`, `wp_enqueue_scripts`, `woocommerce_template_loop_add_to_cart`
+- **Data Models**:
+  - None created; manipulates Woo product DOM
+- **APIs and Integrations**:
+  - Webhook endpoint on uninstall:  
+    - `https://api.preproduct.io/webhooks/woocommerce`  
+    - `https://preproduct.ngrok.io/webhooks/woocommerce`
+- **Infrastructure Requirements**:
+  - PHP 7.4+
+  - Compatible with latest versions of WP and WooCommerce
 
-## Resources
-- WooCommerce Plugin Developer Handbook URL: `https://woocommerce.com/document/create-a-plugin/`
+# Development Roadmap  
+## MVP  
+- Plugin file scaffold with proper headers and directory structure  
+- Iframe loader for PreProduct WooCommerce page  
+- Script injection with production/dev detection  
+- Button tagging via WooCommerce hook on activation  
+- Deactivation removes attributes and script  
+- Uninstall triggers webhook with Woo-compatible payload  
+- `changelog.txt` created using Woo standards  
+- Documentation and code comments
 
+## Future Enhancements  
+- Admin settings page for configuring environment and behavior  
+- OAuth or token-based secure linking of merchant account  
+- Dashboard UI inside WP admin for analytics or order visibility
 
+# Logical Dependency Chain  
+1. Scaffold plugin files and metadata  
+2. Build iframe redirection interface  
+3. Implement script injection  
+4. Hook into WooCommerce product loops to modify buttons  
+5. Deactivation and uninstall hooks  
+6. Webhook payload logic  
+7. Finalize changelog, install guide, and testing  
+8. Graceful error handling and production hardening
 
+# Risks and Mitigations  
+- **Theme incompatibility for button targeting**  
+  - Mitigation: fall back without breaking  
+- **Webhook POST failure**  
+  - Mitigation: Retry or log; send minimal required data with secret  
+- **Incorrect environment detection**  
+  - Mitigation: Add fallback or allow override via constant or setting  
+- **Changes to WooCommerce hook behavior**  
+  - Mitigation: Use stable, documented hooks only
+
+# Appendix  
+- Woo Plugin Dev Docs: https://woocommerce.com/document/create-a-plugin/  
+- Woo Marketplace Guidelines: https://woocommerce.com/document/submitting-your-product-to-the-woo-marketplace/  
+- WP Plugin Best Practices: https://developer.wordpress.org/plugins/plugin-basics/best-practices/  
+- Webhook URLs:  
+  - `https://api.preproduct.io/webhooks/woocommerce`  
+  - `https://preproduct.ngrok.io/webhooks/woocommerce`  
+- Script URLs:  
+  - `https://api.preproduct.io/preproduct-embed.js`  
+  - `https://preproduct.ngrok.io/preproduct-embed.js`  
+- Iframe URLs:  
+  - `https://api.preproduct.io/woocommerce`  
+  - `https://preproduct.ngrok.io/woocommerce`
+</PRD>
