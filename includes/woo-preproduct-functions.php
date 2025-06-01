@@ -126,3 +126,41 @@ function woo_preproduct_is_enabled_for_product($product)
 	}
 	return false;
 }
+
+/**
+ * Get the Script Manager instance
+ *
+ * @return WooPreProduct_Script_Manager|null
+ */
+function woo_preproduct_script_manager()
+{
+	return woo_preproduct()->script_manager;
+}
+
+/**
+ * Check if the PreProduct script should be loaded
+ *
+ * @return bool
+ */
+function woo_preproduct_should_load_script()
+{
+	$script_manager = woo_preproduct_script_manager();
+	if ($script_manager && method_exists($script_manager, 'should_load_script')) {
+		return $script_manager->should_load_script();
+	}
+	return false;
+}
+
+/**
+ * Get the PreProduct script handle
+ *
+ * @return string
+ */
+function woo_preproduct_get_script_handle()
+{
+	$script_manager = woo_preproduct_script_manager();
+	if ($script_manager && method_exists($script_manager, 'get_script_handle')) {
+		return $script_manager->get_script_handle();
+	}
+	return 'preproduct-embed';
+}

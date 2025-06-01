@@ -46,6 +46,13 @@ class WooPreProduct
     public $button_tagger = null;
 
     /**
+     * Script Manager instance
+     *
+     * @var WooPreProduct_Script_Manager
+     */
+    public $script_manager = null;
+
+    /**
      * Main WooPreProduct Instance
      *
      * Ensures only one instance of WooPreProduct is loaded or can be loaded.
@@ -101,13 +108,19 @@ class WooPreProduct
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/woo-preproduct-functions.php';
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-debug-info.php';
         include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-button-tagger.php';
-
+        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-script-manager.php';
+        
         // Initialize Environment Manager
         $this->environment_manager = WooPreProduct_Environment_Manager::get_instance();
         
         // Initialize Button Tagger (only if WooCommerce is active)
         if ($this->isWoocommerceActive()) {
             $this->button_tagger = new WooPreProduct_Button_Tagger();
+        }
+        
+        // Initialize Script Manager (only if WooCommerce is active)
+        if ($this->isWoocommerceActive()) {
+            $this->script_manager = new WooPreProduct_Script_Manager();
         }
         
         // Additional includes will be added here as the plugin develops
