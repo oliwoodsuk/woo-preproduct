@@ -62,13 +62,46 @@ register_activation_hook(__FILE__, 'woo_preproduct_activate');
 
 function woo_preproduct_activate()
 {
-    if (!woo_preproduct_check_woocommerce()) {
+    // Check if WooCommerce is active
+    if (!class_exists('WooCommerce')) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(
-            esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'woo-preproduct'),
-            esc_html__('Plugin Activation Error', 'woo-preproduct'),
+            __('PreProduct requires WooCommerce to be installed and active.', 'woo-preproduct'),
+            'Plugin Activation Error',
             array('back_link' => true)
         );
+    }
+    
+    // Flush rewrite rules
+    flush_rewrite_rules();
+    
+    // Set a transient to redirect to the admin page on first activation
+    set_transient('woo_preproduct_activation_redirect', true, 30);
+}
+
+// Plugin deactivation hook
+register_deactivation_hook(__FILE__, 'woo_preproduct_deactivate');
+
+function woo_preproduct_deactivate()
+{
+    // Flush rewrite rules
+    flush_rewrite_rules();
+}
+
+// Activation redirect to admin page
+add_action('admin_init', 'woo_preproduct_activation_redirect');
+
+function woo_preproduct_activation_redirect()
+{
+    // Check if we should redirect
+    if (get_transient('woo_preproduct_activation_redirect')) {
+        delete_transient('woo_preproduct_activation_redirect');
+        
+        // Only redirect if user can access the admin page
+        if (current_user_can('manage_woocommerce')) {
+            wp_safe_redirect(admin_url('admin.php?page=woo-preproduct'));
+            exit;
+        }
     }
 }
 

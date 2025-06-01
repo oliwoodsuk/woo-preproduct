@@ -20,7 +20,8 @@ $tests = array(
     'environment-test.php' => 'EnvironmentTest',
     'button-tagger-test.php' => 'ButtonTaggerTest', 
     'script-manager-test.php' => 'ScriptManagerTest',
-    'admin-page-test.php' => 'AdminPageTest'
+    'admin-page-test.php' => 'AdminPageTest',
+    'activation-hooks-test.php' => 'ActivationHooksTest'
 );
 
 // Check if user wants to run a specific test
