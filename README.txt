@@ -63,10 +63,15 @@ PreProduct for WooCommerce seamlessly integrates your store with the PreProduct 
 
 **Setup:**
 
-1. After activation, you'll be redirected to the PreProduct admin page
-2. Follow the on-screen instructions to setup a PreProduct account
-3. Configure your pre-order settings through the dashboard (optional)
-4. Test the integration with a sample product by clicking the "New listing" menu on the top right of the screen.
+1. __After Installation:__ Click the option to open the PreProduct app.
+2. __Sign Up:__ You'll then be prompted to sign up for a user account.
+3. __Connect Menu:__ Once logged in, click the "Connect" menu on the left-hand side.
+4. __Payment Processor:__ From the top "Payment Processor" row, select an option to connect a payment processor.
+5. __Ecommerce Platform:__ Under the "Ecommerce Platform" row, choose "WooCommerce" and confirm access when redirected.
+6. __Ready to Start Pre-Selling:__ You are now fully connected and ready to start pre-selling. Click "Home" to choose a PreProduct plan.
+7. __Start Pre-Selling:__ Navigate to the "Setup" screen to adjust your settings, or click "New Listing" in the menu to choose products to start pre-selling.
+
+These changes should make the instructions clearer and easier to follow. Let me know if you need any further assistance!
 
 == Frequently Asked Questions ==
 
