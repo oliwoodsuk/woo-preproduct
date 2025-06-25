@@ -3,7 +3,7 @@ Contributors: preproduct
 Tags: woocommerce, pre-orders, preorders, ecommerce, inventory
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 0.0.1
+Stable tag: 1.0.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,11 +17,11 @@ PreProduct for WooCommerce seamlessly integrates your store with the PreProduct 
 **Key Features:**
 
 * **Seamless Integration**: One-click setup with your existing WooCommerce store
-* **Smart Button Detection**: Automatically detects and enhances your add-to-cart buttons
-* **Environment-Aware**: Automatically switches between development and production endpoints
-* **Real-time Notifications**: Webhook notifications for plugin lifecycle events
-* **Admin Dashboard**: Integrated admin interface for easy management
-* **Lightweight**: Minimal impact on your store's performance with deferred script loading
+* **Charge pre-orders Now, Later or via Deposit **
+* **Checkout multiple pre-orders at once **
+* **Keep customers in the loop** with customisable front-end, email flows and customer portal 
+* ** When you're ready to fulfil, push orders into WooCommerce **
+* **Admin Dashboard**: Manage pre-orders, listings and automations from a dedicated dashboard.
 
 **How It Works:**
 
