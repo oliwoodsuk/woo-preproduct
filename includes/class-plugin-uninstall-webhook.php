@@ -84,8 +84,10 @@ class WooPreProduct_Plugin_Uninstall_Webhook
                     // Override the webhook topic header
                     $parsed_args['headers']['X-WC-Webhook-Topic'] = $event;
                     
-                    if (function_exists('error_log')) {
+                    if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                         error_log('PreProduct: Modified HTTP request headers for URL: ' . $url);
+                        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                         error_log('PreProduct: Set X-WC-Webhook-Topic to: ' . $event);
                     }
                 }
@@ -96,8 +98,10 @@ class WooPreProduct_Plugin_Uninstall_Webhook
             add_filter('woocommerce_webhook_payload', $payload_filter, 10, 4);
             add_filter('http_request_args', $http_request_filter, 10, 2);
             
-            if (function_exists('error_log')) {
+            if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                 error_log('PreProduct: About to deliver webhook with event: ' . $event);
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                 error_log('PreProduct: Webhook ID: ' . $webhook_id);
             }
             
@@ -109,7 +113,8 @@ class WooPreProduct_Plugin_Uninstall_Webhook
             remove_filter('woocommerce_webhook_payload', $payload_filter, 10);
             remove_filter('http_request_args', $http_request_filter, 10);
             
-            if (function_exists('error_log')) {
+            if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                 error_log('PreProduct: Webhook delivery completed');
             }
         }
@@ -142,7 +147,8 @@ class WooPreProduct_Plugin_Uninstall_Webhook
     private static function get_existing_webhook()
     {
         if (!class_exists('WC_Data_Store')) {
-            if (function_exists('error_log')) {
+            if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                 error_log('PreProduct: WC_Data_Store class not available');
             }
             return false;
@@ -153,7 +159,8 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         $env_manager = WooPreProduct_Environment_Manager::get_instance();
         $expected_webhook_url = $env_manager->get_webhook_url();
         
-        if (function_exists('error_log')) {
+        if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
             error_log('PreProduct: Looking for webhook with URL: ' . $expected_webhook_url);
         }
         
@@ -161,7 +168,8 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         $data_store = WC_Data_Store::load('webhook');
         $webhook_ids = $data_store->get_webhooks_ids();
         
-        if (function_exists('error_log')) {
+        if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
             error_log('PreProduct: Found ' . count($webhook_ids) . ' total webhooks');
         }
         
@@ -169,28 +177,32 @@ class WooPreProduct_Plugin_Uninstall_Webhook
             $webhook = wc_get_webhook($webhook_id);
             
             if (!$webhook || $webhook->get_status() !== 'active') {
-                if (function_exists('error_log')) {
+                if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                     error_log('PreProduct: Webhook ID ' . $webhook_id . ' is not active or not found');
                 }
                 continue;
             }
             
             $webhook_url = $webhook->get_delivery_url();
-            if (function_exists('error_log')) {
+            if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                 error_log('PreProduct: Checking webhook ID ' . $webhook_id . ' with URL: ' . $webhook_url);
             }
             
             // Only use webhooks with the EXACT correct delivery URL
             // This ensures the secret matches what PreProduct expects
             if ($webhook_url === $expected_webhook_url) {
-                if (function_exists('error_log')) {
+                if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
                     error_log('PreProduct: Found matching webhook ID ' . $webhook_id);
                 }
                 return $webhook;
             }
         }
         
-        if (function_exists('error_log')) {
+        if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging for webhook operations
             error_log('PreProduct: No matching webhook found');
         }
         

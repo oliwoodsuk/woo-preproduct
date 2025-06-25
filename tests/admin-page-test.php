@@ -161,7 +161,7 @@ class AdminPageTest {
             }
             
             // Check menu title
-            if ($menu['menu_title'] === 'PreProduct') {
+            if ($menu['menu_title'] === 'Pre-orders') {
                 $this->assert_true(true, "✅ Correct menu title");
             } else {
                 $this->assert_true(false, "❌ Incorrect menu title: " . $menu['menu_title']);

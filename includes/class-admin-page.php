@@ -103,6 +103,7 @@ class WooPreProduct_Admin_Page
 				<p class="description">
 					<?php 
 					printf(
+						/* translators: %s: PreProduct support email address link */
 						esc_html__('Having issues? Contact PreProduct support at %s', 'woo-preproduct'),
 						'<a href="mailto:hello@preproduct.io">hello@preproduct.io</a>'
 					); 
@@ -131,6 +132,7 @@ class WooPreProduct_Admin_Page
 	public function is_preproduct_admin_page()
 	{
 		global $pagenow;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Just checking which admin page we're on, no form processing
 		return $pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'woo-preproduct';
 	}
 	
@@ -243,7 +245,11 @@ class WooPreProduct_Admin_Page
 		define(\'WP_DEBUG\', true);<br>
 		define(\'WP_DEBUG_LOG\', true);
 		</code>' . 
-		($log_file_path ? '<p>' . sprintf(__('PreProduct logs can be found at: %s', 'woo-preproduct'), '<code>' . esc_html($log_file_path) . '</code>') . '</p>' : '');
+		($log_file_path ? '<p>' . sprintf(
+			/* translators: %s: file path to log file */
+			__('PreProduct logs can be found at: %s', 'woo-preproduct'), 
+			'<code>' . esc_html($log_file_path) . '</code>'
+		) . '</p>' : '');
 	}
 	
 	/**

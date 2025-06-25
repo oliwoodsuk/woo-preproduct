@@ -1,10 +1,10 @@
-=== PreProduct for WooCommerce ===
+=== PreProduct ===
 Contributors: preproduct
 Tags: woocommerce, pre-orders, preorders, ecommerce, inventory
-Requires at least: 5.0
-Tested up to: 6.7.1
-Stable tag: 1.0.1
-Requires PHP: 7.4
+Requires at least: 5.2
+Tested up to: 6.8
+Stable tag: 0.0.1
+Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,11 @@ PreProduct for WooCommerce seamlessly integrates your store with the PreProduct 
 5. __Ecommerce Platform:__ Under the "Ecommerce Platform" row, choose "WooCommerce" and confirm access when redirected.
 6. __Ready to Start Pre-Selling:__ You are now fully connected and ready to start pre-selling. Click "Home" to choose a PreProduct plan.
 7. __Start Pre-Selling:__ Navigate to the "Setup" screen to adjust your settings, or click "New Listing" in the menu to choose products to start pre-selling.
+
+== Running the tests ==
+```bash
+./test
+```
 
 These changes should make the instructions clearer and easier to follow. Let me know if you need any further assistance!
 

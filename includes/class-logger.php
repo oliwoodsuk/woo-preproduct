@@ -52,8 +52,9 @@ class WooPreProduct_Logger
         self::init();
         
         if (self::$logger === null) {
-            // Fallback to error_log if WooCommerce logger is not available
-            if (function_exists('error_log')) {
+            // Fallback to WP error logging if WooCommerce logger is not available
+            if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Fallback logging when WooCommerce is unavailable
                 error_log('PreProduct: ' . $message);
             }
             return;
@@ -252,7 +253,8 @@ class WooPreProduct_Logger
         $context = array(
             'script_url' => $script_url,
             'is_admin' => $is_admin,
-            'page' => isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'unknown'
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Used for logging only, not output
+            'page' => isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])) : 'unknown'
         );
         
         self::debug($message, $context);

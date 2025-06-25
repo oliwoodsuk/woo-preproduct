@@ -37,13 +37,14 @@ class WooPreProduct_Debug_Info
     /**
      * Handle debug request
      */
-    public static function handle_debug_request()
-    {
-        if (isset($_GET['woo_preproduct_debug']) && $_GET['woo_preproduct_debug'] === 'environment') {
-            self::display_environment_info();
-            exit;
-        }
-    }
+    	public static function handle_debug_request()
+	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is a read-only debug endpoint for administrators only
+		if (isset($_GET['woo_preproduct_debug']) && $_GET['woo_preproduct_debug'] === 'environment') {
+			self::display_environment_info();
+			exit;
+		}
+	}
 
     /**
      * Display environment information

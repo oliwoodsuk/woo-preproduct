@@ -66,7 +66,7 @@ function woo_preproduct_activate()
     if (!class_exists('WooCommerce')) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(
-            __('PreProduct requires WooCommerce to be installed and active.', 'woo-preproduct'),
+            esc_html__('PreProduct requires WooCommerce to be installed and active.', 'woo-preproduct'),
             'Plugin Activation Error',
             array('back_link' => true)
         );
@@ -167,11 +167,11 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'woo_preproduct_a
 
 function woo_preproduct_action_links($links)
 {
-    $plugin_links = array(
-        '<a href="' . admin_url('admin.php?page=woo-preproduct') . '">' . __('Settings', 'woo-preproduct') . '</a>',
-        '<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . __('Documentation', 'woo-preproduct') . '</a>',
-        '<a href="https://preproduct.io/support" target="_blank">' . __('Support', 'woo-preproduct') . '</a>',
-    );
+    	$plugin_links = array(
+		'<a href="' . admin_url('admin.php?page=woo-preproduct') . '">' . esc_html__('Settings', 'woo-preproduct') . '</a>',
+		'<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . esc_html__('Documentation', 'woo-preproduct') . '</a>',
+		'<a href="https://preproduct.io/support" target="_blank">' . esc_html__('Support', 'woo-preproduct') . '</a>',
+	);
     
     return array_merge($plugin_links, $links);
 }
