@@ -41,8 +41,8 @@ class WooPreProduct_Admin_Page
 		if (function_exists('WC') && current_user_can('manage_woocommerce')) {
 			$page_hook = add_submenu_page(
 				'woocommerce',
-				__('PreProduct', 'woo-preproduct'),
-				__('PreProduct', 'woo-preproduct'),
+				__('Pre-orders', 'woo-preproduct'),
+				__('Pre-orders', 'woo-preproduct'),
 				'manage_woocommerce',
 				'woo-preproduct',
 				array($this, 'render_admin_page')
