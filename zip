@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# WooPreProduct Zip Script
+# 
+# Creates a clean zip archive of the project excluding development files,
+# git files, vendor dependencies, and other unnecessary files.
+
+echo "Creating woo-preproduct.zip in parent folder..."
+zip -r ../woo-preproduct.zip . -x "*.DS_Store" "__MACOSX" "*.git*" "vendor/*" "node_modules/*"
+echo "Zip archive created successfully in parent folder!" 

@@ -73,6 +73,15 @@ To run tests, you can use the following command from within the plugin directory
  ./test
 ```
 
+## Zipping
+
+To zip the plugin without any unnecessary files, run the following command from within the plugin directory:
+
+```bash
+./zip
+```
+
+
 ## Support
 
 For support and documentation, visit [PreProduct.io](https://preproduct.io)
