@@ -6,5 +6,5 @@
 # git files, vendor dependencies, and other unnecessary files.
 
 echo "Creating woo-preproduct.zip in parent folder..."
-zip -r ../woo-preproduct.zip . -x "*.DS_Store" "__MACOSX" "*.git*" "vendor/*" "node_modules/*"
+zip -r ../woo-preproduct.zip . -x "*.DS_Store" "__MACOSX" "*.git*" "vendor/*" "node_modules/*" "tests/*" "test"
 echo "Zip archive created successfully in parent folder!" 
