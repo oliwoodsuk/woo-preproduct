@@ -1,0 +1,111 @@
+# .distignore - WordPress Plugin Distribution Exclusion File
+# This file defines patterns for files and directories that should be excluded from plugin distribution packages
+
+# Development Dependencies
+node_modules/
+vendor/
+.bin/
+
+# Package Manager Files
+package.json
+package-lock.json
+composer.json
+composer.lock
+yarn.lock
+
+# Build and Deployment Scripts
+zip
+*.sh
+*.bat
+*.cmd
+
+# Test Files and Directories
+tests/
+test
+phpunit.xml
+phpunit.xml.dist
+.phpunit.result.cache
+
+# Documentation for Development
+CLAUDE.md
+README.md
+
+# Version Control
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+.cursor/
+.claude/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Task Management
+.taskmaster/
+
+# MCP Configuration
+.mcp.json
+mcp.json
+
+# Environment Configuration
+.env.example
+
+# Temporary and Cache Files
+*.tmp
+*.temp
+*.log
+*.cache
+.sass-cache/
+.tmp/
+
+# Build Artifacts
+*.map
+*.min.js.map
+*.min.css.map
+dist/
+build/
+
+# OS Generated Files
+__MACOSX/
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backup Files
+*.bak
+*.backup
+*.orig
+
+# Development Configuration
+.editorconfig
+.eslintrc*
+.babelrc
+webpack.config.js
+gulpfile.js
+Gruntfile.js
+
+# Security Files (should not be in repository anyway)
+.env
+.env.local
+.env.production
+.env.development
+
+# PHP Development
+.phpcs.xml
+.phpcs.xml.dist
+phpcs.xml
+phpcs.xml.dist
+.php_cs
+.php_cs.dist
+
+# Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

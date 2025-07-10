@@ -1,0 +1,45 @@
+/**
+ * PreProduct Debug Page Styles
+ * 
+ * @package WooPreProduct
+ * @since 1.0.0
+ */
+
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 40px; 
+}
+
+.debug-info { 
+    background: #f5f5f5; 
+    padding: 20px; 
+    border-radius: 5px; 
+    margin: 20px 0; 
+}
+
+.env-prod { 
+    background: #e7f5e7; 
+}
+
+.env-dev { 
+    background: #fff3cd; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+th, td { 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    text-align: left; 
+}
+
+th { 
+    background: #f8f9fa; 
+}
+
+.url { 
+    word-break: break-all; 
+}

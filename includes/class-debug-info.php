@@ -41,10 +41,27 @@ class WooPreProduct_Debug_Info
 	{
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is a read-only debug endpoint for administrators only
 		if (isset($_GET['woo_preproduct_debug']) && $_GET['woo_preproduct_debug'] === 'environment') {
+			self::enqueue_debug_styles();
 			self::display_environment_info();
 			exit;
 		}
 	}
+
+    /**
+     * Enqueue debug page styles
+     */
+    private static function enqueue_debug_styles()
+    {
+        wp_enqueue_style(
+            'preproduct-debug',
+            plugin_dir_url(WOO_PREPRODUCT_PLUGIN_FILE) . 'assets/css/debug.css',
+            array(),
+            WOO_PREPRODUCT_VERSION
+        );
+        
+        // Print styles immediately since we're outside normal WordPress flow
+        wp_print_styles('preproduct-debug');
+    }
 
     /**
      * Display environment information
@@ -63,16 +80,6 @@ class WooPreProduct_Debug_Info
         <html>
         <head>
             <title>PreProduct Environment Debug</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 40px; }
-                .debug-info { background: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0; }
-                .env-prod { background: #e7f5e7; }
-                .env-dev { background: #fff3cd; }
-                table { width: 100%; border-collapse: collapse; }
-                th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-                th { background: #f8f9fa; }
-                .url { word-break: break-all; }
-            </style>
         </head>
         <body>
             <h1>PreProduct Environment Debug Information</h1>

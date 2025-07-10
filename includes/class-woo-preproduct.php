@@ -89,7 +89,7 @@ class WooPreProduct
      */
     private function define_constants()
     {
-        $this->define('WOO_PREPRODUCT_ABSPATH', dirname(WOO_PREPRODUCT_PLUGIN_FILE) . '/');
+        $this->define('WOO_PREPRODUCT_ABSPATH', plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE));
     }
 
     /**
@@ -171,11 +171,11 @@ class WooPreProduct
     public function load_plugin_textdomain()
     {
         $locale = determine_locale();
-        $locale = apply_filters('plugin_locale', $locale, 'woo-preproduct');
+        $locale = apply_filters('plugin_locale', $locale, 'preproduct');
 
-        unload_textdomain('woo-preproduct');
-        load_textdomain('woo-preproduct', WP_LANG_DIR . '/woo-preproduct/woo-preproduct-' . $locale . '.mo');
-        load_plugin_textdomain('woo-preproduct', false, plugin_basename(dirname(WOO_PREPRODUCT_PLUGIN_FILE)) . '/languages');
+        unload_textdomain('preproduct');
+        load_textdomain('preproduct', WP_LANG_DIR . '/preproduct/preproduct-' . $locale . '.mo');
+        load_plugin_textdomain('preproduct', false, plugin_basename(dirname(WOO_PREPRODUCT_PLUGIN_FILE)) . '/languages');
     }
 
     /**

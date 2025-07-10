@@ -186,7 +186,7 @@ function woo_preproduct_get_admin_page_url()
 	if ($admin_page && method_exists($admin_page, 'get_admin_page_url')) {
 		return $admin_page->get_admin_page_url();
 	}
-	return admin_url('admin.php?page=woo-preproduct');
+	return admin_url('admin.php?page=preproduct');
 }
 
 /**

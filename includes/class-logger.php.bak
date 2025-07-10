@@ -28,7 +28,7 @@ class WooPreProduct_Logger
      * Log context
      * @var array
      */
-    private static $context = array('source' => 'preproduct');
+    private static $context = array('source' => 'woo-preproduct');
     
     /**
      * Initialize the logger
@@ -302,7 +302,7 @@ class WooPreProduct_Logger
     public static function get_log_file_path()
     {
         if (function_exists('wc_get_log_file_path')) {
-            return wc_get_log_file_path('preproduct');
+            return wc_get_log_file_path('woo-preproduct');
         }
         
         return '';

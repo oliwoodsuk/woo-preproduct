@@ -41,10 +41,10 @@ class WooPreProduct_Admin_Page
 		if (function_exists('WC') && current_user_can('manage_woocommerce')) {
 			$page_hook = add_submenu_page(
 				'woocommerce',
-				__('Pre-orders', 'woo-preproduct'),
-				__('Pre-orders', 'woo-preproduct'),
+				__('Pre-orders', 'preproduct'),
+				__('Pre-orders', 'preproduct'),
 				'manage_woocommerce',
-				'woo-preproduct',
+				'preproduct',
 				array($this, 'render_admin_page')
 			);
 			
@@ -61,10 +61,10 @@ class WooPreProduct_Admin_Page
 	public function enqueue_admin_styles($hook_suffix)
 	{
 		// Only load on our admin page
-		if ($hook_suffix === 'woocommerce_page_woo-preproduct') {
+		if ($hook_suffix === 'woocommerce_page_preproduct') {
 			wp_enqueue_style(
-				'woo-preproduct-admin',
-				plugin_dir_url(WOO_PREPRODUCT_PLUGIN_FILE) . 'assets/admin.css',
+				'preproduct-admin',
+				plugin_dir_url(WOO_PREPRODUCT_PLUGIN_FILE) . 'assets/css/admin.css',
 				array(),
 				WOO_PREPRODUCT_VERSION
 			);
@@ -82,10 +82,10 @@ class WooPreProduct_Admin_Page
 		
 		?>
 		<div class="wrap preproduct-admin-wrap">
-			<h1><?php echo esc_html__('PreProduct for WooCommerce', 'woo-preproduct'); ?></h1>
+			<h1><?php echo esc_html__('PreProduct for WooCommerce', 'preproduct'); ?></h1>
 			
 			<div class="preproduct-admin-header">
-				<p><?php echo esc_html__('Manage your pre-order settings and campaigns through the PreProduct interface below.', 'woo-preproduct'); ?></p>
+				<p><?php echo esc_html__('Manage your pre-order settings and campaigns through the PreProduct interface below.', 'preproduct'); ?></p>
 			</div>
 			
 			<div class="preproduct-iframe-container">
@@ -93,9 +93,9 @@ class WooPreProduct_Admin_Page
 					src="<?php echo esc_url($iframe_url); ?>" 
 					class="preproduct-iframe"
 					frameborder="0"
-					title="<?php echo esc_attr__('PreProduct Management Interface', 'woo-preproduct'); ?>">
-					<p><?php echo esc_html__('Your browser does not support iframes. Please visit', 'woo-preproduct'); ?> 
-					   <a href="<?php echo esc_url($iframe_url); ?>" target="_blank"><?php echo esc_html__('PreProduct directly', 'woo-preproduct'); ?></a>.</p>
+					title="<?php echo esc_attr__('PreProduct Management Interface', 'preproduct'); ?>">
+					<p><?php echo esc_html__('Your browser does not support iframes. Please visit', 'preproduct'); ?> 
+					   <a href="<?php echo esc_url($iframe_url); ?>" target="_blank"><?php echo esc_html__('PreProduct directly', 'preproduct'); ?></a>.</p>
 				</iframe>
 			</div>
 			
@@ -104,7 +104,7 @@ class WooPreProduct_Admin_Page
 					<?php 
 					printf(
 						/* translators: %s: PreProduct support email address link */
-						esc_html__('Having issues? Contact PreProduct support at %s', 'woo-preproduct'),
+						esc_html__('Having issues? Contact PreProduct support at %s', 'preproduct'),
 						'<a href="mailto:hello@preproduct.io">hello@preproduct.io</a>'
 					); 
 					?>
@@ -121,7 +121,7 @@ class WooPreProduct_Admin_Page
 	 */
 	public function get_admin_page_url()
 	{
-		return admin_url('admin.php?page=woo-preproduct');
+		return admin_url('admin.php?page=preproduct');
 	}
 	
 	/**
@@ -133,7 +133,7 @@ class WooPreProduct_Admin_Page
 	{
 		global $pagenow;
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Just checking which admin page we're on, no form processing
-		return $pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'woo-preproduct';
+		return $pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'preproduct';
 	}
 	
 	/**
@@ -146,28 +146,28 @@ class WooPreProduct_Admin_Page
 		// Overview tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_overview',
-			'title'   => __('Overview', 'woo-preproduct'),
+			'title'   => __('Overview', 'preproduct'),
 			'content' => $this->get_help_content_overview(),
 		));
 		
 		// Setup tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_setup',
-			'title'   => __('Setup Guide', 'woo-preproduct'),
+			'title'   => __('Setup Guide', 'preproduct'),
 			'content' => $this->get_help_content_setup(),
 		));
 		
 		// Troubleshooting tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_troubleshooting',
-			'title'   => __('Troubleshooting', 'woo-preproduct'),
+			'title'   => __('Troubleshooting', 'preproduct'),
 			'content' => $this->get_help_content_troubleshooting(),
 		));
 		
 		// Support tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_support',
-			'title'   => __('Support', 'woo-preproduct'),
+			'title'   => __('Support', 'preproduct'),
 			'content' => $this->get_help_content_support(),
 		));
 		
@@ -180,17 +180,17 @@ class WooPreProduct_Admin_Page
 	 */
 	private function get_help_content_overview()
 	{
-		return '<h3>' . __('PreProduct Overview', 'woo-preproduct') . '</h3>
-		<p>' . __('PreProduct for WooCommerce seamlessly integrates your store with the PreProduct platform to enable pre-order functionality.', 'woo-preproduct') . '</p>
-		<h4>' . __('Key Features:', 'woo-preproduct') . '</h4>
+		return '<h3>' . __('PreProduct Overview', 'preproduct') . '</h3>
+		<p>' . __('PreProduct for WooCommerce seamlessly integrates your store with the PreProduct platform to enable pre-order functionality.', 'preproduct') . '</p>
+		<h4>' . __('Key Features:', 'preproduct') . '</h4>
 		<ul>
-			<li>' . __('Automatic button enhancement for eligible products', 'woo-preproduct') . '</li>
-			<li>' . __('Environment-aware configuration (development/production)', 'woo-preproduct') . '</li>
-			<li>' . __('Seamless integration with existing WooCommerce functionality', 'woo-preproduct') . '</li>
-			<li>' . __('Real-time webhook notifications for plugin events', 'woo-preproduct') . '</li>
-			<li>' . __('Comprehensive error logging and debugging', 'woo-preproduct') . '</li>
+			<li>' . __('Automatic button enhancement for eligible products', 'preproduct') . '</li>
+			<li>' . __('Environment-aware configuration (development/production)', 'preproduct') . '</li>
+			<li>' . __('Seamless integration with existing WooCommerce functionality', 'preproduct') . '</li>
+			<li>' . __('Real-time webhook notifications for plugin events', 'preproduct') . '</li>
+			<li>' . __('Comprehensive error logging and debugging', 'preproduct') . '</li>
 		</ul>
-		<p>' . __('The plugin automatically detects your environment and configures appropriate endpoints for seamless integration.', 'woo-preproduct') . '</p>';
+		<p>' . __('The plugin automatically detects your environment and configures appropriate endpoints for seamless integration.', 'preproduct') . '</p>';
 	}
 	
 	/**
@@ -198,22 +198,22 @@ class WooPreProduct_Admin_Page
 	 */
 	private function get_help_content_setup()
 	{
-		return '<h3>' . __('Setup Guide', 'woo-preproduct') . '</h3>
-		<h4>' . __('Initial Setup:', 'woo-preproduct') . '</h4>
+		return '<h3>' . __('Setup Guide', 'preproduct') . '</h3>
+		<h4>' . __('Initial Setup:', 'preproduct') . '</h4>
 		<ol>
-			<li>' . __('Ensure WooCommerce is installed and active', 'woo-preproduct') . '</li>
-			<li>' . __('Install and activate the PreProduct plugin', 'woo-preproduct') . '</li>
-			<li>' . __('Navigate to WooCommerce > PreProduct (you should be redirected automatically)', 'woo-preproduct') . '</li>
-			<li>' . __('Follow the setup instructions in the PreProduct interface', 'woo-preproduct') . '</li>
+			<li>' . __('Ensure WooCommerce is installed and active', 'preproduct') . '</li>
+			<li>' . __('Install and activate the PreProduct plugin', 'preproduct') . '</li>
+			<li>' . __('Navigate to WooCommerce > PreProduct (you should be redirected automatically)', 'preproduct') . '</li>
+			<li>' . __('Follow the setup instructions in the PreProduct interface', 'preproduct') . '</li>
 		</ol>
-		<h4>' . __('Environment Configuration:', 'woo-preproduct') . '</h4>
-		<p>' . __('The plugin automatically detects your environment:', 'woo-preproduct') . '</p>
+		<h4>' . __('Environment Configuration:', 'preproduct') . '</h4>
+		<p>' . __('The plugin automatically detects your environment:', 'preproduct') . '</p>
 		<ul>
-			<li><strong>' . __('Development:', 'woo-preproduct') . '</strong> ' . __('localhost, .test, .local, staging, dev domains', 'woo-preproduct') . '</li>
-			<li><strong>' . __('Production:', 'woo-preproduct') . '</strong> ' . __('All other domains', 'woo-preproduct') . '</li>
+			<li><strong>' . __('Development:', 'preproduct') . '</strong> ' . __('localhost, .test, .local, staging, dev domains', 'preproduct') . '</li>
+			<li><strong>' . __('Production:', 'preproduct') . '</strong> ' . __('All other domains', 'preproduct') . '</li>
 		</ul>
-		<h4>' . __('Manual Override:', 'woo-preproduct') . '</h4>
-		<p>' . __('Add to wp-config.php to force an environment:', 'woo-preproduct') . '</p>
+		<h4>' . __('Manual Override:', 'preproduct') . '</h4>
+		<p>' . __('Add to wp-config.php to force an environment:', 'preproduct') . '</p>
 		<code>define(\'PREPRODUCT_DEV_MODE\', true); // Force development mode</code>';
 	}
 	
@@ -227,27 +227,27 @@ class WooPreProduct_Admin_Page
 			$log_file_path = WooPreProduct_Logger::get_log_file_path();
 		}
 		
-		return '<h3>' . __('Troubleshooting', 'woo-preproduct') . '</h3>
-		<h4>' . __('Common Issues:', 'woo-preproduct') . '</h4>
+		return '<h3>' . __('Troubleshooting', 'preproduct') . '</h3>
+		<h4>' . __('Common Issues:', 'preproduct') . '</h4>
 		<dl>
-			<dt><strong>' . __('PreProduct interface not loading', 'woo-preproduct') . '</strong></dt>
-			<dd>' . __('Check your internet connection and ensure your server can reach external domains.', 'woo-preproduct') . '</dd>
+			<dt><strong>' . __('PreProduct interface not loading', 'preproduct') . '</strong></dt>
+			<dd>' . __('Check your internet connection and ensure your server can reach external domains.', 'preproduct') . '</dd>
 			
-			<dt><strong>' . __('Buttons not being enhanced', 'woo-preproduct') . '</strong></dt>
-			<dd>' . __('The plugin currently enhances simple products on collection pages. Variable, grouped, and external products are not supported yet.', 'woo-preproduct') . '</dd>
+			<dt><strong>' . __('Buttons not being enhanced', 'preproduct') . '</strong></dt>
+			<dd>' . __('The plugin currently enhances simple products on collection pages. Variable, grouped, and external products are not supported yet.', 'preproduct') . '</dd>
 			
-			<dt><strong>' . __('Plugin activation errors', 'woo-preproduct') . '</strong></dt>
-			<dd>' . __('Ensure WooCommerce is installed and active before activating PreProduct.', 'woo-preproduct') . '</dd>
+			<dt><strong>' . __('Plugin activation errors', 'preproduct') . '</strong></dt>
+			<dd>' . __('Ensure WooCommerce is installed and active before activating PreProduct.', 'preproduct') . '</dd>
 		</dl>
-		<h4>' . __('Debugging:', 'woo-preproduct') . '</h4>
-		<p>' . __('Enable WordPress debugging by adding these lines to wp-config.php:', 'woo-preproduct') . '</p>
+		<h4>' . __('Debugging:', 'preproduct') . '</h4>
+		<p>' . __('Enable WordPress debugging by adding these lines to wp-config.php:', 'preproduct') . '</p>
 		<code>
 		define(\'WP_DEBUG\', true);<br>
 		define(\'WP_DEBUG_LOG\', true);
 		</code>' . 
 		($log_file_path ? '<p>' . sprintf(
 			/* translators: %s: file path to log file */
-			__('PreProduct logs can be found at: %s', 'woo-preproduct'), 
+			__('PreProduct logs can be found at: %s', 'preproduct'), 
 			'<code>' . esc_html($log_file_path) . '</code>'
 		) . '</p>' : '');
 	}
@@ -257,24 +257,24 @@ class WooPreProduct_Admin_Page
 	 */
 	private function get_help_content_support()
 	{
-		return '<h3>' . __('Support Resources', 'woo-preproduct') . '</h3>
-		<h4>' . __('Documentation:', 'woo-preproduct') . '</h4>
+		return '<h3>' . __('Support Resources', 'preproduct') . '</h3>
+		<h4>' . __('Documentation:', 'preproduct') . '</h4>
 		<ul>
-			<li><a href="https://docs.preproduct.io/woocommerce" target="_blank">' . __('WooCommerce Integration Guide', 'woo-preproduct') . '</a></li>
-			<li><a href="https://docs.preproduct.io/api" target="_blank">' . __('API Documentation', 'woo-preproduct') . '</a></li>
-			<li><a href="https://docs.preproduct.io/troubleshooting" target="_blank">' . __('Troubleshooting Guide', 'woo-preproduct') . '</a></li>
+			<li><a href="https://docs.preproduct.io/woocommerce" target="_blank">' . __('WooCommerce Integration Guide', 'preproduct') . '</a></li>
+			<li><a href="https://docs.preproduct.io/api" target="_blank">' . __('API Documentation', 'preproduct') . '</a></li>
+			<li><a href="https://docs.preproduct.io/troubleshooting" target="_blank">' . __('Troubleshooting Guide', 'preproduct') . '</a></li>
 		</ul>
-		<h4>' . __('Get Help:', 'woo-preproduct') . '</h4>
+		<h4>' . __('Get Help:', 'preproduct') . '</h4>
 		<ul>
-			<li><strong>' . __('Email Support:', 'woo-preproduct') . '</strong> <a href="mailto:support@preproduct.io">support@preproduct.io</a></li>
-			<li><strong>' . __('Plugin Support:', 'woo-preproduct') . '</strong> <a href="https://preproduct.io/support" target="_blank">preproduct.io/support</a></li>
+			<li><strong>' . __('Email Support:', 'preproduct') . '</strong> <a href="mailto:support@preproduct.io">support@preproduct.io</a></li>
+			<li><strong>' . __('Plugin Support:', 'preproduct') . '</strong> <a href="https://preproduct.io/support" target="_blank">preproduct.io/support</a></li>
 		</ul>
-		<h4>' . __('System Information:', 'woo-preproduct') . '</h4>
+		<h4>' . __('System Information:', 'preproduct') . '</h4>
 		<ul>
-			<li><strong>' . __('Plugin Version:', 'woo-preproduct') . '</strong> ' . WOO_PREPRODUCT_VERSION . '</li>
-			<li><strong>' . __('WordPress Version:', 'woo-preproduct') . '</strong> ' . get_bloginfo('version') . '</li>
-			<li><strong>' . __('WooCommerce Version:', 'woo-preproduct') . '</strong> ' . (defined('WC_VERSION') ? WC_VERSION : __('Not installed', 'woo-preproduct')) . '</li>
-			<li><strong>' . __('PHP Version:', 'woo-preproduct') . '</strong> ' . PHP_VERSION . '</li>
+			<li><strong>' . __('Plugin Version:', 'preproduct') . '</strong> ' . WOO_PREPRODUCT_VERSION . '</li>
+			<li><strong>' . __('WordPress Version:', 'preproduct') . '</strong> ' . get_bloginfo('version') . '</li>
+			<li><strong>' . __('WooCommerce Version:', 'preproduct') . '</strong> ' . (defined('WC_VERSION') ? WC_VERSION : __('Not installed', 'preproduct')) . '</li>
+			<li><strong>' . __('PHP Version:', 'preproduct') . '</strong> ' . PHP_VERSION . '</li>
 		</ul>';
 	}
 	
@@ -283,13 +283,13 @@ class WooPreProduct_Admin_Page
 	 */
 	private function get_help_sidebar()
 	{
-		return '<h4>' . __('Quick Links', 'woo-preproduct') . '</h4>
+		return '<h4>' . __('Quick Links', 'preproduct') . '</h4>
 		<ul>
-			<li><a href="https://preproduct.io" target="_blank">' . __('PreProduct Website', 'woo-preproduct') . '</a></li>
-			<li><a href="https://docs.preproduct.io" target="_blank">' . __('Documentation', 'woo-preproduct') . '</a></li>
-			<li><a href="https://preproduct.io/support" target="_blank">' . __('Support', 'woo-preproduct') . '</a></li>
+			<li><a href="https://preproduct.io" target="_blank">' . __('PreProduct Website', 'preproduct') . '</a></li>
+			<li><a href="https://docs.preproduct.io" target="_blank">' . __('Documentation', 'preproduct') . '</a></li>
+			<li><a href="https://preproduct.io/support" target="_blank">' . __('Support', 'preproduct') . '</a></li>
 		</ul>
-		<h4>' . __('Plugin Version', 'woo-preproduct') . '</h4>
+		<h4>' . __('Plugin Version', 'preproduct') . '</h4>
 		<p>' . WOO_PREPRODUCT_VERSION . '</p>';
 	}
 } 

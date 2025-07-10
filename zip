@@ -2,9 +2,64 @@
 
 # WooPreProduct Zip Script
 # 
-# Creates a clean zip archive of the project excluding development files,
-# git files, vendor dependencies, and other unnecessary files.
+# Creates a clean zip archive of the project excluding files based on .distignore patterns.
+# This script reads .distignore file and converts patterns to zip exclusions.
 
-echo "Creating preproduct.zip in /Users/oli/Mac/Apps/woo-package/ folder..."
-zip -r ../woo-package/preproduct.zip . -x "*.DS_Store" "__MACOSX" "*.git*" "vendor/*" "node_modules/*" "tests/*" "test"
-echo "Zip archive created successfully in /Users/oli/Mac/Apps/woo-package/ folder!" 
+# Check if .distignore file exists
+if [ ! -f ".distignore" ]; then
+    echo "Error: .distignore file not found!"
+    exit 1
+fi
+
+# Create output directory if it doesn't exist
+mkdir -p ../woo-package
+
+echo "Creating preproduct.zip using .distignore patterns..."
+echo "Reading exclusion patterns from .distignore..."
+
+# Create temporary file for zip exclusions
+TEMP_EXCLUDE_FILE=$(mktemp)
+
+# Read .distignore file and write patterns to temp file
+while IFS= read -r line; do
+    # Skip empty lines and comments
+    if [[ -n "$line" && ! "$line" =~ ^#.*$ ]]; then
+        # Convert .distignore patterns to zip exclusion format
+        # Remove trailing slashes for directories
+        pattern="${line%/}"
+        
+        # For directories (with trailing slash), exclude both the directory and its contents
+        if [[ "$line" =~ .*/$  ]]; then
+            echo "$pattern" >> "$TEMP_EXCLUDE_FILE"
+            echo "${pattern}/*" >> "$TEMP_EXCLUDE_FILE"
+        else
+            # For files or patterns without trailing slash, add as-is
+            echo "$pattern" >> "$TEMP_EXCLUDE_FILE"
+        fi
+    fi
+done < .distignore
+
+# Always exclude some OS-specific files regardless of .distignore
+echo "*.DS_Store" >> "$TEMP_EXCLUDE_FILE"
+echo "__MACOSX" >> "$TEMP_EXCLUDE_FILE"
+echo ".DS_Store" >> "$TEMP_EXCLUDE_FILE"
+
+# Create the zip archive using the exclusion file
+echo "Building archive with exclusions..."
+zip -r ../woo-package/preproduct.zip . -x@"$TEMP_EXCLUDE_FILE"
+
+# Clean up temp file
+rm -f "$TEMP_EXCLUDE_FILE"
+
+if [ $? -eq 0 ]; then
+    echo "✓ Zip archive created successfully in ../woo-package/preproduct.zip"
+    echo "✓ Files excluded based on .distignore patterns"
+    
+    # Show some stats
+    echo ""
+    echo "Archive contents:"
+    unzip -l ../woo-package/preproduct.zip | tail -2
+else
+    echo "✗ Error creating zip archive"
+    exit 1
+fi 

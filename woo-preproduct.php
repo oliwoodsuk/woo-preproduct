@@ -11,6 +11,7 @@
  * Author URI:        https://preproduct.io/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       preproduct
  */
 
 // Prevent direct file access
@@ -53,7 +54,7 @@ function woo_preproduct_check_woocommerce()
 function woo_preproduct_woocommerce_missing_notice()
 {
     echo '<div class="notice notice-error"><p>';
-    echo esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'woo-preproduct');
+    echo esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'preproduct');
     echo '</p></div>';
 }
 
@@ -66,7 +67,7 @@ function woo_preproduct_activate()
     if (!class_exists('WooCommerce')) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(
-            esc_html__('PreProduct requires WooCommerce to be installed and active.', 'woo-preproduct'),
+            esc_html__('PreProduct requires WooCommerce to be installed and active.', 'preproduct'),
             'Plugin Activation Error',
             array('back_link' => true)
         );
@@ -131,7 +132,7 @@ function woo_preproduct_activation_redirect()
         
         // Only redirect if user can access the admin page
         if (current_user_can('manage_woocommerce')) {
-            wp_safe_redirect(admin_url('admin.php?page=woo-preproduct'));
+            wp_safe_redirect(admin_url('admin.php?page=preproduct'));
             exit;
         }
     }
@@ -147,7 +148,7 @@ function woo_preproduct_init()
     }
 
     // Load text domain for translations
-    load_plugin_textdomain('woo-preproduct', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('preproduct', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     // Include logger class
     require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
@@ -168,9 +169,9 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'woo_preproduct_a
 function woo_preproduct_action_links($links)
 {
     	$plugin_links = array(
-		'<a href="' . admin_url('admin.php?page=woo-preproduct') . '">' . esc_html__('Settings', 'woo-preproduct') . '</a>',
-		'<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . esc_html__('Documentation', 'woo-preproduct') . '</a>',
-		'<a href="https://preproduct.io/support" target="_blank">' . esc_html__('Support', 'woo-preproduct') . '</a>',
+		'<a href="' . admin_url('admin.php?page=preproduct') . '">' . esc_html__('Settings', 'preproduct') . '</a>',
+		'<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . esc_html__('Documentation', 'preproduct') . '</a>',
+		'<a href="https://preproduct.io/support" target="_blank">' . esc_html__('Support', 'preproduct') . '</a>',
 	);
     
     return array_merge($plugin_links, $links);

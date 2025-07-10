@@ -214,15 +214,15 @@ class AdminPageTest {
         $admin_page = new WooPreProduct_Admin_Page();
         
         // Test with correct hook suffix
-        $admin_page->enqueue_admin_styles('woocommerce_page_woo-preproduct');
+        $admin_page->enqueue_admin_styles('woocommerce_page_preproduct');
         
-        if (isset($mock_enqueued_styles['woo-preproduct-admin'])) {
+        if (isset($mock_enqueued_styles['preproduct-admin'])) {
             $this->assert_true(true, "✅ Admin styles enqueued on correct page");
             
-            $style = $mock_enqueued_styles['woo-preproduct-admin'];
+            $style = $mock_enqueued_styles['preproduct-admin'];
             
-            // Check style URL contains admin.css
-            if (strpos($style['src'], 'admin.css') !== false) {
+            // Check style URL contains css/admin.css
+            if (strpos($style['src'], 'css/admin.css') !== false) {
                 $this->assert_true(true, "✅ Correct CSS file enqueued");
             } else {
                 $this->assert_true(false, "❌ Incorrect CSS file: " . $style['src']);
@@ -243,7 +243,7 @@ class AdminPageTest {
         $mock_enqueued_styles = array();
         $admin_page->enqueue_admin_styles('other_page');
         
-        if (!isset($mock_enqueued_styles['woo-preproduct-admin'])) {
+        if (!isset($mock_enqueued_styles['preproduct-admin'])) {
             $this->assert_true(true, "✅ Styles not enqueued on other pages");
         } else {
             $this->assert_true(false, "❌ Styles incorrectly enqueued on other pages");
@@ -300,7 +300,7 @@ class AdminPageTest {
         
         // Test get_admin_page_url
         $url = $admin_page->get_admin_page_url();
-        if (strpos($url, 'page=woo-preproduct') !== false) {
+        if (strpos($url, 'page=preproduct') !== false) {
             $this->assert_true(true, "✅ Admin page URL contains correct parameter");
         } else {
             $this->assert_true(false, "❌ Admin page URL incorrect: " . $url);
@@ -318,7 +318,7 @@ class AdminPageTest {
         
         // Mock being on admin.php with our page parameter
         $pagenow = 'admin.php';
-        $_GET['page'] = 'woo-preproduct';
+        $_GET['page'] = 'preproduct';
         
         $is_our_page = $admin_page->is_preproduct_admin_page();
         

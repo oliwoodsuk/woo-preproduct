@@ -132,9 +132,14 @@ class WooPreProduct_Plugin_Uninstall_Webhook
             return WOO_PREPRODUCT_PLUGIN_DIR;
         }
         
-        // Fallback: calculate from current file location
+        // Fallback: Use WordPress function if WOO_PREPRODUCT_PLUGIN_FILE is defined
+        if (defined('WOO_PREPRODUCT_PLUGIN_FILE')) {
+            return plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE);
+        }
+        
+        // Last resort fallback: calculate from current file location
         // This file is in includes/, so parent directory is the plugin root
-        return dirname(__DIR__) . '/';
+        return trailingslashit(dirname(__DIR__));
     }
     
     /**
