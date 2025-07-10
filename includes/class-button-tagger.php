@@ -5,7 +5,7 @@
  * Adds PreProduct data attributes to simple product add-to-cart buttons on collection pages only
  * Excludes variable, grouped, external, and other product types
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -15,9 +15,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WooPreProduct Button Tagger Class
+ * PreProduct Button Tagger Class
  */
-class WooPreProduct_Button_Tagger
+class PreProduct_Button_Tagger
 {
 	
 	/**
@@ -124,6 +124,6 @@ class WooPreProduct_Button_Tagger
 	public function shouldEnablePreproduct($product)
 	{
 		// Allow filtering of which products should have PreProduct integration
-		return apply_filters('woo_preproduct_enable_for_product', true, $product);
+		return apply_filters('preproduct_enable_for_product', true, $product);
 	}
 } 

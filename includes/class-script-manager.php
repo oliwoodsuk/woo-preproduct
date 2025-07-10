@@ -5,7 +5,7 @@
  * Handles injection of the PreProduct embed script into the frontend
  * with proper defer attribute and environment-based URL selection
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -15,9 +15,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WooPreProduct Script Manager Class
+ * PreProduct Script Manager Class
  */
-class WooPreProduct_Script_Manager
+class PreProduct_Script_Manager
 {
 	
 	/**
@@ -37,7 +37,7 @@ class WooPreProduct_Script_Manager
 		// Only load on frontend and if WooCommerce is active
 		if (!is_admin() && function_exists('WC')) {
 			// Get script URL from environment manager
-			$environment_manager = WooPreProduct_Environment_Manager::get_instance();
+			$environment_manager = PreProduct_Environment_Manager::get_instance();
 			$script_url = $environment_manager->get_script_url();
 			
 			// Register the script
@@ -45,7 +45,7 @@ class WooPreProduct_Script_Manager
 				'preproduct-embed',
 				$script_url,
 				array(),
-				WOO_PREPRODUCT_VERSION,
+				PREPRODUCT_VERSION,
 				true // Load in footer
 			);
 			
@@ -93,7 +93,7 @@ class WooPreProduct_Script_Manager
 		}
 		
 		// Allow filtering of which pages should load the script
-		return apply_filters('woo_preproduct_load_script', true);
+		return apply_filters('preproduct_load_script', true);
 	}
 	
 	/**

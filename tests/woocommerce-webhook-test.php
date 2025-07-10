@@ -200,7 +200,7 @@ class WooCommerceWebhookTest {
         $mock_webhook_saved = null;
         
         // Simulate plugin activation
-        do_action('woo_preproduct_activated');
+        do_action('preproduct_activated');
         
         if ($mock_webhook_saved !== null) {
             $this->assert_true(true, "✅ Webhook creation triggered by activation");

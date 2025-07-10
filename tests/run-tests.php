@@ -23,7 +23,9 @@ $tests = array(
     'admin-page-test.php' => 'AdminPageTest',
     'activation-hooks-test.php' => 'ActivationHooksTest',
     'uninstall-hooks-test.php' => 'UninstallHooksTest',
-    'woocommerce-webhook-test.php' => 'WooCommerceWebhookTest'
+    'woocommerce-webhook-test.php' => 'WooCommerceWebhookTest',
+    'plugin-path-test.php' => 'PluginPathTest',
+    'prefix-validation-test.php' => 'PrefixValidationTest'
 );
 
 // Check if user wants to run a specific test

@@ -10,9 +10,9 @@
 if (!function_exists('is_admin')) {
     // Define ABSPATH to prevent WordPress security check from exiting
     define('ABSPATH', '/fake/wordpress/path/');
-    define('WOO_PREPRODUCT_VERSION', '1.0.0');
-    define('WOO_PREPRODUCT_PLUGIN_FILE', dirname(__DIR__) . '/woo-preproduct.php');
-    define('WOO_PREPRODUCT_PLUGIN_DIR', dirname(__DIR__) . '/');
+    define('PREPRODUCT_VERSION', '1.0.0');
+    define('PREPRODUCT_PLUGIN_FILE', dirname(__DIR__) . '/woo-preproduct.php');
+    define('PREPRODUCT_PLUGIN_DIR', dirname(__DIR__) . '/');
 
     // Mock WordPress functions
     function is_admin() {
@@ -108,6 +108,63 @@ if (!function_exists('is_admin')) {
     function plugin_dir_url($file) {
         return 'https://example.test/wp-content/plugins/woo-preproduct/';
     }
+    
+    function plugin_dir_path($file) {
+        return '/fake/wordpress/path/wp-content/plugins/woo-preproduct/';
+    }
+    
+    function plugins_url($path = '', $plugin = '') {
+        $base_url = 'https://example.test/wp-content/plugins/';
+        if ($plugin) {
+            $base_url .= dirname($plugin) . '/';
+        } else {
+            $base_url .= 'woo-preproduct/';
+        }
+        return $base_url . ltrim($path, '/');
+    }
+    
+    function plugin_basename($file) {
+        return 'woo-preproduct/' . basename($file);
+    }
+    
+    function determine_locale() {
+        return 'en_US';
+    }
+    
+    function unload_textdomain($domain) {
+        return true;
+    }
+    
+    function load_plugin_textdomain($domain, $deprecated = false, $plugin_rel_path = false) {
+        global $mock_loaded_textdomains;
+        $mock_loaded_textdomains[$domain] = array(
+            'domain' => $domain,
+            'path' => $plugin_rel_path
+        );
+        return true;
+    }
+    
+    function untrailingslashit($string) {
+        return rtrim($string, '/\\');
+    }
+    
+    if (!function_exists('str_starts_with')) {
+        function str_starts_with($haystack, $needle) {
+            return strpos($haystack, $needle) === 0;
+        }
+    }
+    
+    if (!function_exists('str_ends_with')) {
+        function str_ends_with($haystack, $needle) {
+            return substr($haystack, -strlen($needle)) === $needle;
+        }
+    }
+    
+    if (!function_exists('str_contains')) {
+        function str_contains($haystack, $needle) {
+            return strpos($haystack, $needle) !== false;
+        }
+    }
 
     function admin_url($path) {
         return 'https://example.test/wp-admin/' . $path;
@@ -120,10 +177,11 @@ if (!function_exists('is_admin')) {
     }
 
     function get_option($option, $default = false) {
+        global $mock_options;
         if ($option === 'siteurl' || $option === 'home') {
             return 'https://example.test';
         }
-        return $default;
+        return isset($mock_options[$option]) ? $mock_options[$option] : $default;
     }
 
     function __($text, $domain = 'default') {

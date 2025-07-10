@@ -6,7 +6,7 @@
  * Provides debugging information about environment detection
  * Only available for administrators and in development environments
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -16,9 +16,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WooPreProduct Debug Info Class
+ * PreProduct Debug Info Class
  */
-class WooPreProduct_Debug_Info
+class PreProduct_Debug_Info
 {
     /**
      * Initialize debug info hooks
@@ -40,7 +40,7 @@ class WooPreProduct_Debug_Info
     	public static function handle_debug_request()
 	{
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is a read-only debug endpoint for administrators only
-		if (isset($_GET['woo_preproduct_debug']) && $_GET['woo_preproduct_debug'] === 'environment') {
+		if (isset($_GET['preproduct_debug']) && $_GET['preproduct_debug'] === 'environment') {
 			self::enqueue_debug_styles();
 			self::display_environment_info();
 			exit;
@@ -54,9 +54,9 @@ class WooPreProduct_Debug_Info
     {
         wp_enqueue_style(
             'preproduct-debug',
-            plugin_dir_url(WOO_PREPRODUCT_PLUGIN_FILE) . 'assets/css/debug.css',
+            plugin_dir_url(PREPRODUCT_PLUGIN_FILE) . 'assets/css/debug.css',
             array(),
-            WOO_PREPRODUCT_VERSION
+            PREPRODUCT_VERSION
         );
         
         // Print styles immediately since we're outside normal WordPress flow
@@ -72,7 +72,7 @@ class WooPreProduct_Debug_Info
             wp_die('Insufficient permissions');
         }
 
-        $env_manager = woo_preproduct_environment();
+        $env_manager = preproduct_environment();
         $urls = $env_manager->get_all_urls();
 
         ?>

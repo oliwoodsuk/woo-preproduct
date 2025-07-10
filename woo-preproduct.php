@@ -34,24 +34,24 @@ if (!defined('ABSPATH')) {
  */
 
 // Plugin constants
-define('WOO_PREPRODUCT_VERSION', '0.0.1');
-define('WOO_PREPRODUCT_PLUGIN_FILE', __FILE__);
-define('WOO_PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('WOO_PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('WOO_PREPRODUCT_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define('PREPRODUCT_VERSION', '0.0.1');
+define('PREPRODUCT_PLUGIN_FILE', __FILE__);
+define('PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('PREPRODUCT_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Check if WooCommerce is active
-function woo_preproduct_check_woocommerce()
+function preproduct_check_woocommerce()
 {
     if (!class_exists('WooCommerce')) {
-        add_action('admin_notices', 'woo_preproduct_woocommerce_missing_notice');
+        add_action('admin_notices', 'preproduct_woocommerce_missing_notice');
         return false;
     }
     return true;
 }
 
 // Admin notice for missing WooCommerce
-function woo_preproduct_woocommerce_missing_notice()
+function preproduct_woocommerce_missing_notice()
 {
     echo '<div class="notice notice-error"><p>';
     echo esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'preproduct');
@@ -59,9 +59,9 @@ function woo_preproduct_woocommerce_missing_notice()
 }
 
 // Plugin activation hook
-register_activation_hook(__FILE__, 'woo_preproduct_activate');
+register_activation_hook(__FILE__, 'preproduct_activate');
 
-function woo_preproduct_activate()
+function preproduct_activate()
 {
     // Check if WooCommerce is active
     if (!class_exists('WooCommerce')) {
@@ -74,61 +74,61 @@ function woo_preproduct_activate()
     }
     
     // Include logger for activation logging
-    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
+    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
     
     // Log activation
-    WooPreProduct_Logger::log_activation();
+    PreProduct_Logger::log_activation();
     
     // Flush rewrite rules
     flush_rewrite_rules();
     
     // Set a transient to redirect to the admin page on first activation
-    set_transient('woo_preproduct_activation_redirect', true, 30);
+    set_transient('preproduct_activation_redirect', true, 30);
     
     // Trigger webhook creation (will be handled by the webhook class)
-    do_action('woo_preproduct_activated');
+    do_action('preproduct_activated');
 }
 
 // Plugin deactivation hook
-register_deactivation_hook(__FILE__, 'woo_preproduct_deactivate');
+register_deactivation_hook(__FILE__, 'preproduct_deactivate');
 
-function woo_preproduct_deactivate()
+function preproduct_deactivate()
 {
     // Include logger for deactivation logging
-    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
+    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
     
     // Log deactivation
-    WooPreProduct_Logger::log_deactivation();
+    PreProduct_Logger::log_deactivation();
     
     // Flush rewrite rules
     flush_rewrite_rules();
     
     // TEMPORARY: Trigger webhook for testing (normally this would only happen on uninstall)
     // Ensure the webhook class is loaded
-    if (!class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
-        require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
+    if (!class_exists('PreProduct_Plugin_Uninstall_Webhook')) {
+        require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
     }
     
     try {
-        if (class_exists('WooPreProduct_Plugin_Uninstall_Webhook')) {
-            WooPreProduct_Plugin_Uninstall_Webhook::trigger_uninstall_webhook();
-            WooPreProduct_Logger::info('Deactivation webhook sent successfully');
+        if (class_exists('PreProduct_Plugin_Uninstall_Webhook')) {
+            PreProduct_Plugin_Uninstall_Webhook::trigger_uninstall_webhook();
+            PreProduct_Logger::info('Deactivation webhook sent successfully');
         } else {
-            WooPreProduct_Logger::warning('Webhook class not available during deactivation');
+            PreProduct_Logger::warning('Webhook class not available during deactivation');
         }
     } catch (Exception $e) {
-        WooPreProduct_Logger::error('Webhook trigger failed during deactivation: ' . $e->getMessage());
+        PreProduct_Logger::error('Webhook trigger failed during deactivation: ' . $e->getMessage());
     }
 }
 
 // Activation redirect to admin page
-add_action('admin_init', 'woo_preproduct_activation_redirect');
+add_action('admin_init', 'preproduct_activation_redirect');
 
-function woo_preproduct_activation_redirect()
+function preproduct_activation_redirect()
 {
     // Check if we should redirect
-    if (get_transient('woo_preproduct_activation_redirect')) {
-        delete_transient('woo_preproduct_activation_redirect');
+    if (get_transient('preproduct_activation_redirect')) {
+        delete_transient('preproduct_activation_redirect');
         
         // Only redirect if user can access the admin page
         if (current_user_can('manage_woocommerce')) {
@@ -139,11 +139,11 @@ function woo_preproduct_activation_redirect()
 }
 
 // Initialize plugin
-add_action('plugins_loaded', 'woo_preproduct_init');
+add_action('plugins_loaded', 'preproduct_init');
 
-function woo_preproduct_init()
+function preproduct_init()
 {
-    if (!woo_preproduct_check_woocommerce()) {
+    if (!preproduct_check_woocommerce()) {
         return;
     }
 
@@ -151,22 +151,22 @@ function woo_preproduct_init()
     load_plugin_textdomain('preproduct', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     // Include logger class
-    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
+    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
 
     // Include main plugin class
-    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-woo-preproduct.php';
+    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-woo-preproduct.php';
 
     // Include plugin uninstall webhook handler
-    require_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
+    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';
 
     // Initialize the plugin
-    WooPreProduct::instance();
+    PreProduct_Plugin::instance();
 }
 
 // Add plugin action links (Settings link on plugins page)
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'woo_preproduct_action_links');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'preproduct_action_links');
 
-function woo_preproduct_action_links($links)
+function preproduct_action_links($links)
 {
     	$plugin_links = array(
 		'<a href="' . admin_url('admin.php?page=preproduct') . '">' . esc_html__('Settings', 'preproduct') . '</a>',

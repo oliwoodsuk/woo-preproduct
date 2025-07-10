@@ -4,7 +4,7 @@
  *
  * Provides centralized logging functionality using WooCommerce's logging system
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -14,9 +14,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WooPreProduct Logger Class
+ * PreProduct Logger Class
  */
-class WooPreProduct_Logger
+class PreProduct_Logger
 {
     /**
      * Logger instance
@@ -161,7 +161,7 @@ class WooPreProduct_Logger
             'wp_version' => get_bloginfo('version'),
             'wc_version' => defined('WC_VERSION') ? WC_VERSION : 'unknown',
             'php_version' => PHP_VERSION,
-            'plugin_version' => defined('WOO_PREPRODUCT_VERSION') ? WOO_PREPRODUCT_VERSION : '1.0.0'
+            'plugin_version' => defined('PREPRODUCT_VERSION') ? PREPRODUCT_VERSION : '1.0.0'
         ));
     }
     

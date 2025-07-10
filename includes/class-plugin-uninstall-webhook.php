@@ -5,7 +5,7 @@
  * Uses existing WooCommerce webhook and modifies payload/headers via filters
  * for plugin uninstall notifications to PreProduct
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 /**
  * Plugin Uninstall Webhook Class
  */
-class WooPreProduct_Plugin_Uninstall_Webhook
+class PreProduct_Plugin_Uninstall_Webhook
 {
     
     /**
@@ -26,7 +26,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
     public function __construct()
     {
         // Hook into plugin activation to ensure we have a webhook configured
-        add_action('woo_preproduct_activated', array($this, 'ensure_webhook_exists'));
+        add_action('preproduct_activated', array($this, 'ensure_webhook_exists'));
     }
     
     /**
@@ -56,7 +56,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
             'store_name' => get_option('blogname'),
             'timestamp' => time(),
             'wc_version' => defined('WC_VERSION') ? WC_VERSION : 'unknown',
-            'plugin_version' => defined('WOO_PREPRODUCT_VERSION') ? WOO_PREPRODUCT_VERSION : '1.0.0'
+            'plugin_version' => defined('PREPRODUCT_VERSION') ? PREPRODUCT_VERSION : '1.0.0'
         );
         
         // Find an existing webhook with the correct URL
@@ -128,13 +128,13 @@ class WooPreProduct_Plugin_Uninstall_Webhook
      */
     private static function get_plugin_dir()
     {
-        if (defined('WOO_PREPRODUCT_PLUGIN_DIR')) {
-            return WOO_PREPRODUCT_PLUGIN_DIR;
+        if (defined('PREPRODUCT_PLUGIN_DIR')) {
+            return PREPRODUCT_PLUGIN_DIR;
         }
         
-        // Fallback: Use WordPress function if WOO_PREPRODUCT_PLUGIN_FILE is defined
-        if (defined('WOO_PREPRODUCT_PLUGIN_FILE')) {
-            return plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE);
+        // Fallback: Use WordPress function if PREPRODUCT_PLUGIN_FILE is defined
+        if (defined('PREPRODUCT_PLUGIN_FILE')) {
+            return plugin_dir_path(PREPRODUCT_PLUGIN_FILE);
         }
         
         // Last resort fallback: calculate from current file location
@@ -161,7 +161,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         
         // Get the exact webhook URL we need
         require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         $expected_webhook_url = $env_manager->get_webhook_url();
         
         if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG && function_exists('error_log')) {
@@ -249,7 +249,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         
         // Get the exact webhook URL we need
         require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         $expected_webhook_url = $env_manager->get_webhook_url();
         
         $data_store = WC_Data_Store::load('webhook');
@@ -279,7 +279,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
     private function create_preproduct_webhook()
     {
         require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         $webhook_url = $env_manager->get_webhook_url();
         
         $webhook = new WC_Webhook();
@@ -292,7 +292,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
         $webhook_id = $webhook->save();
         
         if ($webhook_id) {
-            update_option('woo_preproduct_webhook_id', $webhook_id);
+            update_option('preproduct_webhook_id', $webhook_id);
             return true;
         }
         
@@ -307,7 +307,7 @@ class WooPreProduct_Plugin_Uninstall_Webhook
     public function get_webhook_endpoint()
     {
         require_once self::get_plugin_dir() . 'includes/class-environment-manager.php';
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         return $env_manager->get_webhook_url();
     }
     
@@ -326,17 +326,17 @@ class WooPreProduct_Plugin_Uninstall_Webhook
      */
     public static function cleanup_webhook()
     {
-        $webhook_id = get_option('woo_preproduct_webhook_id', 0);
+        $webhook_id = get_option('preproduct_webhook_id', 0);
         
         if ($webhook_id) {
             $webhook = wc_get_webhook($webhook_id);
             if ($webhook) {
                 $webhook->delete(true);
             }
-            delete_option('woo_preproduct_webhook_id');
+            delete_option('preproduct_webhook_id');
         }
     }
 }
 
 // Initialize the webhook handler
-new WooPreProduct_Plugin_Uninstall_Webhook(); 
+new PreProduct_Plugin_Uninstall_Webhook(); 

@@ -5,7 +5,7 @@
  * Handles the WordPress admin interface for PreProduct including
  * the iframe that loads the PreProduct WooCommerce management interface
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -15,9 +15,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WooPreProduct Admin Page Class
+ * PreProduct Admin Page Class
  */
-class WooPreProduct_Admin_Page
+class PreProduct_Admin_Page
 {
 	
 	/**
@@ -64,9 +64,9 @@ class WooPreProduct_Admin_Page
 		if ($hook_suffix === 'woocommerce_page_preproduct') {
 			wp_enqueue_style(
 				'preproduct-admin',
-				plugin_dir_url(WOO_PREPRODUCT_PLUGIN_FILE) . 'assets/css/admin.css',
+				plugin_dir_url(PREPRODUCT_PLUGIN_FILE) . 'assets/css/admin.css',
 				array(),
-				WOO_PREPRODUCT_VERSION
+				PREPRODUCT_VERSION
 			);
 		}
 	}
@@ -77,7 +77,7 @@ class WooPreProduct_Admin_Page
 	public function render_admin_page()
 	{
 		// Get iframe URL from environment manager
-		$environment_manager = WooPreProduct_Environment_Manager::get_instance();
+		$environment_manager = PreProduct_Environment_Manager::get_instance();
 		$iframe_url = $environment_manager->get_iframe_url();
 		
 		?>
@@ -223,8 +223,8 @@ class WooPreProduct_Admin_Page
 	private function get_help_content_troubleshooting()
 	{
 		$log_file_path = '';
-		if (class_exists('WooPreProduct_Logger')) {
-			$log_file_path = WooPreProduct_Logger::get_log_file_path();
+		if (class_exists('PreProduct_Logger')) {
+			$log_file_path = PreProduct_Logger::get_log_file_path();
 		}
 		
 		return '<h3>' . __('Troubleshooting', 'preproduct') . '</h3>
@@ -271,7 +271,7 @@ class WooPreProduct_Admin_Page
 		</ul>
 		<h4>' . __('System Information:', 'preproduct') . '</h4>
 		<ul>
-			<li><strong>' . __('Plugin Version:', 'preproduct') . '</strong> ' . WOO_PREPRODUCT_VERSION . '</li>
+			<li><strong>' . __('Plugin Version:', 'preproduct') . '</strong> ' . PREPRODUCT_VERSION . '</li>
 			<li><strong>' . __('WordPress Version:', 'preproduct') . '</strong> ' . get_bloginfo('version') . '</li>
 			<li><strong>' . __('WooCommerce Version:', 'preproduct') . '</strong> ' . (defined('WC_VERSION') ? WC_VERSION : __('Not installed', 'preproduct')) . '</li>
 			<li><strong>' . __('PHP Version:', 'preproduct') . '</strong> ' . PHP_VERSION . '</li>
@@ -290,6 +290,6 @@ class WooPreProduct_Admin_Page
 			<li><a href="https://preproduct.io/support" target="_blank">' . __('Support', 'preproduct') . '</a></li>
 		</ul>
 		<h4>' . __('Plugin Version', 'preproduct') . '</h4>
-		<p>' . WOO_PREPRODUCT_VERSION . '</p>';
+		<p>' . PREPRODUCT_VERSION . '</p>';
 	}
 } 

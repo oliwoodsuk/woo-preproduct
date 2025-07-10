@@ -1,9 +1,9 @@
 <?php
 
 /**
- * WooPreProduct Helper Functions
+ * PreProduct Helper Functions
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -13,21 +13,21 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Get the main WooPreProduct instance
+ * Get the main PreProduct instance
  *
- * @return WooPreProduct
+ * @return PreProduct_Plugin
  */
-function woo_preproduct()
+function preproduct()
 {
-    return WooPreProduct::instance();
+    return PreProduct_Plugin::instance();
 }
 
 /**
  * Get the Environment Manager instance
  *
- * @return WooPreProduct_Environment_Manager
+ * @return PreProduct_Environment_Manager
  */
-function woo_preproduct_environment()
+function preproduct_environment()
 {
     return woo_preproduct()->environment();
 }
@@ -37,9 +37,9 @@ function woo_preproduct_environment()
  *
  * @return bool
  */
-function woo_preproduct_is_dev()
+function preproduct_is_dev()
 {
-    return woo_preproduct_environment()->is_development();
+    return preproduct_environment()->is_development();
 }
 
 /**
@@ -47,9 +47,9 @@ function woo_preproduct_is_dev()
  *
  * @return bool
  */
-function woo_preproduct_is_production()
+function preproduct_is_production()
 {
-    return woo_preproduct_environment()->is_production();
+    return preproduct_environment()->is_production();
 }
 
 /**
@@ -57,9 +57,9 @@ function woo_preproduct_is_production()
  *
  * @return string
  */
-function woo_preproduct_get_script_url()
+function preproduct_get_script_url()
 {
-    return woo_preproduct_environment()->get_script_url();
+    return preproduct_environment()->get_script_url();
 }
 
 /**
@@ -67,9 +67,9 @@ function woo_preproduct_get_script_url()
  *
  * @return string
  */
-function woo_preproduct_get_iframe_url()
+function preproduct_get_iframe_url()
 {
-    return woo_preproduct_environment()->get_iframe_url();
+    return preproduct_environment()->get_iframe_url();
 }
 
 /**
@@ -77,9 +77,9 @@ function woo_preproduct_get_iframe_url()
  *
  * @return string
  */
-function woo_preproduct_get_webhook_url()
+function preproduct_get_webhook_url()
 {
-    return woo_preproduct_environment()->get_webhook_url();
+    return preproduct_environment()->get_webhook_url();
 }
 
 /**
@@ -87,9 +87,9 @@ function woo_preproduct_get_webhook_url()
  *
  * @return string
  */
-function woo_preproduct_get_api_base_url()
+function preproduct_get_api_base_url()
 {
-    return woo_preproduct_environment()->get_api_base_url();
+    return preproduct_environment()->get_api_base_url();
 }
 
 /**
@@ -97,17 +97,17 @@ function woo_preproduct_get_api_base_url()
  *
  * @return array
  */
-function woo_preproduct_get_all_urls()
+function preproduct_get_all_urls()
 {
-    return woo_preproduct_environment()->get_all_urls();
+    return preproduct_environment()->get_all_urls();
 }
 
 /**
  * Get the Button Tagger instance
  *
- * @return WooPreProduct_Button_Tagger|null
+ * @return PreProduct_Button_Tagger|null
  */
-function woo_preproduct_button_tagger()
+function preproduct_button_tagger()
 {
 	return woo_preproduct()->button_tagger;
 }
@@ -118,9 +118,9 @@ function woo_preproduct_button_tagger()
  * @param WC_Product $product The product object
  * @return bool
  */
-function woo_preproduct_is_enabled_for_product($product)
+function preproduct_is_enabled_for_product($product)
 {
-	$button_tagger = woo_preproduct_button_tagger();
+	$button_tagger = preproduct_button_tagger();
 	if ($button_tagger && method_exists($button_tagger, 'shouldEnablePreproduct')) {
 		return $button_tagger->shouldEnablePreproduct($product);
 	}
@@ -130,9 +130,9 @@ function woo_preproduct_is_enabled_for_product($product)
 /**
  * Get the Script Manager instance
  *
- * @return WooPreProduct_Script_Manager|null
+ * @return PreProduct_Script_Manager|null
  */
-function woo_preproduct_script_manager()
+function preproduct_script_manager()
 {
 	return woo_preproduct()->script_manager;
 }
@@ -142,9 +142,9 @@ function woo_preproduct_script_manager()
  *
  * @return bool
  */
-function woo_preproduct_should_load_script()
+function preproduct_should_load_script()
 {
-	$script_manager = woo_preproduct_script_manager();
+	$script_manager = preproduct_script_manager();
 	if ($script_manager && method_exists($script_manager, 'should_load_script')) {
 		return $script_manager->should_load_script();
 	}
@@ -156,9 +156,9 @@ function woo_preproduct_should_load_script()
  *
  * @return string
  */
-function woo_preproduct_get_script_handle()
+function preproduct_get_script_handle()
 {
-	$script_manager = woo_preproduct_script_manager();
+	$script_manager = preproduct_script_manager();
 	if ($script_manager && method_exists($script_manager, 'get_script_handle')) {
 		return $script_manager->get_script_handle();
 	}
@@ -168,9 +168,9 @@ function woo_preproduct_get_script_handle()
 /**
  * Get the Admin Page instance
  *
- * @return WooPreProduct_Admin_Page|null
+ * @return PreProduct_Admin_Page|null
  */
-function woo_preproduct_admin_page()
+function preproduct_admin_page()
 {
 	return woo_preproduct()->admin_page;
 }
@@ -180,9 +180,9 @@ function woo_preproduct_admin_page()
  *
  * @return string
  */
-function woo_preproduct_get_admin_page_url()
+function preproduct_get_admin_page_url()
 {
-	$admin_page = woo_preproduct_admin_page();
+	$admin_page = preproduct_admin_page();
 	if ($admin_page && method_exists($admin_page, 'get_admin_page_url')) {
 		return $admin_page->get_admin_page_url();
 	}
@@ -194,9 +194,9 @@ function woo_preproduct_get_admin_page_url()
  *
  * @return bool
  */
-function woo_preproduct_is_admin_page()
+function preproduct_is_admin_page()
 {
-	$admin_page = woo_preproduct_admin_page();
+	$admin_page = preproduct_admin_page();
 	if ($admin_page && method_exists($admin_page, 'is_preproduct_admin_page')) {
 		return $admin_page->is_preproduct_admin_page();
 	}

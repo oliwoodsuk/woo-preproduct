@@ -5,7 +5,7 @@
  *
  * Handles environment detection and endpoint configuration
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -15,14 +15,14 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WooPreProduct Environment Manager Class
+ * PreProduct Environment Manager Class
  */
-class WooPreProduct_Environment_Manager
+class PreProduct_Environment_Manager
 {
     /**
      * Single instance of the class
      *
-     * @var WooPreProduct_Environment_Manager
+     * @var PreProduct_Environment_Manager
      */
     private static $instance = null;
 
@@ -36,7 +36,7 @@ class WooPreProduct_Environment_Manager
     /**
      * Get instance of Environment Manager
      *
-     * @return WooPreProduct_Environment_Manager
+     * @return PreProduct_Environment_Manager
      */
     public static function get_instance()
     {

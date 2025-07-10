@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Main WooPreProduct Class
+ * Main PreProduct Plugin Class
  *
- * @package WooPreProduct
+ * @package PreProduct
  * @since 1.0.0
  */
 
@@ -13,14 +13,14 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Main WooPreProduct Class
+ * Main PreProduct Plugin Class
  */
-class WooPreProduct
+class PreProduct_Plugin
 {
     /**
      * Single instance of the class
      *
-     * @var WooPreProduct
+     * @var PreProduct_Plugin
      */
     protected static $_instance = null;
 
@@ -29,42 +29,42 @@ class WooPreProduct
      *
      * @var string
      */
-    public $version = WOO_PREPRODUCT_VERSION;
+    public $version = PREPRODUCT_VERSION;
 
     /**
      * Environment Manager instance
      *
-     * @var WooPreProduct_Environment_Manager
+     * @var PreProduct_Environment_Manager
      */
     public $environment_manager = null;
 
     /**
      * Button Tagger instance
      *
-     * @var WooPreProduct_Button_Tagger
+     * @var PreProduct_Button_Tagger
      */
     public $button_tagger = null;
 
     /**
      * Script Manager instance
      *
-     * @var WooPreProduct_Script_Manager
+     * @var PreProduct_Script_Manager
      */
     public $script_manager = null;
 
     /**
      * Admin Page instance
      *
-     * @var WooPreProduct_Admin_Page
+     * @var PreProduct_Admin_Page
      */
     public $admin_page = null;
 
     /**
-     * Main WooPreProduct Instance
+     * Main PreProduct Plugin Instance
      *
-     * Ensures only one instance of WooPreProduct is loaded or can be loaded.
+     * Ensures only one instance of PreProduct_Plugin is loaded or can be loaded.
      *
-     * @return WooPreProduct - Main instance
+     * @return PreProduct_Plugin - Main instance
      */
     public static function instance()
     {
@@ -75,7 +75,7 @@ class WooPreProduct
     }
 
     /**
-     * WooPreProduct Constructor
+     * PreProduct Plugin Constructor
      */
     public function __construct()
     {
@@ -85,11 +85,11 @@ class WooPreProduct
     }
 
     /**
-     * Define WooPreProduct Constants
+     * Define PreProduct Plugin Constants
      */
     private function define_constants()
     {
-        $this->define('WOO_PREPRODUCT_ABSPATH', plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE));
+        $this->define('PREPRODUCT_ABSPATH', plugin_dir_path(PREPRODUCT_PLUGIN_FILE));
     }
 
     /**
@@ -111,29 +111,29 @@ class WooPreProduct
     public function includes()
     {
         // Core includes
-        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
-        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/woo-preproduct-functions.php';
-        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-debug-info.php';
-        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-button-tagger.php';
-        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-script-manager.php';
-        include_once WOO_PREPRODUCT_PLUGIN_DIR . 'includes/class-admin-page.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/woo-preproduct-functions.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-debug-info.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-button-tagger.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-script-manager.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-admin-page.php';
         
         // Initialize Environment Manager
-        $this->environment_manager = WooPreProduct_Environment_Manager::get_instance();
+        $this->environment_manager = PreProduct_Environment_Manager::get_instance();
         
         // Initialize Button Tagger (only if WooCommerce is active)
         if ($this->isWoocommerceActive()) {
-            $this->button_tagger = new WooPreProduct_Button_Tagger();
+            $this->button_tagger = new PreProduct_Button_Tagger();
         }
         
         // Initialize Script Manager (only if WooCommerce is active)
         if ($this->isWoocommerceActive()) {
-            $this->script_manager = new WooPreProduct_Script_Manager();
+            $this->script_manager = new PreProduct_Script_Manager();
         }
         
         // Initialize Admin Page (only if WooCommerce is active)
         if ($this->isWoocommerceActive()) {
-            $this->admin_page = new WooPreProduct_Admin_Page();
+            $this->admin_page = new PreProduct_Admin_Page();
         }
         
         // Additional includes will be added here as the plugin develops
@@ -148,21 +148,21 @@ class WooPreProduct
     }
 
     /**
-     * Init WooPreProduct when WordPress Initializes
+     * Init PreProduct Plugin when WordPress Initializes
      */
     public function init()
     {
         // Before init action
-        do_action('woo_preproduct_before_init');
+        do_action('preproduct_before_init');
 
         // Set up localization
         $this->load_plugin_textdomain();
 
         // Initialize debug info (for administrators only)
-        WooPreProduct_Debug_Info::init();
+        PreProduct_Debug_Info::init();
 
         // Init action
-        do_action('woo_preproduct_init');
+        do_action('preproduct_init');
     }
 
     /**
@@ -174,8 +174,7 @@ class WooPreProduct
         $locale = apply_filters('plugin_locale', $locale, 'preproduct');
 
         unload_textdomain('preproduct');
-        load_textdomain('preproduct', WP_LANG_DIR . '/preproduct/preproduct-' . $locale . '.mo');
-        load_plugin_textdomain('preproduct', false, plugin_basename(dirname(WOO_PREPRODUCT_PLUGIN_FILE)) . '/languages');
+        load_plugin_textdomain('preproduct', false, plugin_basename(dirname(PREPRODUCT_PLUGIN_FILE)) . '/languages');
     }
 
     /**
@@ -185,7 +184,7 @@ class WooPreProduct
      */
     public function plugin_url()
     {
-        return untrailingslashit(plugins_url('/', WOO_PREPRODUCT_PLUGIN_FILE));
+        return untrailingslashit(plugins_url('/', PREPRODUCT_PLUGIN_FILE));
     }
 
     /**
@@ -195,13 +194,13 @@ class WooPreProduct
      */
     public function plugin_path()
     {
-        return untrailingslashit(plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE));
+        return untrailingslashit(plugin_dir_path(PREPRODUCT_PLUGIN_FILE));
     }
 
     /**
      * Get Environment Manager instance
      *
-     * @return WooPreProduct_Environment_Manager
+     * @return PreProduct_Environment_Manager
      */
     public function environment()
     {
@@ -215,7 +214,7 @@ class WooPreProduct
      */
     public function pluginPath()
     {
-        return untrailingslashit(plugin_dir_path(WOO_PREPRODUCT_PLUGIN_FILE));
+        return untrailingslashit(plugin_dir_path(PREPRODUCT_PLUGIN_FILE));
     }
 
     /**
