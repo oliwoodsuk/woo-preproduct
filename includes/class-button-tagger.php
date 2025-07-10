@@ -3,7 +3,8 @@
  * Button Tagger Class
  *
  * Adds PreProduct data attributes to simple product add-to-cart buttons on collection pages only
- * Excludes variable, grouped, external, and other product types
+ * Excludes variable, grouped, external, and other product types.
+ * The PreProduct script adds data-attributes to product pages automatically
  *
  * @package PreProduct
  * @since 1.0.0

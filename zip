@@ -11,9 +11,6 @@ if [ ! -f ".distignore" ]; then
     exit 1
 fi
 
-# Create output directory if it doesn't exist
-mkdir -p ../woo-package
-
 echo "Creating preproduct.zip using .distignore patterns..."
 echo "Reading exclusion patterns from .distignore..."
 
@@ -46,19 +43,19 @@ echo ".DS_Store" >> "$TEMP_EXCLUDE_FILE"
 
 # Create the zip archive using the exclusion file
 echo "Building archive with exclusions..."
-zip -r ../woo-package/preproduct.zip . -x@"$TEMP_EXCLUDE_FILE"
+zip -r ../preproduct.zip . -x@"$TEMP_EXCLUDE_FILE"
 
 # Clean up temp file
 rm -f "$TEMP_EXCLUDE_FILE"
 
 if [ $? -eq 0 ]; then
-    echo "✓ Zip archive created successfully in ../woo-package/preproduct.zip"
+    echo "✓ Zip archive created successfully in ../preproduct.zip"
     echo "✓ Files excluded based on .distignore patterns"
     
     # Show some stats
     echo ""
     echo "Archive contents:"
-    unzip -l ../woo-package/preproduct.zip | tail -2
+    unzip -l ../preproduct.zip | tail -2
 else
     echo "✗ Error creating zip archive"
     exit 1
