@@ -46,7 +46,7 @@ class ScriptManagerTest {
         $mock_enqueued_scripts = array();
         $mock_is_admin = false;
         
-        $script_manager = new WooPreProduct_Script_Manager();
+        $script_manager = new PreProduct_Script_Manager();
         
         // Simulate frontend script enqueuing
         $script_manager->enqueue_frontend_script();
@@ -95,7 +95,7 @@ class ScriptManagerTest {
     private function test_defer_attribute() {
         echo "Testing Defer Attribute Addition...\n";
         
-        $script_manager = new WooPreProduct_Script_Manager();
+        $script_manager = new PreProduct_Script_Manager();
         
         // Test with our script handle
         $original_tag = '<script type="text/javascript" src="https://preproduct.ngrok.io/preproduct-embed.js" id="preproduct-embed-js"></script>';
@@ -128,7 +128,7 @@ class ScriptManagerTest {
         $mock_enqueued_scripts = array();
         $mock_is_admin = true; // Simulate admin page
         
-        $script_manager = new WooPreProduct_Script_Manager();
+        $script_manager = new PreProduct_Script_Manager();
         
         // Try to enqueue script on admin page
         $script_manager->enqueue_frontend_script();
@@ -155,7 +155,7 @@ class ScriptManagerTest {
         global $mock_is_admin;
         $mock_is_admin = false;
         
-        $script_manager = new WooPreProduct_Script_Manager();
+        $script_manager = new PreProduct_Script_Manager();
         
         // Test should_load_script method
         $should_load = $script_manager->should_load_script();

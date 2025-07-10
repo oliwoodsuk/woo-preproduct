@@ -142,7 +142,7 @@ class AdminPageTest {
         $mock_is_admin = true;
         $mock_current_user_can = true;
         
-        $admin_page = new WooPreProduct_Admin_Page();
+        $admin_page = new PreProduct_Admin_Page();
         
         // Simulate admin_menu action
         $admin_page->add_admin_menu();
@@ -189,7 +189,7 @@ class AdminPageTest {
         $mock_is_admin = true;
         $mock_current_user_can = false; // User cannot manage WooCommerce
         
-        $admin_page = new WooPreProduct_Admin_Page();
+        $admin_page = new PreProduct_Admin_Page();
         
         // Try to add menu without proper capability
         $admin_page->add_admin_menu();
@@ -211,7 +211,7 @@ class AdminPageTest {
         $mock_enqueued_styles = array();
         $mock_is_admin = true;
         
-        $admin_page = new WooPreProduct_Admin_Page();
+        $admin_page = new PreProduct_Admin_Page();
         
         // Test with correct hook suffix
         $admin_page->enqueue_admin_styles('woocommerce_page_preproduct');
@@ -255,7 +255,7 @@ class AdminPageTest {
     private function test_iframe_rendering() {
         echo "Testing Iframe Rendering...\n";
         
-        $admin_page = new WooPreProduct_Admin_Page();
+        $admin_page = new PreProduct_Admin_Page();
         
         // Capture output
         ob_start();
@@ -296,7 +296,7 @@ class AdminPageTest {
     private function test_helper_functions() {
         echo "Testing Helper Functions...\n";
         
-        $admin_page = new WooPreProduct_Admin_Page();
+        $admin_page = new PreProduct_Admin_Page();
         
         // Test get_admin_page_url
         $url = $admin_page->get_admin_page_url();
@@ -314,7 +314,7 @@ class AdminPageTest {
         
         global $pagenow;
         
-        $admin_page = new WooPreProduct_Admin_Page();
+        $admin_page = new PreProduct_Admin_Page();
         
         // Mock being on admin.php with our page parameter
         $pagenow = 'admin.php';

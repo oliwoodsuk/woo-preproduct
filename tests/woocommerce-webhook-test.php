@@ -43,7 +43,7 @@ class WooCommerceWebhookTest {
         echo "Testing Webhook Class Initialization...\n";
         
         try {
-            $webhook_handler = new WooPreProduct_Plugin_Uninstall_Webhook();
+            $webhook_handler = new PreProduct_Plugin_Uninstall_Webhook();
             
             if (is_object($webhook_handler)) {
                 $this->assert_true(true, "✅ Webhook class instantiated successfully");
@@ -141,7 +141,7 @@ class WooCommerceWebhookTest {
     private function test_existing_webhook_detection() {
         echo "Testing Existing Webhook Detection...\n";
         
-        $webhook_handler = new WooPreProduct_Plugin_Uninstall_Webhook();
+        $webhook_handler = new PreProduct_Plugin_Uninstall_Webhook();
         
         // Test webhook endpoint detection
         $endpoint_url = $webhook_handler->get_webhook_endpoint();
@@ -172,7 +172,7 @@ class WooCommerceWebhookTest {
     private function test_webhook_endpoint_configuration() {
         echo "Testing Webhook Endpoint Configuration...\n";
         
-        $webhook_handler = new WooPreProduct_Plugin_Uninstall_Webhook();
+        $webhook_handler = new PreProduct_Plugin_Uninstall_Webhook();
         
         // Test that the webhook endpoint is properly configured
         $endpoint_url = $webhook_handler->get_webhook_endpoint();
@@ -241,13 +241,13 @@ class WooCommerceWebhookTest {
         $mock_webhook_delivered = false;
         
         // Test the static method exists and can be called
-        if (method_exists('WooPreProduct_Plugin_Uninstall_Webhook', 'trigger_uninstall_webhook')) {
+        if (method_exists('PreProduct_Plugin_Uninstall_Webhook', 'trigger_uninstall_webhook')) {
             $this->assert_true(true, "✅ trigger_uninstall_webhook method exists");
             
             try {
                 // This would normally trigger webhook delivery, but in our test environment
                 // it will just validate the method can be called
-                WooPreProduct_Plugin_Uninstall_Webhook::trigger_uninstall_webhook();
+                PreProduct_Plugin_Uninstall_Webhook::trigger_uninstall_webhook();
                 $this->assert_true(true, "✅ trigger_uninstall_webhook method executes without error");
             } catch (Exception $e) {
                 $this->assert_true(false, "❌ trigger_uninstall_webhook method threw exception: " . $e->getMessage());

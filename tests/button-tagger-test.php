@@ -117,7 +117,7 @@ class ButtonTaggerTest {
     private function test_collection_page_attributes() {
         echo "Testing Collection Page Button Attribute Generation...\n";
         
-        $tagger = new WooPreProduct_Button_Tagger();
+        $tagger = new PreProduct_Button_Tagger();
         $product = new WC_Product(123, 'simple', 'TEST-SKU', '19.99');
         
         // Test HTML modification for collection pages
@@ -161,7 +161,7 @@ class ButtonTaggerTest {
     private function test_product_filtering() {
         echo "Testing Product Type Filtering (Simple Products Only)...\n";
         
-        $tagger = new WooPreProduct_Button_Tagger();
+        $tagger = new PreProduct_Button_Tagger();
         
         // Test with simple product - should be tagged
         $simple_product = new WC_Product(123, 'simple', 'SIMPLE-SKU', '19.99');
@@ -233,7 +233,7 @@ class ButtonTaggerTest {
     private function test_invalid_product_handling() {
         echo "Testing Invalid Product Handling...\n";
         
-        $tagger = new WooPreProduct_Button_Tagger();
+        $tagger = new PreProduct_Button_Tagger();
         
         // Test with null product
         $original_html = '<a href="/cart?add-to-cart=123">Add to cart</a>';
@@ -260,7 +260,7 @@ class ButtonTaggerTest {
     private function test_html_modification() {
         echo "Testing HTML Modification Edge Cases...\n";
         
-        $tagger = new WooPreProduct_Button_Tagger();
+        $tagger = new PreProduct_Button_Tagger();
         $product = new WC_Product();
         
         // Test with HTML that doesn't have closing </a>
@@ -289,7 +289,7 @@ class ButtonTaggerTest {
     private function test_attribute_generation() {
         echo "Testing Attribute Generation...\n";
         
-        $tagger = new WooPreProduct_Button_Tagger();
+        $tagger = new PreProduct_Button_Tagger();
         
         // Use reflection to test private method
         $reflection = new ReflectionClass($tagger);

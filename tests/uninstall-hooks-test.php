@@ -172,7 +172,7 @@ class UninstallHooksTest {
         $test_site_url = 'https://production.com';
         $this->reset_environment_manager();
         
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         $webhook_url = $env_manager->get_webhook_url();
         
         if ($webhook_url === 'https://api.preproduct.io/woocommerce/webhooks') {
@@ -185,7 +185,7 @@ class UninstallHooksTest {
         $test_site_url = 'http://localhost';
         $this->reset_environment_manager();
         
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         $webhook_url = $env_manager->get_webhook_url();
         
         if ($webhook_url === 'https://preproduct.ngrok.io/woocommerce/webhooks') {
@@ -301,7 +301,7 @@ class UninstallHooksTest {
         // Mock WordPress function calls
         global $test_site_url;
         
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         $webhook_url = $env_manager->get_webhook_url();
         
         // Store webhook URL for testing
@@ -361,7 +361,7 @@ class UninstallHooksTest {
     
     private function reset_environment_manager() {
         // Reset the singleton by accessing the private static property via reflection
-        $reflection = new ReflectionClass('WooPreProduct_Environment_Manager');
+        $reflection = new ReflectionClass('PreProduct_Environment_Manager');
         $instance = $reflection->getProperty('instance');
         $instance->setAccessible(true);
         $instance->setValue(null, null);

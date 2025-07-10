@@ -60,7 +60,7 @@ class EnvironmentTest {
             
             // Reset singleton
             $this->reset_environment_manager();
-            $env_manager = WooPreProduct_Environment_Manager::get_instance();
+            $env_manager = PreProduct_Environment_Manager::get_instance();
             
             if ($env_manager->is_production()) {
                 $this->assert_true(true, "✅ '{$url}' detected as production");
@@ -92,7 +92,7 @@ class EnvironmentTest {
             
             // Reset singleton
             $this->reset_environment_manager();
-            $env_manager = WooPreProduct_Environment_Manager::get_instance();
+            $env_manager = PreProduct_Environment_Manager::get_instance();
             
             if ($env_manager->is_development()) {
                 $this->assert_true(true, "✅ '{$url}' detected as development");
@@ -112,7 +112,7 @@ class EnvironmentTest {
         $test_site_url = 'http://localhost:8000';
         
         $this->reset_environment_manager();
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         
         $script_url = $env_manager->get_script_url();
         if (strpos($script_url, 'preproduct.ngrok.io') !== false && strpos($script_url, 'preproduct-embed.js') !== false) {
@@ -124,7 +124,7 @@ class EnvironmentTest {
         // Test production URLs (.test domain - now production)
         $test_site_url = 'https://mysite.test';
         $this->reset_environment_manager();
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         
         $script_url = $env_manager->get_script_url();
         if (strpos($script_url, 'api.preproduct.io') !== false && strpos($script_url, 'preproduct-embed.js') !== false) {
@@ -160,7 +160,7 @@ class EnvironmentTest {
         define('PREPRODUCT_DEV_MODE', true);
         
         $this->reset_environment_manager();
-        $env_manager = WooPreProduct_Environment_Manager::get_instance();
+        $env_manager = PreProduct_Environment_Manager::get_instance();
         
         if ($env_manager->is_development()) {
             $this->assert_true(true, "✅ Manual override to development works");
@@ -173,7 +173,7 @@ class EnvironmentTest {
     
     private function reset_environment_manager() {
         // Reset the singleton by accessing the private static property via reflection
-        $reflection = new ReflectionClass('WooPreProduct_Environment_Manager');
+        $reflection = new ReflectionClass('PreProduct_Environment_Manager');
         $instance = $reflection->getProperty('instance');
         $instance->setAccessible(true);
         $instance->setValue(null, null);

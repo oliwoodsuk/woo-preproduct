@@ -120,7 +120,7 @@ class PluginPathTest {
         echo "Testing plugins_url() usage...\n";
         
         // Test that plugins_url can generate asset URLs
-        $asset_url = plugins_url('assets/css/admin.css', WOO_PREPRODUCT_PLUGIN_FILE);
+        $asset_url = plugins_url('assets/css/admin.css', PREPRODUCT_PLUGIN_FILE);
         $this->assert_test(
             'plugins_url() generates valid asset URL',
             !empty($asset_url) && is_string($asset_url) && filter_var($asset_url, FILTER_VALIDATE_URL),
