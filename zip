@@ -21,6 +21,11 @@ TEMP_EXCLUDE_FILE=$(mktemp)
 while IFS= read -r line; do
     # Skip empty lines and comments
     if [[ -n "$line" && ! "$line" =~ ^#.*$ ]]; then
+        # Skip any pattern that would exclude /admin or its contents
+        if [[ "$line" =~ ^/?admin(/.*)?$ ]] || [[ "$line" =~ ^admin(/.*)?$ ]]; then
+            # Skip this line to always include /admin
+            continue
+        fi
         # Convert .distignore patterns to zip exclusion format
         # Remove trailing slashes for directories
         pattern="${line%/}"
@@ -40,6 +45,7 @@ done < .distignore
 echo "*.DS_Store" >> "$TEMP_EXCLUDE_FILE"
 echo "__MACOSX" >> "$TEMP_EXCLUDE_FILE"
 echo ".DS_Store" >> "$TEMP_EXCLUDE_FILE"
+echo "build-deployment.php" >> "$TEMP_EXCLUDE_FILE"
 
 # Create the zip archive using the exclusion file
 echo "Building archive with exclusions..."
