@@ -42,10 +42,14 @@ while IFS= read -r line; do
 done < .distignore
 
 # Always exclude some OS-specific files regardless of .distignore
+# Always exclude some OS-specific and hidden files regardless of .distignore
+echo ".*" >> "$TEMP_EXCLUDE_FILE"              # All hidden files in root
+echo "*/.*" >> "$TEMP_EXCLUDE_FILE"            # All hidden files in subdirectories
 echo "*.DS_Store" >> "$TEMP_EXCLUDE_FILE"
 echo "__MACOSX" >> "$TEMP_EXCLUDE_FILE"
 echo ".DS_Store" >> "$TEMP_EXCLUDE_FILE"
 echo "build-deployment.php" >> "$TEMP_EXCLUDE_FILE"
+echo "*.gitkeep" >> "$TEMP_EXCLUDE_FILE"
 
 # Create the zip archive using the exclusion file
 echo "Building archive with exclusions..."

@@ -147,9 +147,6 @@ function preproduct_init()
         return;
     }
 
-    // Load text domain for translations
-    load_plugin_textdomain('preproduct', false, dirname(plugin_basename(__FILE__)) . '/languages');
-
     // Include logger class
     require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
 

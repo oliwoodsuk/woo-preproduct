@@ -155,26 +155,11 @@ class PreProduct_Plugin
         // Before init action
         do_action('preproduct_before_init');
 
-        // Set up localization
-        $this->load_plugin_textdomain();
-
         // Initialize debug info (for administrators only)
         PreProduct_Debug_Info::init();
 
         // Init action
         do_action('preproduct_init');
-    }
-
-    /**
-     * Load Localisation files
-     */
-    public function load_plugin_textdomain()
-    {
-        $locale = determine_locale();
-        $locale = apply_filters('plugin_locale', $locale, 'preproduct');
-
-        unload_textdomain('preproduct');
-        load_plugin_textdomain('preproduct', false, plugin_basename(dirname(PREPRODUCT_PLUGIN_FILE)) . '/languages');
     }
 
     /**
