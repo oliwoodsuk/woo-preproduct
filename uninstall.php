@@ -21,7 +21,7 @@ if (!defined('PREPRODUCT_VERSION')) {
     define('PREPRODUCT_VERSION', '0.0.1');
 }
 if (!defined('PREPRODUCT_PLUGIN_FILE')) {
-    define('PREPRODUCT_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'woo-preproduct.php');
+    define('PREPRODUCT_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'preproduct.php');
 }
 if (!defined('PREPRODUCT_PLUGIN_DIR')) {
     define('PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -30,7 +30,7 @@ if (!defined('PREPRODUCT_PLUGIN_URL')) {
     define('PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
 }
 if (!defined('PREPRODUCT_PLUGIN_BASENAME')) {
-    define('PREPRODUCT_PLUGIN_BASENAME', plugin_basename(__FILE__ . '/woo-preproduct.php'));
+    define('PREPRODUCT_PLUGIN_BASENAME', plugin_basename(__FILE__ . '/preproduct.php'));
 }
 
 // Include the logger class

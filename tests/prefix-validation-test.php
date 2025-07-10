@@ -13,7 +13,7 @@
 require_once __DIR__ . '/bootstrap.php';
 
 // Include the main plugin files
-require_once dirname(__DIR__) . '/includes/class-woo-preproduct.php';
+require_once dirname(__DIR__) . '/includes/class-preproduct.php';
 require_once dirname(__DIR__) . '/includes/class-environment-manager.php';
 require_once dirname(__DIR__) . '/includes/class-admin-page.php';
 require_once dirname(__DIR__) . '/includes/class-button-tagger.php';

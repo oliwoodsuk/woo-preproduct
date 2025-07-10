@@ -64,7 +64,7 @@ class HookFilterRefactoringTest
         echo "Testing action hooks...\n";
 
         // Test that old function names are not used in add_action calls
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
         $includes_content = '';
         
         // Read all includes files
@@ -103,7 +103,7 @@ class HookFilterRefactoringTest
         echo "Testing filter hooks...\n";
 
         // Read all plugin files
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
         $includes_content = '';
         
         $includes_files = glob(__DIR__ . '/../includes/*.php');
@@ -137,7 +137,7 @@ class HookFilterRefactoringTest
         echo "Testing custom hook names...\n";
 
         // Read all plugin files
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
         $includes_content = '';
         
         $includes_files = glob(__DIR__ . '/../includes/*.php');
@@ -171,8 +171,8 @@ class HookFilterRefactoringTest
         echo "Testing hook callbacks...\n";
 
         // Read plugin file to verify function definitions exist
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
-        $functions_content = file_get_contents(__DIR__ . '/../includes/woo-preproduct-functions.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
+        $functions_content = file_get_contents(__DIR__ . '/../includes/preproduct-functions.php');
         
         // Test that all callback functions are defined in the code
         $this->assert_true(strpos($plugin_content, 'function preproduct_woocommerce_missing_notice') !== false, "preproduct_woocommerce_missing_notice function is defined");

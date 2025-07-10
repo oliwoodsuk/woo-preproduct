@@ -48,7 +48,7 @@ class ActivationHooksTest {
         }
         
         try {
-            $this->woo_preproduct_activate();
+            $this->preproduct_activate();
             
             if ($this->test_results['flush_rewrite_rules_called']) {
                 $this->assert_true(true, "✅ flush_rewrite_rules() called correctly");
@@ -56,8 +56,8 @@ class ActivationHooksTest {
                 $this->assert_true(false, "❌ flush_rewrite_rules() was not called");
             }
             
-            if (isset($this->test_results['transients']['woo_preproduct_activation_redirect'])) {
-                $transient = $this->test_results['transients']['woo_preproduct_activation_redirect'];
+            if (isset($this->test_results['transients']['preproduct_activation_redirect'])) {
+                $transient = $this->test_results['transients']['preproduct_activation_redirect'];
                 if ($transient['value'] === true && $transient['expiration'] === 30) {
                     $this->assert_true(true, "✅ Activation redirect transient set correctly");
                 } else {
@@ -80,7 +80,7 @@ class ActivationHooksTest {
         $this->reset_test_environment();
         
         try {
-            $this->woo_preproduct_activate_no_wc();
+            $this->preproduct_activate_no_wc();
             $this->assert_true(false, "❌ wp_die() was not called when WooCommerce is missing");
         } catch (Exception $e) {
             if (strpos($e->getMessage(), 'PreProduct requires WooCommerce') !== false) {
@@ -103,7 +103,7 @@ class ActivationHooksTest {
         echo "Testing Deactivation Functionality...\n";
         
         $this->reset_test_environment();
-        $this->woo_preproduct_deactivate();
+        $this->preproduct_deactivate();
         
         if ($this->test_results['flush_rewrite_rules_called']) {
             $this->assert_true(true, "✅ flush_rewrite_rules() called during deactivation");
@@ -121,9 +121,9 @@ class ActivationHooksTest {
         $this->test_user_capabilities = array('manage_woocommerce');
         
         // Set the transient
-        $this->set_transient('woo_preproduct_activation_redirect', true, 30);
+        $this->set_transient('preproduct_activation_redirect', true, 30);
         
-        $result = $this->woo_preproduct_activation_redirect_test();
+        $result = $this->preproduct_activation_redirect_test();
         
         if ($result === 'exit_called') {
             $this->assert_true(true, "✅ Redirect executed correctly");
@@ -132,7 +132,7 @@ class ActivationHooksTest {
         }
         
         if ($this->test_results['redirect_called']) {
-            $expected_url = 'http://example.com/wp-admin/admin.php?page=woo-preproduct';
+            $expected_url = 'http://example.com/wp-admin/admin.php?page=preproduct';
             if ($this->test_results['redirect_location'] === $expected_url) {
                 $this->assert_true(true, "✅ Redirect URL correct");
             } else {
@@ -142,7 +142,7 @@ class ActivationHooksTest {
             $this->assert_true(false, "❌ wp_safe_redirect() not called");
         }
         
-        if (in_array('woo_preproduct_activation_redirect', $this->test_results['deleted_transients'])) {
+        if (in_array('preproduct_activation_redirect', $this->test_results['deleted_transients'])) {
             $this->assert_true(true, "✅ Transient deleted correctly");
         } else {
             $this->assert_true(false, "❌ Transient not deleted");
@@ -158,9 +158,9 @@ class ActivationHooksTest {
         $this->test_user_capabilities = array(); // No capabilities
         
         // Set the transient
-        $this->set_transient('woo_preproduct_activation_redirect', true, 30);
+        $this->set_transient('preproduct_activation_redirect', true, 30);
         
-        $result = $this->woo_preproduct_activation_redirect_test();
+        $result = $this->preproduct_activation_redirect_test();
         
         if ($result === 'no_redirect') {
             $this->assert_true(true, "✅ Redirect correctly skipped without permissions");
@@ -168,7 +168,7 @@ class ActivationHooksTest {
             $this->assert_true(false, "❌ Redirect should have been skipped");
         }
         
-        if (in_array('woo_preproduct_activation_redirect', $this->test_results['deleted_transients'])) {
+        if (in_array('preproduct_activation_redirect', $this->test_results['deleted_transients'])) {
             $this->assert_true(true, "✅ Transient still deleted correctly");
         } else {
             $this->assert_true(false, "❌ Transient not deleted");
@@ -184,7 +184,7 @@ class ActivationHooksTest {
         $this->test_user_capabilities = array('manage_woocommerce');
         
         // Don't set the transient
-        $result = $this->woo_preproduct_activation_redirect_test();
+        $result = $this->preproduct_activation_redirect_test();
         
         if ($result === 'no_redirect') {
             $this->assert_true(true, "✅ Redirect correctly skipped when no transient");
@@ -196,7 +196,7 @@ class ActivationHooksTest {
     }
     
     // Mock activation function (with WooCommerce)
-    private function woo_preproduct_activate() {
+    private function preproduct_activate() {
         if (!class_exists('WooCommerce')) {
             $this->deactivate_plugins($this->plugin_basename(__FILE__));
             $this->wp_die(
@@ -207,11 +207,11 @@ class ActivationHooksTest {
         }
         
         $this->flush_rewrite_rules();
-        $this->set_transient('woo_preproduct_activation_redirect', true, 30);
+        $this->set_transient('preproduct_activation_redirect', true, 30);
     }
     
     // Mock activation function (without WooCommerce)
-    private function woo_preproduct_activate_no_wc() {
+    private function preproduct_activate_no_wc() {
         if (!class_exists('WooCommerceNonExistent')) {
             $this->deactivate_plugins($this->plugin_basename(__FILE__));
             $this->wp_die(
@@ -222,21 +222,21 @@ class ActivationHooksTest {
         }
         
         $this->flush_rewrite_rules();
-        $this->set_transient('woo_preproduct_activation_redirect', true, 30);
+        $this->set_transient('preproduct_activation_redirect', true, 30);
     }
     
     // Mock deactivation function
-    private function woo_preproduct_deactivate() {
+    private function preproduct_deactivate() {
         $this->flush_rewrite_rules();
     }
     
     // Mock activation redirect function (for testing)
-    private function woo_preproduct_activation_redirect_test() {
-        if ($this->get_transient('woo_preproduct_activation_redirect')) {
-            $this->delete_transient('woo_preproduct_activation_redirect');
+    private function preproduct_activation_redirect_test() {
+        if ($this->get_transient('preproduct_activation_redirect')) {
+            $this->delete_transient('preproduct_activation_redirect');
             
             if ($this->current_user_can('manage_woocommerce')) {
-                $this->wp_safe_redirect($this->admin_url('admin.php?page=woo-preproduct'));
+                $this->wp_safe_redirect($this->admin_url('admin.php?page=preproduct'));
                 return 'exit_called';
             }
         }

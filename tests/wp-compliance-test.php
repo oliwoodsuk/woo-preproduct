@@ -68,7 +68,7 @@ class WPComplianceTest
     {
         echo "Testing plugin header requirements...\n";
 
-        $plugin_content = file_get_contents($this->plugin_root . '/woo-preproduct.php');
+        $plugin_content = file_get_contents($this->plugin_root . '/preproduct.php');
 
         // Check required header fields
         $this->assert_true(strpos($plugin_content, 'Plugin Name:') !== false, "Plugin Name header field present");
@@ -98,7 +98,7 @@ class WPComplianceTest
 
         // Check required files
         $this->assert_true(file_exists($this->plugin_root . '/README.md'), "README.md file exists");
-        $this->assert_true(file_exists($this->plugin_root . '/woo-preproduct.php'), "Main plugin file exists");
+        $this->assert_true(file_exists($this->plugin_root . '/preproduct.php'), "Main plugin file exists");
         $this->assert_true(file_exists($this->plugin_root . '/uninstall.php'), "Uninstall.php file exists");
 
         // Check directory structure
@@ -114,7 +114,7 @@ class WPComplianceTest
         $plugin_files = glob($this->plugin_root . '/*.php');
         $main_plugin_file = false;
         foreach ($plugin_files as $file) {
-            if (basename($file) === 'woo-preproduct.php') {
+            if (basename($file) === 'preproduct.php') {
                 $main_plugin_file = true;
                 break;
             }
@@ -201,7 +201,7 @@ class WPComplianceTest
         echo "Testing naming conventions...\n";
 
         // Check function prefixes
-        $functions_file = $this->plugin_root . '/includes/woo-preproduct-functions.php';
+        $functions_file = $this->plugin_root . '/includes/preproduct-functions.php';
         $content = file_get_contents($functions_file);
         
         // Look for function definitions
@@ -348,7 +348,7 @@ class WPComplianceTest
         $this->assert_equals(0, $files_without_phpdoc, "All class files have PHPDoc headers");
 
         // Check main plugin file has proper description
-        $plugin_content = file_get_contents($this->plugin_root . '/woo-preproduct.php');
+        $plugin_content = file_get_contents($this->plugin_root . '/preproduct.php');
         $this->assert_true(strlen($plugin_content) > 500, "Main plugin file has substantial content and documentation");
 
         echo "✓ Documentation tests completed\n";

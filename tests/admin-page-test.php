@@ -7,8 +7,8 @@
 
 // Define ABSPATH to prevent WordPress security check from exiting
 define('ABSPATH', '/fake/wordpress/path/');
-define('WOO_PREPRODUCT_VERSION', '1.0.0');
-define('WOO_PREPRODUCT_PLUGIN_FILE', __FILE__);
+define('PREPRODUCT_VERSION', '1.0.0');
+define('PREPRODUCT_PLUGIN_FILE', __FILE__);
 
 // Global variables for testing
 global $mock_menu_pages, $mock_enqueued_styles, $mock_is_admin, $mock_current_user_can, $mock_pagenow, $mock_get;
@@ -229,7 +229,7 @@ class AdminPageTest {
             }
             
             // Check version
-            if ($style['ver'] === WOO_PREPRODUCT_VERSION) {
+            		if ($style['ver'] === PREPRODUCT_VERSION) {
                 $this->assert_true(true, "✅ Correct CSS version");
             } else {
                 $this->assert_true(false, "❌ Incorrect CSS version");

@@ -29,7 +29,7 @@ function preproduct()
  */
 function preproduct_environment()
 {
-    return woo_preproduct()->environment();
+    return preproduct()->environment();
 }
 
 /**
@@ -109,7 +109,7 @@ function preproduct_get_all_urls()
  */
 function preproduct_button_tagger()
 {
-	return woo_preproduct()->button_tagger;
+	return preproduct()->button_tagger;
 }
 
 /**
@@ -134,7 +134,7 @@ function preproduct_is_enabled_for_product($product)
  */
 function preproduct_script_manager()
 {
-	return woo_preproduct()->script_manager;
+	return preproduct()->script_manager;
 }
 
 /**
@@ -172,7 +172,7 @@ function preproduct_get_script_handle()
  */
 function preproduct_admin_page()
 {
-	return woo_preproduct()->admin_page;
+	return preproduct()->admin_page;
 }
 
 /**

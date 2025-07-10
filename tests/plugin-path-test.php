@@ -15,7 +15,7 @@
 require_once __DIR__ . '/bootstrap.php';
 
 // Include the main plugin class
-require_once dirname(__DIR__) . '/includes/class-woo-preproduct.php';
+require_once dirname(__DIR__) . '/includes/class-preproduct.php';
 
 class PluginPathTest {
     private $test_results = array();
@@ -259,14 +259,14 @@ class PluginPathTest {
         // Test that paths follow WordPress conventions
         $this->assert_test(
             'plugin path follows WordPress conventions',
-            str_contains($plugin_path, 'plugins') && str_contains($plugin_path, 'woo-preproduct'),
-            "Path should contain 'plugins' and 'woo-preproduct': $plugin_path"
+            str_contains($plugin_path, 'plugins') && str_contains($plugin_path, 'preproduct'),
+            "Path should contain 'plugins' and 'preproduct': $plugin_path"
         );
         
         $this->assert_test(
             'plugin URL follows WordPress conventions',
-            str_contains($plugin_url, 'plugins') && str_contains($plugin_url, 'woo-preproduct'),
-            "URL should contain 'plugins' and 'woo-preproduct': $plugin_url"
+            str_contains($plugin_url, 'plugins') && str_contains($plugin_url, 'preproduct'),
+            "URL should contain 'plugins' and 'preproduct': $plugin_url"
         );
         
         echo "✓ Path consistency tests completed\n\n";

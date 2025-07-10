@@ -154,7 +154,7 @@ function preproduct_init()
     require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-logger.php';
 
     // Include main plugin class
-    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-woo-preproduct.php';
+    require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-preproduct.php';
 
     // Include plugin uninstall webhook handler
     require_once PREPRODUCT_PLUGIN_DIR . 'includes/class-plugin-uninstall-webhook.php';

@@ -112,7 +112,7 @@ class PreProduct_Plugin
     {
         // Core includes
         include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-environment-manager.php';
-        include_once PREPRODUCT_PLUGIN_DIR . 'includes/woo-preproduct-functions.php';
+        include_once PREPRODUCT_PLUGIN_DIR . 'includes/preproduct-functions.php';
         include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-debug-info.php';
         include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-button-tagger.php';
         include_once PREPRODUCT_PLUGIN_DIR . 'includes/class-script-manager.php';

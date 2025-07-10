@@ -1,5 +1,5 @@
 {
-    "name": "preproduct/woo-preproduct",
+    "name": "preproduct/preproduct",
     "description": "PreProduct for WooCommerce - Enables pre-order functionality for WooCommerce stores via PreProduct integration",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",

@@ -65,7 +65,7 @@ class ScriptManagerTest {
             }
             
             // Check version
-            if ($script_data['ver'] === WOO_PREPRODUCT_VERSION) {
+            		if ($script_data['ver'] === PREPRODUCT_VERSION) {
                 $this->assert_true(true, "✅ Script version matches plugin version");
             } else {
                 $this->assert_true(false, "❌ Script version doesn't match plugin version");

@@ -13,7 +13,7 @@ class DeploymentBuilder
 {
     private $source_dir;
     private $build_dir;
-    private $plugin_name = 'woo-preproduct';
+    private $plugin_name = 'preproduct';
     
     // Files and directories to exclude from deployment
     private $exclude_patterns = [
@@ -183,11 +183,11 @@ class DeploymentBuilder
         
         // Check required files exist
         $required_files = [
-            'woo-preproduct.php',
+            'preproduct.php',
             'README.md',
             'uninstall.php',
-            'includes/woo-preproduct-functions.php',
-            'includes/class-woo-preproduct.php'
+            'includes/preproduct-functions.php',
+            'includes/class-preproduct.php'
         ];
         
         foreach ($required_files as $file) {

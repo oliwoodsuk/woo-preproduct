@@ -61,7 +61,7 @@ class ActivationDeactivationTest
         echo "Testing activation hooks...\n";
 
         // Read plugin file
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
 
         // Check for activation hook registration
         $this->assert_true(strpos($plugin_content, 'register_activation_hook') !== false, "Plugin registers activation hook");
@@ -86,7 +86,7 @@ class ActivationDeactivationTest
         echo "Testing deactivation hooks...\n";
 
         // Read plugin file
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
 
         // Check for deactivation hook registration
         $this->assert_true(strpos($plugin_content, 'register_deactivation_hook') !== false, "Plugin registers deactivation hook");
@@ -136,7 +136,7 @@ class ActivationDeactivationTest
         echo "Testing activation functions...\n";
 
         // Test activation function structure
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
 
         // Check activation function content
         $this->assert_true(strpos($plugin_content, 'PreProduct_Logger::log_activation') !== false, "Activation logs event");
@@ -157,7 +157,7 @@ class ActivationDeactivationTest
         echo "Testing plugin file structure...\n";
 
         // Test main plugin file
-        $this->assert_true(file_exists(__DIR__ . '/../woo-preproduct.php'), "Main plugin file exists");
+        $this->assert_true(file_exists(__DIR__ . '/../preproduct.php'), "Main plugin file exists");
 
         // Test required directories
         $this->assert_true(is_dir(__DIR__ . '/../includes'), "Includes directory exists");
@@ -166,10 +166,10 @@ class ActivationDeactivationTest
 
         // Test required files
         $this->assert_true(file_exists(__DIR__ . '/../README.md'), "README.md exists");
-        $this->assert_true(file_exists(__DIR__ . '/../includes/woo-preproduct-functions.php'), "Functions file exists");
+        $this->assert_true(file_exists(__DIR__ . '/../includes/preproduct-functions.php'), "Functions file exists");
 
         // Test plugin header
-        $plugin_content = file_get_contents(__DIR__ . '/../woo-preproduct.php');
+        $plugin_content = file_get_contents(__DIR__ . '/../preproduct.php');
         $this->assert_true(strpos($plugin_content, 'Plugin Name:') !== false, "Plugin header has name");
         $this->assert_true(strpos($plugin_content, 'Version:') !== false, "Plugin header has version");
         $this->assert_true(strpos($plugin_content, 'Description:') !== false, "Plugin header has description");

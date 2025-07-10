@@ -11,7 +11,7 @@ if (!function_exists('is_admin')) {
     // Define ABSPATH to prevent WordPress security check from exiting
     define('ABSPATH', '/fake/wordpress/path/');
     define('PREPRODUCT_VERSION', '1.0.0');
-    define('PREPRODUCT_PLUGIN_FILE', dirname(__DIR__) . '/woo-preproduct.php');
+    define('PREPRODUCT_PLUGIN_FILE', dirname(__DIR__) . '/preproduct.php');
     define('PREPRODUCT_PLUGIN_DIR', dirname(__DIR__) . '/');
 
     // Mock WordPress functions
@@ -106,11 +106,11 @@ if (!function_exists('is_admin')) {
     }
 
     function plugin_dir_url($file) {
-        return 'https://example.test/wp-content/plugins/woo-preproduct/';
+        return 'https://example.test/wp-content/plugins/preproduct/';
     }
     
     function plugin_dir_path($file) {
-        return '/fake/wordpress/path/wp-content/plugins/woo-preproduct/';
+        return '/fake/wordpress/path/wp-content/plugins/preproduct/';
     }
     
     function plugins_url($path = '', $plugin = '') {
@@ -118,13 +118,13 @@ if (!function_exists('is_admin')) {
         if ($plugin) {
             $base_url .= dirname($plugin) . '/';
         } else {
-            $base_url .= 'woo-preproduct/';
+            $base_url .= 'preproduct/';
         }
         return $base_url . ltrim($path, '/');
     }
     
     function plugin_basename($file) {
-        return 'woo-preproduct/' . basename($file);
+        return 'preproduct/' . basename($file);
     }
     
     function determine_locale() {
