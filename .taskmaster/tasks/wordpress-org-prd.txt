@@ -1,0 +1,117 @@
+<context>
+# Overview  
+The plugin "PreProduct" allows WooCommerce merchants to run pre-order campaigns by offering various payment options (pay now, deposit, or charge later). It helps merchants validate demand and sell out-of-stock products before inventory arrives. This plugin is particularly valuable for stores launching new products, managing backorders, or testing the market before committing to stock.
+
+# Core Features  
+- **Pre-order Listings**  
+  Merchants can create pre-order listings directly from their WooCommerce product catalog.
+
+- **Custom Checkout Flows**  
+  Redirects customers to the cart or checkout with pre-order details and terms.
+
+- **Deferred Charging Support**  
+  Enables deposits and charge-later flows via secure payment handling.
+
+- **Admin Dashboard**  
+  Interface to manage pre-orders, settings, and initiate charges.
+
+- **Customer Portal**  
+  Shoppers can view, manage, and optionally pay off pre-orders early.
+
+# User Experience  
+- **User Personas**  
+  - *Store Owner:* Wants to launch and manage pre-orders with flexible payment options.
+  - *Customer:* Wants to pre-order a product and understand when and how they'll be charged.
+
+- **Key User Flows**  
+  1. Merchant installs and activates the plugin.
+  2. Merchant creates a pre-order listing.
+  3. Customer visits product page and clicks "Pre-order".
+  4. Redirects to checkout, completes purchase.
+  5. Merchant later triggers charge if deferred.
+
+- **UI/UX Considerations**  
+  - Clean admin UI using WordPress best practices.
+  - Smooth checkout integration with WooCommerce.
+  - Lightweight, with styles and scripts only loaded as needed.
+</context>
+
+<PRD>
+# Technical Architecture  
+- **System Components**  
+  - Main Plugin Bootstrap (`preproduct.php`)
+  - Class-based architecture for admin, scripts, logging, uninstall, etc.
+  - Embedded frontend app (iframe) served via remote SaaS.
+
+- **Data Models**  
+  - Uses WooCommerce products and orders as base entities.
+  - Stores configuration and state via options, post meta, and transients.
+
+- **APIs and Integrations**  
+  - Communicates with remote PreProduct SaaS via REST API.
+  - Uses WordPress hooks and WooCommerce filters extensively.
+
+- **Infrastructure Requirements**  
+  - PHP 7.4+
+  - WordPress 5.8+
+  - WooCommerce installed and active
+
+# Development Roadmap  
+
+## ✅ MVP Requirements (Fixes for WordPress Plugin Review)
+(run and add tests after every deliverable is actioned)
+- Strip out non-plugin files (e.g., `zip/` folders)
+- Replace hardcoded CSS/JS with `wp_enqueue_script/style`
+- Use proper file path helpers like `plugin_dir_url()` instead of `WP_LANG_DIR`
+- Change text domain from `woo-preproduct` → `preproduct` (plugin slug)
+- Prefix all functions, classes, constants, and option names with `preproduct_`
+- Avoid using `woo_`, `wp_`, or double underscores (`__`)
+- Refactor all usages and filters accordingly
+
+## Future Enhancements
+- Add settings page with more granular pre-order controls
+- Deeper WooCommerce order status integration
+- Native reports dashboard in WP Admin
+- Support for Gutenberg block for pre-order components
+
+# Logical Dependency Chain
+1. **Fix non-permitted files**  
+   Remove or `.distignore` build artifacts (e.g., local `zip/` directory)
+
+2. **Text domain + enqueue updates**  
+   - Update all `__()`, `esc_html__()` to use `'preproduct'`
+   - Replace inline CSS/JS with `wp_enqueue_*` calls
+   - Move assets to proper locations (`/assets/js`, `/assets/css`)
+
+3. **Prefixing refactor**  
+   - Audit and rename all `woo_` and `woopreproduct_` usages
+   - Update class, function, constant names accordingly
+
+4. **Path and directory fixes**  
+   - Replace any `WP_LANG_DIR`, hardcoded URLs/paths
+   - Use `plugin_dir_path()`, `plugin_dir_url()` for all plugin references
+
+5. **Smoke Test on clean WP install**  
+   - Manual QA to ensure plugin activates, works, and doesn’t break anything on fresh WordPress site
+
+# Risks and Mitigations  
+- **Plugin Conflicts**  
+  Risk of breaking other plugins/themes due to generic prefixes. → *Fully refactor to unique namespace.*
+
+- **Script/style issues**  
+  Improperly loaded assets may break UI → *Use correct enqueuing, scope to admin/frontend as needed.*
+
+- **i18n issues**  
+  Community can't translate plugin if text domain is wrong → *Align domain with plugin slug `preproduct`.*
+
+- **Deployment errors**  
+  Accidentally bundling wrong files → *Use `.distignore` and/or `wp dist-archive` for safe deploy.*
+
+# Appendix  
+- **Resources**
+  - [Enqueuing scripts and styles](https://developer.wordpress.org/themes/basics/including-css-javascript/)
+  - [Script attributes (async/defer)](https://make.wordpress.org/core/2023/07/14/registering-scripts-with-async-and-defer-attributes-in-wordpress-6-3/)
+  - [Determining plugin directories](https://developer.wordpress.org/plugins/plugin-basics/determining-plugin-and-content-directories/)
+  - [Plugin Internationalization](https://developer.wordpress.org/plugins/internationalization/)
+  - [PHP_CodeSniffer Ruleset for WP](https://github.com/WordPress/WordPress-Coding-Standards)
+</PRD>

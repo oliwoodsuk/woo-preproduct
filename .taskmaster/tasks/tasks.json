@@ -1,0 +1,566 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Remove Non-Plugin Files and Build Artifacts from zip script output",
+        "description": "Strip out non-plugin files like zip folders and build artifacts to comply with WordPress plugin review requirements",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "Audit the plugin directory and remove or add to .distignore any build artifacts, zip directories, development files, or other non-plugin files. Create or update .distignore file to exclude these files from distribution. This is critical for WordPress plugin review approval.",
+        "testStrategy": "Verify plugin directory contains only necessary plugin files, test that .distignore properly excludes development files, and ensure clean archive generation",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit plugin directory to identify non-plugin files",
+            "description": "Perform comprehensive audit of the plugin directory to identify all non-plugin files including build artifacts, zip directories, development files, and other files that should not be included in the distribution",
+            "dependencies": [],
+            "details": "Use file system tools to scan the plugin directory and create a comprehensive list of files that are not part of the core plugin functionality. Look for: build artifacts (.map, .tmp files), zip directories, node_modules, development configs (.babelrc, webpack.config.js), IDE files (.vscode, .idea), version control files (.git), and any other non-essential files. Document findings in a structured format for review.",
+            "status": "pending",
+            "testStrategy": "Manual review of identified files list to ensure accuracy and completeness"
+          },
+          {
+            "id": 2,
+            "title": "Create or update .distignore file with exclusion patterns",
+            "description": "Create a new .distignore file or update existing one to include patterns that exclude all identified non-plugin files from distribution packages",
+            "dependencies": [
+              1
+            ],
+            "details": "Based on the audit results, create comprehensive .distignore file following WordPress plugin standards. Include patterns for: build artifacts (*.map, *.tmp), development directories (node_modules/, .git/, .vscode/), configuration files (webpack.config.js, .babelrc, package.json), zip directories, and any other non-plugin files. Use glob patterns where appropriate for efficiency. Reference WordPress plugin handbook for standard exclusion patterns.",
+            "status": "pending",
+            "testStrategy": "Validate .distignore syntax and test patterns against sample files"
+          },
+          {
+            "id": 3,
+            "title": "Remove or relocate non-plugin files from plugin directory",
+            "description": "Physically remove or relocate files that should not be present in the plugin directory structure, focusing on files that cannot be handled by .distignore alone",
+            "dependencies": [
+              1
+            ],
+            "details": "Remove files and directories that should not exist in the plugin directory at all, such as zip folders, temporary build artifacts, and development-only files. For files that need to be preserved but excluded from distribution, ensure they are properly covered by .distignore patterns. Create backup of important files before deletion. Document all changes made for rollback purposes.",
+            "status": "pending",
+            "testStrategy": "Verify that removed files are not essential to plugin functionality through manual testing"
+          },
+          {
+            "id": 4,
+            "title": "Update zip script to respect .distignore patterns",
+            "description": "Modify the existing zip script to properly read and implement .distignore file patterns when creating distribution packages",
+            "dependencies": [
+              2
+            ],
+            "details": "Update the zip script to parse .distignore file and exclude matching files/directories from the zip archive. Implement logic to handle glob patterns, negation patterns, and directory exclusions. Ensure the script properly handles both file and directory exclusions. Test with various .distignore patterns to ensure compatibility. Add error handling for malformed .distignore files.",
+            "status": "pending",
+            "testStrategy": "Test zip script with various .distignore patterns and verify excluded files are not in output"
+          },
+          {
+            "id": 5,
+            "title": "Write and run tests to verify file cleanup success",
+            "description": "Create automated tests to verify that the zip script properly excludes non-plugin files and that the resulting package contains only WordPress plugin-compliant files",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Write test suite that: 1) Runs the zip script and extracts the resulting archive, 2) Verifies that no .distignore patterns are present in the extracted files, 3) Checks that all required plugin files are included, 4) Validates that the package structure complies with WordPress plugin standards. Include both positive tests (required files present) and negative tests (excluded files absent). Create test fixtures with known file patterns to ensure reliable testing.",
+            "status": "pending",
+            "testStrategy": "Automated test suite with assertions for file presence/absence and package compliance verification"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Update Text Domain to Plugin Slug",
+        "description": "Change text domain from 'woo-preproduct' to 'preproduct' throughout the plugin for proper internationalization",
+        "details": "Search and replace all instances of text domain 'woo-preproduct' with 'preproduct' in all __(), _e(), esc_html__(), esc_attr__(), and other internationalization functions. Update the plugin header text domain declaration. This ensures proper translation support and WordPress standards compliance.",
+        "testStrategy": "Use grep to find all text domain references, verify all are updated to 'preproduct', test that translations load correctly",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit Current Text Domain Usage",
+            "description": "Identify all instances of the current 'woo-preproduct' text domain throughout the plugin codebase",
+            "dependencies": [],
+            "details": "Use grep or similar search tools to find all occurrences of 'woo-preproduct' in PHP files. Look for usage in __(), _e(), esc_html__(), esc_attr__(), _n(), _x(), and other internationalization functions. Create a comprehensive list of files and line numbers that need to be updated. Also check for any hardcoded references in comments or documentation.",
+            "status": "pending",
+            "testStrategy": "Document all found instances in a checklist format for verification after changes"
+          },
+          {
+            "id": 2,
+            "title": "Update Plugin Header Text Domain",
+            "description": "Change the text domain declaration in the main plugin file header",
+            "dependencies": [
+              1
+            ],
+            "details": "Locate the main plugin file (typically the file with the same name as the plugin directory) and update the 'Text Domain:' header from 'woo-preproduct' to 'preproduct'. This is usually found in the plugin header comment block at the top of the main PHP file.",
+            "status": "pending",
+            "testStrategy": "Verify the header change is correctly formatted and follows WordPress plugin header standards"
+          },
+          {
+            "id": 3,
+            "title": "Replace Text Domain in Internationalization Functions",
+            "description": "Update all instances of 'woo-preproduct' to 'preproduct' in internationalization function calls",
+            "dependencies": [
+              1
+            ],
+            "details": "Systematically replace 'woo-preproduct' with 'preproduct' in all internationalization functions including __(), _e(), esc_html__(), esc_attr__(), _n(), _x(), and any other WordPress i18n functions. Use find and replace with careful attention to maintain proper string formatting and syntax. Work through each file identified in the audit phase.",
+            "status": "pending",
+            "testStrategy": "Use syntax checking tools to ensure no PHP syntax errors were introduced during replacement"
+          },
+          {
+            "id": 4,
+            "title": "Update Load Text Domain Function Calls",
+            "description": "Modify any load_plugin_textdomain() function calls to use the new text domain",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Find and update any load_plugin_textdomain() function calls that reference the old text domain. These are typically found in the main plugin file or in initialization functions. Update both the text domain parameter and ensure the plugin directory path is correct. Also check for any wp_set_script_translations() calls that might reference the old text domain.",
+            "status": "pending",
+            "testStrategy": "Test that translations still load correctly by checking if WordPress can find the language files"
+          },
+          {
+            "id": 5,
+            "title": "Create and Run Text Domain Validation Tests",
+            "description": "Write and execute tests to verify all text domain changes are working correctly",
+            "dependencies": [
+              4
+            ],
+            "details": "Create a test script that scans all PHP files to ensure no instances of 'woo-preproduct' remain in internationalization functions. Test translation loading functionality by attempting to load a test translation file. Verify that the WordPress debug log shows no errors related to text domain loading. Create a simple test translation to confirm the new text domain works with WordPress translation system.",
+            "status": "pending",
+            "testStrategy": "Run automated tests to confirm no old text domain references remain and that translation loading works correctly in both development and production environments"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Replace Inline CSS/JS with Proper Enqueuing",
+        "description": "Replace hardcoded CSS and JavaScript with wp_enqueue_script and wp_enqueue_style calls",
+        "details": "Identify all inline CSS and JavaScript code throughout the plugin. Create separate asset files in /assets/css and /assets/js directories. Replace inline code with proper wp_enqueue_style() and wp_enqueue_script() calls, ensuring proper dependencies, versioning, and conditional loading (admin vs frontend). Implement script attributes like async/defer where appropriate.",
+        "testStrategy": "Verify no inline CSS/JS remains, test that all assets load correctly in admin and frontend, check for proper dependency loading and no conflicts",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit and Identify All Inline CSS and JavaScript",
+            "description": "Scan through all plugin files to identify and document inline CSS and JavaScript code that needs to be extracted",
+            "dependencies": [],
+            "details": "Use grep or similar tools to search for <style>, <script>, and inline style attributes throughout the plugin codebase. Create a comprehensive inventory of all inline assets including their locations, functionality, and dependencies. Document which assets are admin-only vs frontend-only vs both.",
+            "status": "pending",
+            "testStrategy": "Create a checklist of all identified inline assets and verify completeness through manual code review"
+          },
+          {
+            "id": 2,
+            "title": "Create Asset Directory Structure and Extract Files",
+            "description": "Set up proper directory structure and extract inline CSS/JS into separate files",
+            "dependencies": [
+              1
+            ],
+            "details": "Create /assets/css/ and /assets/js/ directories. Extract all identified inline CSS into appropriately named .css files and inline JavaScript into .js files. Organize files by functionality (admin, frontend, components) and ensure proper file naming conventions. Maintain code comments and functionality.",
+            "status": "pending",
+            "testStrategy": "Verify all extracted files are syntactically valid and maintain original functionality through file validation"
+          },
+          {
+            "id": 3,
+            "title": "Implement wp_enqueue_style() Calls",
+            "description": "Replace all inline CSS with proper wp_enqueue_style() function calls",
+            "dependencies": [
+              2
+            ],
+            "details": "Create enqueue functions that use wp_enqueue_style() with proper parameters including handle, source URL, dependencies, version, and media type. Implement conditional loading using appropriate hooks (wp_enqueue_scripts, admin_enqueue_scripts). Set up proper dependency chains between stylesheets and ensure version numbering for cache busting.",
+            "status": "pending",
+            "testStrategy": "Verify stylesheets load in correct order and only on intended pages through browser developer tools"
+          },
+          {
+            "id": 4,
+            "title": "Implement wp_enqueue_script() Calls",
+            "description": "Replace all inline JavaScript with proper wp_enqueue_script() function calls",
+            "dependencies": [
+              2
+            ],
+            "details": "Create enqueue functions using wp_enqueue_script() with proper parameters including handle, source URL, dependencies (like jQuery), version, and footer placement. Implement script attributes like async/defer where appropriate. Handle script localization with wp_localize_script() for any PHP variables that need to be passed to JavaScript.",
+            "status": "pending",
+            "testStrategy": "Test JavaScript functionality and verify proper loading order and dependency resolution through browser console"
+          },
+          {
+            "id": 5,
+            "title": "Write and Run Tests for Asset Enqueuing",
+            "description": "Create comprehensive tests to verify proper asset enqueuing and functionality",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Write unit tests to verify wp_enqueue_style() and wp_enqueue_script() calls are made correctly. Create functional tests to ensure assets load on appropriate pages (admin vs frontend). Test dependency chains, version numbering, and conditional loading. Verify no inline CSS/JS remains in the output. Test both logged-in and logged-out states.",
+            "status": "pending",
+            "testStrategy": "Implement PHPUnit tests for enqueue functions and browser-based tests for asset loading verification"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement Proper Plugin Path Helpers",
+        "description": "Replace hardcoded paths and WP_LANG_DIR usage with plugin_dir_path() and plugin_dir_url() functions",
+        "details": "Audit all file path references throughout the plugin. Replace any hardcoded URLs, paths, or improper usage of WP_LANG_DIR with proper WordPress functions: plugin_dir_path(__FILE__) for directory paths, plugin_dir_url(__FILE__) for URLs, and plugins_url() for asset URLs. Ensure all paths are properly escaped and secure.",
+        "testStrategy": "Test plugin functionality across different WordPress installations and directory structures, verify all assets load correctly, check for any broken file references",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit and catalog all file path references",
+            "description": "Systematically review all plugin files to identify and document current path usage patterns",
+            "dependencies": [],
+            "details": "Search through all PHP files in the plugin directory for hardcoded paths, WP_LANG_DIR usage, and any direct file system references. Create a comprehensive list of files and line numbers that need to be updated. Look for patterns like '../', './', absolute paths, and any usage of WP_LANG_DIR. Document the current path construction methods used throughout the plugin.",
+            "status": "pending",
+            "testStrategy": "Create a checklist of all identified path references and verify each one is documented"
+          },
+          {
+            "id": 2,
+            "title": "Replace hardcoded directory paths with plugin_dir_path()",
+            "description": "Update all hardcoded directory paths to use the proper WordPress plugin_dir_path() function",
+            "dependencies": [
+              1
+            ],
+            "details": "Replace all hardcoded directory paths with plugin_dir_path(__FILE__) calls. This includes paths used for including files, reading configuration files, and accessing plugin directories. Ensure the __FILE__ parameter references the correct file context. Pay special attention to paths used in include/require statements and file system operations.",
+            "status": "pending",
+            "testStrategy": "Verify each replaced path resolves to the correct directory and all file includes/requires still work properly"
+          },
+          {
+            "id": 3,
+            "title": "Replace hardcoded URLs with plugin_dir_url() and plugins_url()",
+            "description": "Update all hardcoded URLs to use proper WordPress URL functions for assets and resources",
+            "dependencies": [
+              1
+            ],
+            "details": "Replace hardcoded URLs with plugin_dir_url(__FILE__) for general plugin URLs and plugins_url() for asset URLs like CSS, JavaScript, and images. Ensure all URLs are properly constructed for both frontend and admin contexts. Handle cases where URLs need to be relative to different plugin files or subdirectories.",
+            "status": "pending",
+            "testStrategy": "Test all asset loading (CSS, JS, images) in both frontend and admin areas to ensure URLs resolve correctly"
+          },
+          {
+            "id": 4,
+            "title": "Fix WP_LANG_DIR usage and implement proper localization paths",
+            "description": "Replace improper WP_LANG_DIR usage with correct plugin localization path functions",
+            "dependencies": [
+              2
+            ],
+            "details": "Replace any WP_LANG_DIR usage with proper plugin localization paths using plugin_dir_path() combined with the correct language directory structure. Implement proper textdomain loading with load_plugin_textdomain() and ensure language files are loaded from the correct plugin directory path. Update any translation file references to use the proper plugin language directory structure.",
+            "status": "pending",
+            "testStrategy": "Test localization functionality by loading the plugin in different languages and verifying translation files are found and loaded correctly"
+          },
+          {
+            "id": 5,
+            "title": "Create comprehensive tests for plugin path usage",
+            "description": "Develop and execute test suite to verify all plugin paths are working correctly and securely",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Create unit tests and integration tests to verify all plugin paths resolve correctly. Test that plugin_dir_path() and plugin_dir_url() calls work in different contexts (main plugin file, included files, subdirectories). Verify that all asset URLs load properly and that localization paths work correctly. Include tests for edge cases like symbolic links and different WordPress installation configurations. Ensure all paths are properly escaped and secure against directory traversal attacks.",
+            "status": "pending",
+            "testStrategy": "Run comprehensive test suite covering all path types, verify no broken links or missing assets, and confirm security measures are in place"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Prefix All Functions and Classes",
+        "description": "Add 'preproduct_' prefix to all functions, classes, constants, and option names to prevent conflicts",
+        "details": "Systematically rename all plugin functions, classes, constants, and option names to include the 'preproduct_' prefix. Remove any usage of 'woo_', 'wp_', or double underscores '__' prefixes. Update all references throughout the codebase including hooks, filters, and database option names. Ensure unique namespace to prevent conflicts with other plugins.",
+        "testStrategy": "Search for any remaining unprefixed names, test plugin activation and functionality, verify no conflicts with other plugins, check database options are properly prefixed",
+        "priority": "high",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Analyze and Inventory All Functions and Classes",
+            "description": "Scan the entire codebase to identify all functions, classes, constants, and option names that need to be prefixed with 'preproduct_'",
+            "dependencies": [],
+            "details": "Use grep or similar tools to find all function definitions, class declarations, constants, and option names. Create a comprehensive list of items to rename, including their current names and proposed new names. Pay special attention to removing any existing 'woo_', 'wp_', or '__' prefixes. Document all WordPress hooks, filters, and database option names that will be affected.",
+            "status": "pending",
+            "testStrategy": "Create a checklist of all identified items to track renaming progress"
+          },
+          {
+            "id": 2,
+            "title": "Rename Core Functions and Classes",
+            "description": "Systematically rename all identified functions and classes to include the 'preproduct_' prefix",
+            "dependencies": [
+              1
+            ],
+            "details": "Go through each PHP file and rename functions, classes, and constants according to the inventory created in subtask 1. Use find-and-replace operations carefully to ensure all declarations are updated. Focus on main plugin files, class definitions, and core functionality. Maintain consistent naming conventions throughout.",
+            "status": "pending",
+            "testStrategy": "Verify that all renamed items follow the 'preproduct_' naming convention and no old names remain"
+          },
+          {
+            "id": 3,
+            "title": "Update WordPress Hooks and Filters",
+            "description": "Update all WordPress hooks, filters, and action names to use the 'preproduct_' prefix",
+            "dependencies": [
+              2
+            ],
+            "details": "Modify all add_action(), add_filter(), do_action(), and apply_filters() calls to use the new prefixed names. Update hook names in both the registration and the callback functions. Ensure all custom hooks created by the plugin also follow the new naming convention.",
+            "status": "pending",
+            "testStrategy": "Test that all hooks and filters are properly registered and functioning with the new names"
+          },
+          {
+            "id": 4,
+            "title": "Update Database Options and References",
+            "description": "Rename all database option names and update all references throughout the codebase",
+            "dependencies": [
+              3
+            ],
+            "details": "Update all get_option(), update_option(), delete_option(), and add_option() calls to use the new prefixed option names. Update any references in JavaScript files, AJAX handlers, and configuration arrays. Ensure all database interactions use the new naming convention.",
+            "status": "pending",
+            "testStrategy": "Verify that all database operations work correctly with the new option names"
+          },
+          {
+            "id": 5,
+            "title": "Create and Run Comprehensive Tests",
+            "description": "Write and execute tests to verify all functions and classes are properly prefixed and functioning correctly",
+            "dependencies": [
+              4
+            ],
+            "details": "Create test scripts to verify that all renamed functions and classes exist and are accessible. Test all WordPress hooks and filters to ensure they trigger correctly. Verify database operations work with the new option names. Run integration tests to ensure the plugin functions properly with the new naming convention. Check for any remaining references to old names.",
+            "status": "pending",
+            "testStrategy": "Automated tests that check for proper prefixing, functional tests for all major features, and regression tests to ensure no functionality is broken"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Refactor Hook and Filter Usage",
+        "description": "Update all WordPress hooks and WooCommerce filters to use the new prefixed function names",
+        "details": "Update all add_action(), add_filter(), remove_action(), and remove_filter() calls to reference the newly prefixed function names. Ensure callback functions match the renamed functions. Review all custom hooks and filters to ensure they follow WordPress naming conventions and use the preproduct_ prefix.",
+        "testStrategy": "Test all plugin functionality that depends on hooks and filters, verify WooCommerce integration still works, check admin and frontend features",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit and Inventory Current Hook and Filter Usage",
+            "description": "Identify all WordPress hooks and WooCommerce filters currently used in the codebase that need prefixing updates",
+            "dependencies": [],
+            "details": "Search through all PHP files to find add_action(), add_filter(), remove_action(), and remove_filter() calls. Create a comprehensive list of all hook names, filter names, and callback functions that need to be updated to use the preproduct_ prefix. Document the current state and create a mapping of old names to new prefixed names.",
+            "status": "pending",
+            "testStrategy": "Create a checklist of all identified hooks and filters to track completion"
+          },
+          {
+            "id": 2,
+            "title": "Update WordPress Action Hooks with Prefixed Names",
+            "description": "Replace all add_action() and remove_action() calls to use the new prefixed function names",
+            "dependencies": [
+              1
+            ],
+            "details": "Go through each add_action() and remove_action() call identified in the audit. Update the callback function names to match the newly prefixed function names. Ensure the hook names themselves follow WordPress conventions with preproduct_ prefix where appropriate. Update priority and accepted_args parameters as needed.",
+            "status": "pending",
+            "testStrategy": "Verify each updated action hook still fires correctly and callbacks execute without errors"
+          },
+          {
+            "id": 3,
+            "title": "Update WordPress Filter Hooks with Prefixed Names",
+            "description": "Replace all add_filter() and remove_filter() calls to use the new prefixed function names",
+            "dependencies": [
+              1
+            ],
+            "details": "Update each add_filter() and remove_filter() call identified in the audit. Change callback function names to match the newly prefixed function names. Ensure filter names follow WordPress conventions with preproduct_ prefix where appropriate. Verify return values and parameter handling remain consistent.",
+            "status": "pending",
+            "testStrategy": "Test that filtered values are properly modified and returned by the prefixed callback functions"
+          },
+          {
+            "id": 4,
+            "title": "Update Custom Hooks and Filters with Proper Naming Conventions",
+            "description": "Review and update all custom hooks and filters to ensure they follow WordPress naming conventions and use the preproduct_ prefix",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Identify all do_action() and apply_filters() calls that create custom hooks and filters. Ensure all custom hook and filter names use the preproduct_ prefix and follow WordPress naming conventions (lowercase, underscores). Update any corresponding documentation or comments that reference the old names.",
+            "status": "pending",
+            "testStrategy": "Verify custom hooks fire correctly and custom filters process data as expected"
+          },
+          {
+            "id": 5,
+            "title": "Write and Run Tests for Hook and Filter Refactoring",
+            "description": "Create comprehensive tests to verify all hook and filter refactoring works correctly",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Write unit tests and integration tests to verify that all refactored hooks and filters work correctly. Test that actions fire at the correct times, filters modify data as expected, and callback functions execute without errors. Include tests for edge cases like hook removal and priority handling. Run the full test suite to ensure no regressions.",
+            "status": "pending",
+            "testStrategy": "Create automated tests that can be run to verify the refactoring and prevent future regressions"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Optimize Asset Loading and Scoping",
+        "description": "Implement conditional loading of scripts and styles based on admin/frontend context",
+        "details": "Implement proper asset loading strategies to only load scripts and styles when needed. Use is_admin(), current_screen checks, and page-specific conditions to load assets only on relevant pages. Implement proper script localization for AJAX calls and ensure all assets are properly versioned for cache busting.",
+        "testStrategy": "Verify assets only load on appropriate pages, test that no unnecessary scripts load on frontend, check admin functionality and AJAX calls work correctly",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Admin vs Frontend Asset Loading Context Detection",
+            "description": "Create a system to detect and differentiate between admin and frontend contexts for conditional asset loading",
+            "dependencies": [],
+            "details": "Implement utility functions using is_admin(), current_screen, and page-specific checks to determine loading context. Create helper functions to identify specific admin pages, frontend pages, and their asset requirements. Set up conditional loading hooks that fire based on context detection.",
+            "status": "pending",
+            "testStrategy": "Unit tests for context detection functions, integration tests for different page types"
+          },
+          {
+            "id": 2,
+            "title": "Refactor Script Loading with Conditional Enqueuing",
+            "description": "Modify existing script loading to use conditional enqueuing based on page context and requirements",
+            "dependencies": [
+              1
+            ],
+            "details": "Update wp_enqueue_script calls to use conditional checks. Implement page-specific script loading for admin pages, frontend pages, and specific functionality. Remove global script loading and replace with targeted loading based on context detection from subtask 1.",
+            "status": "pending",
+            "testStrategy": "Test script loading on different page types, verify scripts only load where needed"
+          },
+          {
+            "id": 3,
+            "title": "Implement Conditional Style Loading and CSS Optimization",
+            "description": "Apply conditional loading to stylesheets and optimize CSS delivery based on page context",
+            "dependencies": [
+              1
+            ],
+            "details": "Update wp_enqueue_style calls with conditional checks. Implement separate CSS loading for admin and frontend contexts. Optimize CSS delivery by loading only required styles per page type. Consider critical CSS inlining for above-the-fold content.",
+            "status": "pending",
+            "testStrategy": "Verify CSS loading on different pages, check for unused CSS elimination"
+          },
+          {
+            "id": 4,
+            "title": "Implement Script Localization and AJAX Optimization",
+            "description": "Set up proper script localization for AJAX calls and implement cache busting with asset versioning",
+            "dependencies": [
+              2
+            ],
+            "details": "Use wp_localize_script for AJAX endpoints, nonces, and configuration data. Implement proper asset versioning using file modification times or version constants. Set up cache busting strategies for development and production environments. Optimize AJAX call efficiency by loading localization data only when needed.",
+            "status": "pending",
+            "testStrategy": "Test AJAX functionality with localized data, verify cache busting works correctly"
+          },
+          {
+            "id": 5,
+            "title": "Write and Execute Asset Loading Optimization Tests",
+            "description": "Create comprehensive test suite to verify asset loading optimization and performance improvements",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Develop automated tests to verify conditional loading works correctly across different page types. Create performance benchmarks to measure loading improvements. Implement tests for AJAX functionality, cache busting, and script localization. Set up automated testing pipeline to run asset loading tests on different WordPress environments.",
+            "status": "pending",
+            "testStrategy": "Automated testing suite with performance benchmarks, cross-browser testing, and WordPress environment compatibility tests"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Update Database Options and Transients",
+        "description": "Ensure all database options and transients use the preproduct_ prefix",
+        "details": "Audit all get_option(), update_option(), delete_option(), get_transient(), set_transient(), and delete_transient() calls. Ensure all option names and transient keys use the preproduct_ prefix. Consider migration strategy for existing installations to rename old options to new prefixed names.",
+        "testStrategy": "Test plugin settings persistence, verify all options are properly prefixed in database, test upgrade scenario from old to new option names",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit existing database options and transients",
+            "description": "Scan the entire codebase to identify all uses of get_option(), update_option(), delete_option(), get_transient(), set_transient(), and delete_transient() functions",
+            "dependencies": [],
+            "details": "Use grep or similar tools to search for all WordPress option and transient functions. Create a comprehensive list of all option names and transient keys currently in use, documenting their current names and purposes. Focus on identifying which ones need the preproduct_ prefix added.",
+            "status": "pending",
+            "testStrategy": "Create a checklist of all found options and transients to verify completeness of the audit"
+          },
+          {
+            "id": 2,
+            "title": "Update option and transient calls with preproduct_ prefix",
+            "description": "Modify all identified database option and transient calls to use the preproduct_ prefix",
+            "dependencies": [
+              1
+            ],
+            "details": "For each option/transient identified in the audit, update the code to use the preproduct_ prefix. For example, change get_option('my_setting') to get_option('preproduct_my_setting'). Ensure consistency across all files and maintain the original functionality.",
+            "status": "pending",
+            "testStrategy": "Verify each updated call maintains the same functionality as before the prefix change"
+          },
+          {
+            "id": 3,
+            "title": "Create migration script for existing installations",
+            "description": "Develop a migration function to rename existing options and transients from old names to new prefixed names",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a migration function that runs on plugin activation or update. For each old option/transient name, copy its value to the new prefixed name using get_option() and update_option() (or transient equivalents). Include error handling and logging. Consider using WordPress's upgrade routine hooks.",
+            "status": "pending",
+            "testStrategy": "Test migration script with sample data to ensure values are correctly transferred from old names to new prefixed names"
+          },
+          {
+            "id": 4,
+            "title": "Implement cleanup of old unprefixed options",
+            "description": "Add functionality to remove old unprefixed options and transients after successful migration",
+            "dependencies": [
+              3
+            ],
+            "details": "After confirming successful migration, delete the old unprefixed options and transients using delete_option() and delete_transient(). Include safeguards to only delete if the new prefixed version exists and contains the expected data. Consider adding an admin notice for successful cleanup.",
+            "status": "pending",
+            "testStrategy": "Verify that old options are properly removed and new prefixed options contain the correct data"
+          },
+          {
+            "id": 5,
+            "title": "Write and run comprehensive tests for database operations",
+            "description": "Create unit tests to verify all database options and transients functionality with the new prefixed names",
+            "dependencies": [
+              4
+            ],
+            "details": "Write PHPUnit tests or similar to verify: 1) All options/transients use correct prefixed names, 2) Migration script works correctly, 3) Old options are properly cleaned up, 4) All get/set/delete operations work as expected with prefixed names. Include edge cases and error scenarios.",
+            "status": "pending",
+            "testStrategy": "Run full test suite covering option/transient CRUD operations, migration scenarios, and cleanup verification"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Perform Clean Installation Smoke Test",
+        "description": "Conduct comprehensive testing on fresh WordPress installation to ensure plugin compliance",
+        "details": "Set up clean WordPress installation with only WooCommerce as dependency. Test plugin activation, deactivation, and uninstall procedures. Verify all features work correctly, no PHP errors or warnings are generated, and plugin doesn't conflict with common themes and plugins. Document any remaining issues and create final deployment package.",
+        "testStrategy": "Manual QA on clean WordPress site, automated testing across multiple WordPress/WooCommerce versions, verify plugin review requirements are met, test deployment package",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-10T11:03:53.015Z",
+      "updated": "2025-07-10T11:03:53.015Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

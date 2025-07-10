@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Remove Non-Plugin Files and Build Artifacts from zip script output
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Strip out non-plugin files like zip folders and build artifacts to comply with WordPress plugin review requirements
+# Details:
+Audit the plugin directory and remove or add to .distignore any build artifacts, zip directories, development files, or other non-plugin files. Create or update .distignore file to exclude these files from distribution. This is critical for WordPress plugin review approval.
+
+# Test Strategy:
+Verify plugin directory contains only necessary plugin files, test that .distignore properly excludes development files, and ensure clean archive generation

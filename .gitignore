@@ -34,9 +34,9 @@ node_modules/
 CLAUDE.md
 
 # Task files
-tasks.json
-tasks/ 
-.taskmaster/
+# tasks.json
+# tasks/ 
+# .taskmaster/
 
 # vendors
 package.json

@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Replace Inline CSS/JS with Proper Enqueuing
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Replace hardcoded CSS and JavaScript with wp_enqueue_script and wp_enqueue_style calls
+# Details:
+Identify all inline CSS and JavaScript code throughout the plugin. Create separate asset files in /assets/css and /assets/js directories. Replace inline code with proper wp_enqueue_style() and wp_enqueue_script() calls, ensuring proper dependencies, versioning, and conditional loading (admin vs frontend). Implement script attributes like async/defer where appropriate.
+
+# Test Strategy:
+Verify no inline CSS/JS remains, test that all assets load correctly in admin and frontend, check for proper dependency loading and no conflicts

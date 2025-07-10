@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Update Text Domain to Plugin Slug
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Change text domain from 'woo-preproduct' to 'preproduct' throughout the plugin for proper internationalization
+# Details:
+Search and replace all instances of text domain 'woo-preproduct' with 'preproduct' in all __(), _e(), esc_html__(), esc_attr__(), and other internationalization functions. Update the plugin header text domain declaration. This ensures proper translation support and WordPress standards compliance.
+
+# Test Strategy:
+Use grep to find all text domain references, verify all are updated to 'preproduct', test that translations load correctly

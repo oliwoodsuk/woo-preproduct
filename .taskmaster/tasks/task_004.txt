@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Implement Proper Plugin Path Helpers
+# Status: pending
+# Dependencies: 3
+# Priority: high
+# Description: Replace hardcoded paths and WP_LANG_DIR usage with plugin_dir_path() and plugin_dir_url() functions
+# Details:
+Audit all file path references throughout the plugin. Replace any hardcoded URLs, paths, or improper usage of WP_LANG_DIR with proper WordPress functions: plugin_dir_path(__FILE__) for directory paths, plugin_dir_url(__FILE__) for URLs, and plugins_url() for asset URLs. Ensure all paths are properly escaped and secure.
+
+# Test Strategy:
+Test plugin functionality across different WordPress installations and directory structures, verify all assets load correctly, check for any broken file references
