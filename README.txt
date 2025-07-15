@@ -3,25 +3,27 @@ Contributors: preproduct
 Tags: woocommerce, pre-orders, preorders, ecommerce, inventory
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 1.0.0
+Stable tag: 1.0.4
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Enable pre-order functionality for your WooCommerce store with the WP PreProduct integration.
 
 == Description ==
 
-PreProduct for WooCommerce seamlessly integrates your store with the PreProduct pre-order platform, enabling you to capture demand and sales before your products are available.
+Level up your pre-orders and grow.
+PreProduct for WooCommerce integrates your store with the PreProduct pre-order platform, enabling you to capture demand and sales before your products are available.
+
+See [https://preproduct.io](https://preproduct.io) for more information
 
 **Key Features:**
 
-* **Seamless Integration**: One-click setup with your existing WooCommerce store
-* **Charge pre-orders Now, Later or via Deposit **
-* **Checkout multiple pre-orders at once **
-* **Keep customers in the loop** with customisable front-end, email flows and customer portal 
-* ** When you're ready to fulfil, push orders into WooCommerce **
-* **Admin Dashboard**: Manage pre-orders, listings and automations from a dedicated dashboard.
+* **Integration** with your existing WooCommerce store, catalogue and orders.
+* **Charge when you want** pre-orders Now, Later or via Deposit 
+* **Control** if multiple pre-orders or single pre-order products can be checked out together.
+* **Keep customers in the loop** with customisable front-end, email flows and customer portal .
+* **Smoother fulfilment** by keeping pre-orders out of WooCommerce until you push the orders from PreProduct.
+* **Admin Dashboard**: Manage pre-orders, listings and automations from dedicated dashboards.
 
 **How It Works:**
 
@@ -34,15 +36,7 @@ PreProduct for WooCommerce seamlessly integrates your store with the PreProduct 
 
 * WooCommerce 5.0 or higher
 * PHP 7.4 or higher
-* PreProduct account (sign up at https://preproduct.io)
 
-**Security & Performance:**
-
-* Uses WordPress and WooCommerce best practices
-* Non-blocking webhook requests
-* Secure HMAC-SHA256 signature verification
-* Proper data sanitization and validation
-* Deferred script loading for optimal performance
 
 == Installation ==
 
@@ -71,12 +65,6 @@ PreProduct for WooCommerce seamlessly integrates your store with the PreProduct 
 6. __Ready to Start Pre-Selling:__ You are now fully connected and ready to start pre-selling. Click "Home" to choose a PreProduct plan.
 7. __Start Pre-Selling:__ Navigate to the "Setup" screen to adjust your settings, or click "New Listing" in the menu to choose products to start pre-selling.
 
-== Running the tests ==
-```bash
-./test
-```
-
-These changes should make the instructions clearer and easier to follow. Let me know if you need any further assistance!
 
 == Frequently Asked Questions ==
 
@@ -118,6 +106,14 @@ The plugin is designed for minimal performance impact. The PreProduct script is 
 4. Charge when you’re ready; now, later or both via deposits
 
 == Changelog ==
+= 1.0.4 = 
+* Readme update 
+
+= 1.0.3 = 
+* Readme update + assets
+
+= 1.0.2 = 
+* Readme update + assets
 
 = 1.0.0 =
 * Initial release
@@ -141,25 +137,3 @@ For support, please visit:
 * Plugin Support: hello@preproduct.io
 * Documentation: https://preproduct.io/docs
 * Contact: hello@preproduct.io
-
-== Privacy Policy ==
-
-This plugin sends store information (store URL, admin email, store name) to PreProduct servers during plugin lifecycle events (activation, deactivation, uninstall). 
-This data is used solely for account management and integration purposes. No customer data or product information is transmitted without explicit configuration through the PreProduct platform.
-
-== Technical Details ==
-
-**Hooks & Filters Used:**
-* `woocommerce_loop_add_to_cart_link` - For tagging quick-buy buttons on collection pages
-* `wp_enqueue_scripts` - For adding script the PreProduct <script> tag
-* `admin_menu` - For admin interface
-* `http_request_args` - For webhook customization
-
-**Files Created:**
-* No additional database tables
-* Temporary transients for activation flow
-* Optional webhook configuration storage
-
-**Third-party Services:**
-* PreProduct API (https://api.preproduct.io or https://preproduct.ngrok.io for development)
-* Used for pre-order functionality and store integration 

@@ -4,7 +4,7 @@
  * Plugin Name:       PreProduct
  * Plugin URI:        https://preproduct.io/woocommerce-pre-orders/
  * Description:       Smarter WooCommerce pre-orders. Charge upfront, later or both (via deposits), add a pre-order area to your cart page, automations available as well as fine-grained control.
- * Version:           1.0.0
+ * Version:           1.0.4
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author: PreProduct
@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
  */
 
 // Plugin constants
-define('PREPRODUCT_VERSION', '0.0.1');
+define('PREPRODUCT_VERSION', '0.0.4');
 define('PREPRODUCT_PLUGIN_FILE', __FILE__);
 define('PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
