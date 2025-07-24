@@ -1,36 +1,50 @@
-=== PreProduct ===
+=== PreProduct – Smarter Pre-orders & Deposits for WooCommerce ===
 Contributors: preproduct
-Tags: woocommerce, pre-orders, preorders, ecommerce, inventory
+Tags: woocommerce, pre-orders, backorders, preorder, preorder plugin, out of stock, ecommerce, product launch, waitlist, inventory management
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+Smarter pre-orders and deposits for WooCommerce. Level up your pre-orders and grow.
 
 == Description ==
 
-Level up your pre-orders and grow.
+**PreProduct helps you sell products before they're in stock — while keeping your WooCommerce store organized and in charge.**
+**Take pre-orders now, later or by deposit.**
+
 PreProduct for WooCommerce integrates your store with the PreProduct pre-order platform, enabling you to capture demand and sales before your products are available.
+
+Whether you're launching a new product or restocking a bestseller, PreProduct gives you full control over *how and when* customers pay.
+
+✅ Let customers pre-order Now, Later, or via Deposit  
+✅ Customize pre-order flows, messages and fulfillment behavior  
+✅ Keep pre-orders out of WooCommerce until you're ready to fulfill  
+✅ Dashboard for listings, sales, customer status and automation  
+✅ Works with variable products and supports multi-variant logic
 
 See [https://preproduct.io](https://preproduct.io) for more information
 
 **Key Features:**
 
-* **Integration** with your existing WooCommerce store, catalogue and orders.
-* **Charge when you want** pre-orders Now, Later or via Deposit 
-* **Control** if multiple pre-orders or single pre-order products can be checked out together.
-* **Keep customers in the loop** with customisable front-end, email flows and customer portal .
-* **Smoother fulfilment** by keeping pre-orders out of WooCommerce until you push the orders from PreProduct.
-* **Admin Dashboard**: Manage pre-orders, listings and automations from dedicated dashboards.
+- Seamless WooCommerce integration with your store, catalog and order flow
+- Take payment upfront, later, or via partial deposit
+- Control if multiple pre-orders or single pre-order products can be checked out together
+- Built-in customer email flows, portal, and progress tracking
+- Choose when to push pre-orders into WooCommerce
+- Webhook lifecycle support for advanced workflows
+
 
 **How It Works:**
 
 1. Install and activate the plugin
-2. Your storefront will then be ready to take pre-orders.
-4. To get started, navigate to WooCommerce > PreProduct to complete setup.
-5. Then click the "New listing" menu item from the top of PreProduct to pick products for pre-order.
+2. Create your PreProduct account and connect WooCommerce
+3. Connect your payment processor
+4. Choose products and configure how pre-orders should work
+5. Start capturing pre-orders
+
 
 **Requirements:**
 
@@ -106,6 +120,9 @@ The plugin is designed for minimal performance impact. The PreProduct script is 
 4. Charge when you’re ready; now, later or both via deposits
 
 == Changelog ==
+= 1.0.5 = 
+* Readme update 
+
 = 1.0.4 = 
 * Readme update 
 

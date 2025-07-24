@@ -1,9 +1,12 @@
 *** PreProduct for WooCommerce Changelog ***
 
-2024.07.15 - version 1.0.2
+2025.07.24 0.0.5
+* update readme.txt
+
+2025.07.15 - version 1.0.2
 * release
 
-2024.07.15 - version 1.0.0
+2025.07.15 - version 1.0.0
 * Feature - Initial release of PreProduct for WooCommerce
 * Feature - Seamless WooCommerce integration with environment detection
 * Feature - Automatic add-to-cart button enhancement for simple products

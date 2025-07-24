@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
  */
 
 // Plugin constants
-define('PREPRODUCT_VERSION', '0.0.4');
+define('PREPRODUCT_VERSION', '0.0.5');
 define('PREPRODUCT_PLUGIN_FILE', __FILE__);
 define('PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
