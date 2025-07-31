@@ -1,21 +1,21 @@
 === PreProduct – Smarter Pre-orders & Deposits for WooCommerce ===
 Contributors: preproduct
-Tags: woocommerce, pre-orders, backorders, preorder, preorder plugin, out of stock, ecommerce, product launch, waitlist, inventory management
+Tags: pre-order, pre-orders, backorders, preorder, deposit
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Pre-orders and deposits for WooCommerce. Launch earlier, capture demand, and grow without inventory risk.
 
-Smarter pre-orders and deposits for WooCommerce. Level up your pre-orders and grow.
+== Pre-order App Description ==
 
-== Description ==
-
-**PreProduct helps you sell products before they're in stock — while keeping your WooCommerce store organized and in charge.**
+**PreProduct helps you take pre-orders for products before they're in stock — while keeping your WooCommerce store organized and in charge.**
 **Take pre-orders now, later or by deposit.**
 
-PreProduct for WooCommerce integrates your store with the PreProduct pre-order platform, enabling you to capture demand and sales before your products are available.
+Whether you call it pre-order, preorder, or backorder — PreProduct helps you take orders before you’re ready to ship.
+It integrates your store and WooCommerce with the PreProduct pre-order platform, enabling you to capture demand and sales before your products are available.
 
 Whether you're launching a new product or restocking a bestseller, PreProduct gives you full control over *how and when* customers pay.
 
@@ -27,7 +27,7 @@ Whether you're launching a new product or restocking a bestseller, PreProduct gi
 
 See [https://preproduct.io](https://preproduct.io) for more information
 
-**Key Features:**
+**Key Pre-order Features:**
 
 - Seamless WooCommerce integration with your store, catalog and order flow
 - Take payment upfront, later, or via partial deposit
@@ -80,7 +80,7 @@ See [https://preproduct.io](https://preproduct.io) for more information
 7. __Start Pre-Selling:__ Navigate to the "Setup" screen to adjust your settings, or click "New Listing" in the menu to choose products to start pre-selling.
 
 
-== Frequently Asked Questions ==
+== Frequently Asked Pre-order Questions ==
 
 = Does this require a PreProduct account? =
 
@@ -120,6 +120,9 @@ The plugin is designed for minimal performance impact. The PreProduct script is 
 4. Charge when you’re ready; now, later or both via deposits
 
 == Changelog ==
+= 1.0.6 = 
+* Readme update 
+
 = 1.0.5 = 
 * Readme update 
 
