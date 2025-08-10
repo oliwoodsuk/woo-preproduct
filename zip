@@ -53,19 +53,19 @@ echo "*.gitkeep" >> "$TEMP_EXCLUDE_FILE"
 
 # Create the zip archive using the exclusion file
 echo "Building archive with exclusions..."
-zip -r ../preproduct.zip . -x@"$TEMP_EXCLUDE_FILE"
+zip -r ../preproduct-pre-orders-and-deposits.zip . -x@"$TEMP_EXCLUDE_FILE"
 
 # Clean up temp file
 rm -f "$TEMP_EXCLUDE_FILE"
 
 if [ $? -eq 0 ]; then
-    echo "✓ Zip archive created successfully in ../preproduct.zip"
+    echo "✓ Zip archive created successfully in ../preproduct-pre-orders-and-deposits.zip"
     echo "✓ Files excluded based on .distignore patterns"
     
     # Show some stats
     echo ""
     echo "Archive contents:"
-    unzip -l ../preproduct.zip | tail -2
+    unzip -l ../preproduct-pre-orders-and-deposits.zip | tail -2
 else
     echo "✗ Error creating zip archive"
     exit 1

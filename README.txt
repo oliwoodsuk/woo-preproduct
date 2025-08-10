@@ -1,13 +1,13 @@
-=== PreProduct – Smarter Pre-orders & Deposits for WooCommerce ===
+=== PreProduct – Pre-orders & Deposits for WooCommerce ===
 Contributors: preproduct
 Tags: pre-order, pre-orders, backorders, preorder, deposit
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 1.0.6
+Stable tag: 1.0.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Pre-orders and deposits for WooCommerce. Launch earlier, capture demand, and grow without inventory risk.
+Pre-orders and deposits for WooCommerce. Launch earlier, capture demand, and grow.
 
 == Pre-order App Description ==
 
