@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name:       PreProduct – Pre-orders & Deposits for WooCommerce
+ * Plugin Name:       PreProduct – Smarter Pre-order and Deposit
  * Plugin URI:        https://preproduct.io/woocommerce-pre-orders/
  * Description:       Smarter WooCommerce pre-orders. Charge upfront, later or both (via deposits), add a pre-order area to your cart page, automations available as well as fine-grained control.
  * Version:           1.0.0
@@ -11,7 +11,7 @@
  * Author URI:        https://preproduct.io/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       preproduct-pre-orders-deposits-for-woocommerce
+ * Text Domain:       preproduct-smarter-pre-order-and-deposit
  */
 
 // Prevent direct file access
@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
  */
 
 // Plugin constants
-define('PREPRODUCT_VERSION', '1.0.6');
+define('PREPRODUCT_VERSION', '1.0.0');
 define('PREPRODUCT_PLUGIN_FILE', __FILE__);
 define('PREPRODUCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PREPRODUCT_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -54,7 +54,7 @@ function preproduct_check_woocommerce()
 function preproduct_woocommerce_missing_notice()
 {
     echo '<div class="notice notice-error"><p>';
-    echo esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'preproduct');
+    echo esc_html__('PreProduct for WooCommerce requires WooCommerce to be installed and active.', 'preproduct-smarter-pre-order-and-deposit');
     echo '</p></div>';
 }
 
@@ -67,7 +67,7 @@ function preproduct_activate()
     if (!class_exists('WooCommerce')) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(
-            esc_html__('PreProduct requires WooCommerce to be installed and active.', 'preproduct'),
+            esc_html__('PreProduct requires WooCommerce to be installed and active.', 'preproduct-smarter-pre-order-and-deposit'),
             'Plugin Activation Error',
             array('back_link' => true)
         );
@@ -166,9 +166,9 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'preproduct_actio
 function preproduct_action_links($links)
 {
     	$plugin_links = array(
-		'<a href="' . admin_url('admin.php?page=preproduct') . '">' . esc_html__('Settings', 'preproduct') . '</a>',
-		'<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . esc_html__('Documentation', 'preproduct') . '</a>',
-		'<a href="https://preproduct.io/support" target="_blank">' . esc_html__('Support', 'preproduct') . '</a>',
+		'<a href="' . admin_url('admin.php?page=preproduct') . '">' . esc_html__('Settings', 'preproduct-smarter-pre-order-and-deposit') . '</a>',
+		'<a href="https://docs.preproduct.io/woocommerce" target="_blank">' . esc_html__('Documentation', 'preproduct-smarter-pre-order-and-deposit') . '</a>',
+		'<a href="https://preproduct.io/support" target="_blank">' . esc_html__('Support', 'preproduct-smarter-pre-order-and-deposit') . '</a>',
 	);
     
     return array_merge($plugin_links, $links);

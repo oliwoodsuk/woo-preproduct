@@ -1,15 +1,16 @@
-=== PreProduct – Pre-orders & Deposits for WooCommerce ===
-Contributors: preproduct
-Tags: pre-order, pre-orders, backorders, preorder, deposit
+=== PreProduct – Smarter Pre-order and Deposit ===
+Contributors: owaukus
+Tags: pre-order, preorder, pre-orders, deposit, pre-sale
 Requires at least: 5.2
-Tested up to: 6.8
+Tested up to: 7.0
 Stable tag: 1.0.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Pre-orders and deposits for WooCommerce. Launch earlier, capture demand, and grow.
 
-== Pre-order App Description ==
+The Pre-order Specialists for Growing Brands. Charge-upfront, charge-later, and deposit-based pre-orders.
+
+== Description ==
 
 **PreProduct helps you take pre-orders for products before they're in stock — while keeping your WooCommerce store organized and in charge.**
 **Take pre-orders now, later or by deposit.**
@@ -19,10 +20,10 @@ It integrates your store and WooCommerce with the PreProduct pre-order platform,
 
 Whether you're launching a new product or restocking a bestseller, PreProduct gives you full control over *how and when* customers pay.
 
-✅ Let customers pre-order Now, Later, or via Deposit  
-✅ Customize pre-order flows, messages and fulfillment behavior  
-✅ Keep pre-orders out of WooCommerce until you're ready to fulfill  
-✅ Dashboard for listings, sales, customer status and automation  
+✅ Let customers pre-order Now, Later, or via Deposit
+✅ Customize pre-order flows, messages and fulfillment behavior
+✅ Keep pre-orders out of WooCommerce until you're ready to fulfill
+✅ Dashboard for listings, sales, customer status and automation
 ✅ Works with variable products and supports multi-variant logic
 
 See [https://preproduct.io](https://preproduct.io) for more information
@@ -65,7 +66,7 @@ See [https://preproduct.io](https://preproduct.io) for more information
 **Manual Installation:**
 
 1. Download the plugin zip file
-2. Upload the plugin files to the `/wp-content/plugins/woo-preproduct` directory, or install the plugin through the WordPress plugins screen
+2. Upload the plugin files to the `/wp-content/plugins/preproduct-smarter-pre-order-and-deposit` directory, or install the plugin through the WordPress plugins screen
 3. Activate the plugin through the 'Plugins' screen in WordPress
 4. Navigate to WooCommerce > PreProduct to complete setup
 
@@ -80,7 +81,7 @@ See [https://preproduct.io](https://preproduct.io) for more information
 7. __Start Pre-Selling:__ Navigate to the "Setup" screen to adjust your settings, or click "New Listing" in the menu to choose products to start pre-selling.
 
 
-== Frequently Asked Pre-order Questions ==
+== Frequently Asked Questions ==
 
 = Does this require a PreProduct account? =
 
@@ -96,7 +97,7 @@ Yes, the plugin automatically tags eligible add-to-cart buttons so that PreProdu
 
 = What happens when I deactivate or uninstall the plugin? =
 
-When deactivated, all PreProduct functionality is removed from your store (script and buy button attributes). 
+When deactivated, all PreProduct functionality is removed from your store (script and buy button attributes).
 When uninstalled, the plugin sends a notification to PreProduct and cleans up all stored data.
 
 = Is the plugin compatible with my theme? =
@@ -120,36 +121,21 @@ The plugin is designed for minimal performance impact. The PreProduct script is 
 4. Charge when you’re ready; now, later or both via deposits
 
 == Changelog ==
-= 1.0.6 = 
-* Readme update 
-
-= 1.0.5 = 
-* Readme update 
-
-= 1.0.4 = 
-* Readme update 
-
-= 1.0.3 = 
-* Readme update + assets
-
-= 1.0.2 = 
-* Readme update + assets
 
 = 1.0.0 =
 * Initial release
 * WooCommerce integration
-* Environment-aware endpoint detection
-* Automatic button tagging for simple products
+* Pre-orders with charge-now, charge-later, and deposit modes
+* Automatic add-to-cart button tagging for simple products
 * Admin dashboard integration
 * Webhook notifications for plugin lifecycle events
-* Comprehensive test suite with 111+ tests
 * Security features including HMAC signature verification
 * Performance optimizations with deferred script loading
 
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of PreProduct for WooCommerce. Install to enable pre-order functionality for your store.
+Initial release of PreProduct for WooCommerce. Install to enable pre-order and deposit functionality for your store.
 
 == Support ==
 

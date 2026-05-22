@@ -1,32 +1,14 @@
-*** PreProduct for WooCommerce Changelog ***
+*** PreProduct – Smarter Pre-order and Deposit Changelog ***
 
-2025.07.24 0.0.5
-* update readme.txt
-
-2025.07.15 - version 1.0.2
-* release
-
-2025.07.15 - version 1.0.0
-* Feature - Initial release of PreProduct for WooCommerce
-* Feature - Seamless WooCommerce integration with environment detection
-* Feature - Automatic add-to-cart button enhancement for simple products
-* Feature - Admin dashboard integration via iframe
-* Feature - Script injection with defer attribute for optimal performance
-* Feature - Webhook notifications for plugin lifecycle events (activation, deactivation, uninstall)
-* Feature - Security features including HMAC-SHA256 signature verification
-* Feature - Comprehensive error logging using WooCommerce logger
-* Feature - Plugin action links for easy access to settings and documentation
-* Feature - Environment-aware endpoints (development/production auto-detection)
-* Feature - Non-blocking webhook requests with proper timeout handling
-* Feature - WordPress and WooCommerce coding standards compliance
-* Feature - Comprehensive test suite with 111+ automated tests
-* Feature - Proper activation/deactivation hooks with rewrite rule flushing
-* Feature - Automatic redirect to admin page on first activation
-* Feature - Multi-language support preparation (text domain: woo-preproduct)
-* Dev - Modular architecture with separate classes for different functionality
-* Dev - Environment manager for development/production endpoint switching
-* Dev - Button tagger for collection page product enhancement
-* Dev - Script manager for frontend JavaScript integration
-* Dev - Admin page manager for WordPress admin integration
-* Dev - Plugin uninstall webhook handler for lifecycle notifications
-* Dev - Comprehensive documentation and inline code comments 
+2026.05.22 - version 1.0.0
+* Initial release of PreProduct – Smarter Pre-order and Deposit for WooCommerce
+* Pre-orders with charge-now, charge-later, and deposit modes
+* Seamless WooCommerce integration with environment-aware endpoint detection
+* Automatic add-to-cart button tagging for simple products
+* Admin dashboard integration via iframe
+* Script injection with defer attribute for optimal performance
+* Webhook notifications for plugin lifecycle events (activation, deactivation, uninstall)
+* Security features including HMAC-SHA256 signature verification
+* Comprehensive error logging using WooCommerce logger
+* Plugin action links for easy access to settings and documentation
+* WordPress and WooCommerce coding standards compliance

@@ -41,8 +41,8 @@ class PreProduct_Admin_Page
 		if (function_exists('WC') && current_user_can('manage_woocommerce')) {
 			$page_hook = add_submenu_page(
 				'woocommerce',
-				__('Pre-orders', 'preproduct'),
-				__('Pre-orders', 'preproduct'),
+				__('Pre-orders', 'preproduct-smarter-pre-order-and-deposit'),
+				__('Pre-orders', 'preproduct-smarter-pre-order-and-deposit'),
 				'manage_woocommerce',
 				'preproduct',
 				array($this, 'render_admin_page')
@@ -82,10 +82,10 @@ class PreProduct_Admin_Page
 		
 		?>
 		<div class="wrap preproduct-admin-wrap">
-			<h1><?php echo esc_html__('PreProduct for WooCommerce', 'preproduct'); ?></h1>
+			<h1><?php echo esc_html__('PreProduct for WooCommerce', 'preproduct-smarter-pre-order-and-deposit'); ?></h1>
 			
 			<div class="preproduct-admin-header">
-				<p><?php echo esc_html__('Manage your pre-order settings and campaigns through the PreProduct interface below.', 'preproduct'); ?></p>
+				<p><?php echo esc_html__('Manage your pre-order settings and campaigns through the PreProduct interface below.', 'preproduct-smarter-pre-order-and-deposit'); ?></p>
 			</div>
 			
 			<div class="preproduct-iframe-container">
@@ -93,9 +93,9 @@ class PreProduct_Admin_Page
 					src="<?php echo esc_url($iframe_url); ?>" 
 					class="preproduct-iframe"
 					frameborder="0"
-					title="<?php echo esc_attr__('PreProduct Management Interface', 'preproduct'); ?>">
-					<p><?php echo esc_html__('Your browser does not support iframes. Please visit', 'preproduct'); ?> 
-					   <a href="<?php echo esc_url($iframe_url); ?>" target="_blank"><?php echo esc_html__('PreProduct directly', 'preproduct'); ?></a>.</p>
+					title="<?php echo esc_attr__('PreProduct Management Interface', 'preproduct-smarter-pre-order-and-deposit'); ?>">
+					<p><?php echo esc_html__('Your browser does not support iframes. Please visit', 'preproduct-smarter-pre-order-and-deposit'); ?> 
+					   <a href="<?php echo esc_url($iframe_url); ?>" target="_blank"><?php echo esc_html__('PreProduct directly', 'preproduct-smarter-pre-order-and-deposit'); ?></a>.</p>
 				</iframe>
 			</div>
 			
@@ -104,7 +104,7 @@ class PreProduct_Admin_Page
 					<?php 
 					printf(
 						/* translators: %s: PreProduct support email address link */
-						esc_html__('Having issues? Contact PreProduct support at %s', 'preproduct'),
+						esc_html__('Having issues? Contact PreProduct support at %s', 'preproduct-smarter-pre-order-and-deposit'),
 						'<a href="mailto:hello@preproduct.io">hello@preproduct.io</a>'
 					); 
 					?>
@@ -146,28 +146,28 @@ class PreProduct_Admin_Page
 		// Overview tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_overview',
-			'title'   => __('Overview', 'preproduct'),
+			'title'   => __('Overview', 'preproduct-smarter-pre-order-and-deposit'),
 			'content' => $this->get_help_content_overview(),
 		));
 		
 		// Setup tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_setup',
-			'title'   => __('Setup Guide', 'preproduct'),
+			'title'   => __('Setup Guide', 'preproduct-smarter-pre-order-and-deposit'),
 			'content' => $this->get_help_content_setup(),
 		));
 		
 		// Troubleshooting tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_troubleshooting',
-			'title'   => __('Troubleshooting', 'preproduct'),
+			'title'   => __('Troubleshooting', 'preproduct-smarter-pre-order-and-deposit'),
 			'content' => $this->get_help_content_troubleshooting(),
 		));
 		
 		// Support tab
 		$screen->add_help_tab(array(
 			'id'      => 'preproduct_support',
-			'title'   => __('Support', 'preproduct'),
+			'title'   => __('Support', 'preproduct-smarter-pre-order-and-deposit'),
 			'content' => $this->get_help_content_support(),
 		));
 		
@@ -180,17 +180,17 @@ class PreProduct_Admin_Page
 	 */
 	private function get_help_content_overview()
 	{
-		return '<h3>' . __('PreProduct Overview', 'preproduct') . '</h3>
-		<p>' . __('PreProduct for WooCommerce seamlessly integrates your store with the PreProduct platform to enable pre-order functionality.', 'preproduct') . '</p>
-		<h4>' . __('Key Features:', 'preproduct') . '</h4>
+		return '<h3>' . __('PreProduct Overview', 'preproduct-smarter-pre-order-and-deposit') . '</h3>
+		<p>' . __('PreProduct for WooCommerce seamlessly integrates your store with the PreProduct platform to enable pre-order functionality.', 'preproduct-smarter-pre-order-and-deposit') . '</p>
+		<h4>' . __('Key Features:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<ul>
-			<li>' . __('Automatic button enhancement for eligible products', 'preproduct') . '</li>
-			<li>' . __('Environment-aware configuration (development/production)', 'preproduct') . '</li>
-			<li>' . __('Seamless integration with existing WooCommerce functionality', 'preproduct') . '</li>
-			<li>' . __('Real-time webhook notifications for plugin events', 'preproduct') . '</li>
-			<li>' . __('Comprehensive error logging and debugging', 'preproduct') . '</li>
+			<li>' . __('Automatic button enhancement for eligible products', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Environment-aware configuration (development/production)', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Seamless integration with existing WooCommerce functionality', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Real-time webhook notifications for plugin events', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Comprehensive error logging and debugging', 'preproduct-smarter-pre-order-and-deposit') . '</li>
 		</ul>
-		<p>' . __('The plugin automatically detects your environment and configures appropriate endpoints for seamless integration.', 'preproduct') . '</p>';
+		<p>' . __('The plugin automatically detects your environment and configures appropriate endpoints for seamless integration.', 'preproduct-smarter-pre-order-and-deposit') . '</p>';
 	}
 	
 	/**
@@ -198,22 +198,22 @@ class PreProduct_Admin_Page
 	 */
 	private function get_help_content_setup()
 	{
-		return '<h3>' . __('Setup Guide', 'preproduct') . '</h3>
-		<h4>' . __('Initial Setup:', 'preproduct') . '</h4>
+		return '<h3>' . __('Setup Guide', 'preproduct-smarter-pre-order-and-deposit') . '</h3>
+		<h4>' . __('Initial Setup:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<ol>
-			<li>' . __('Ensure WooCommerce is installed and active', 'preproduct') . '</li>
-			<li>' . __('Install and activate the PreProduct plugin', 'preproduct') . '</li>
-			<li>' . __('Navigate to WooCommerce > PreProduct (you should be redirected automatically)', 'preproduct') . '</li>
-			<li>' . __('Follow the setup instructions in the PreProduct interface', 'preproduct') . '</li>
+			<li>' . __('Ensure WooCommerce is installed and active', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Install and activate the PreProduct plugin', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Navigate to WooCommerce > PreProduct (you should be redirected automatically)', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li>' . __('Follow the setup instructions in the PreProduct interface', 'preproduct-smarter-pre-order-and-deposit') . '</li>
 		</ol>
-		<h4>' . __('Environment Configuration:', 'preproduct') . '</h4>
-		<p>' . __('The plugin automatically detects your environment:', 'preproduct') . '</p>
+		<h4>' . __('Environment Configuration:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
+		<p>' . __('The plugin automatically detects your environment:', 'preproduct-smarter-pre-order-and-deposit') . '</p>
 		<ul>
-			<li><strong>' . __('Development:', 'preproduct') . '</strong> ' . __('localhost, .test, .local, staging, dev domains', 'preproduct') . '</li>
-			<li><strong>' . __('Production:', 'preproduct') . '</strong> ' . __('All other domains', 'preproduct') . '</li>
+			<li><strong>' . __('Development:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> ' . __('localhost, .test, .local, staging, dev domains', 'preproduct-smarter-pre-order-and-deposit') . '</li>
+			<li><strong>' . __('Production:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> ' . __('All other domains', 'preproduct-smarter-pre-order-and-deposit') . '</li>
 		</ul>
-		<h4>' . __('Manual Override:', 'preproduct') . '</h4>
-		<p>' . __('Add to wp-config.php to force an environment:', 'preproduct') . '</p>
+		<h4>' . __('Manual Override:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
+		<p>' . __('Add to wp-config.php to force an environment:', 'preproduct-smarter-pre-order-and-deposit') . '</p>
 		<code>define(\'PREPRODUCT_DEV_MODE\', true); // Force development mode</code>';
 	}
 	
@@ -227,27 +227,27 @@ class PreProduct_Admin_Page
 			$log_file_path = PreProduct_Logger::get_log_file_path();
 		}
 		
-		return '<h3>' . __('Troubleshooting', 'preproduct') . '</h3>
-		<h4>' . __('Common Issues:', 'preproduct') . '</h4>
+		return '<h3>' . __('Troubleshooting', 'preproduct-smarter-pre-order-and-deposit') . '</h3>
+		<h4>' . __('Common Issues:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<dl>
-			<dt><strong>' . __('PreProduct interface not loading', 'preproduct') . '</strong></dt>
-			<dd>' . __('Check your internet connection and ensure your server can reach external domains.', 'preproduct') . '</dd>
+			<dt><strong>' . __('PreProduct interface not loading', 'preproduct-smarter-pre-order-and-deposit') . '</strong></dt>
+			<dd>' . __('Check your internet connection and ensure your server can reach external domains.', 'preproduct-smarter-pre-order-and-deposit') . '</dd>
 			
-			<dt><strong>' . __('Buttons not being enhanced', 'preproduct') . '</strong></dt>
-			<dd>' . __('The plugin currently enhances simple products on collection pages. Variable, grouped, and external products are not supported yet.', 'preproduct') . '</dd>
+			<dt><strong>' . __('Buttons not being enhanced', 'preproduct-smarter-pre-order-and-deposit') . '</strong></dt>
+			<dd>' . __('The plugin currently enhances simple products on collection pages. Variable, grouped, and external products are not supported yet.', 'preproduct-smarter-pre-order-and-deposit') . '</dd>
 			
-			<dt><strong>' . __('Plugin activation errors', 'preproduct') . '</strong></dt>
-			<dd>' . __('Ensure WooCommerce is installed and active before activating PreProduct.', 'preproduct') . '</dd>
+			<dt><strong>' . __('Plugin activation errors', 'preproduct-smarter-pre-order-and-deposit') . '</strong></dt>
+			<dd>' . __('Ensure WooCommerce is installed and active before activating PreProduct.', 'preproduct-smarter-pre-order-and-deposit') . '</dd>
 		</dl>
-		<h4>' . __('Debugging:', 'preproduct') . '</h4>
-		<p>' . __('Enable WordPress debugging by adding these lines to wp-config.php:', 'preproduct') . '</p>
+		<h4>' . __('Debugging:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
+		<p>' . __('Enable WordPress debugging by adding these lines to wp-config.php:', 'preproduct-smarter-pre-order-and-deposit') . '</p>
 		<code>
 		define(\'WP_DEBUG\', true);<br>
 		define(\'WP_DEBUG_LOG\', true);
 		</code>' . 
 		($log_file_path ? '<p>' . sprintf(
 			/* translators: %s: file path to log file */
-			__('PreProduct logs can be found at: %s', 'preproduct'), 
+			__('PreProduct logs can be found at: %s', 'preproduct-smarter-pre-order-and-deposit'), 
 			'<code>' . esc_html($log_file_path) . '</code>'
 		) . '</p>' : '');
 	}
@@ -257,24 +257,24 @@ class PreProduct_Admin_Page
 	 */
 	private function get_help_content_support()
 	{
-		return '<h3>' . __('Support Resources', 'preproduct') . '</h3>
-		<h4>' . __('Documentation:', 'preproduct') . '</h4>
+		return '<h3>' . __('Support Resources', 'preproduct-smarter-pre-order-and-deposit') . '</h3>
+		<h4>' . __('Documentation:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<ul>
-			<li><a href="https://docs.preproduct.io/woocommerce" target="_blank">' . __('WooCommerce Integration Guide', 'preproduct') . '</a></li>
-			<li><a href="https://docs.preproduct.io/api" target="_blank">' . __('API Documentation', 'preproduct') . '</a></li>
-			<li><a href="https://docs.preproduct.io/troubleshooting" target="_blank">' . __('Troubleshooting Guide', 'preproduct') . '</a></li>
+			<li><a href="https://docs.preproduct.io/woocommerce" target="_blank">' . __('WooCommerce Integration Guide', 'preproduct-smarter-pre-order-and-deposit') . '</a></li>
+			<li><a href="https://docs.preproduct.io/api" target="_blank">' . __('API Documentation', 'preproduct-smarter-pre-order-and-deposit') . '</a></li>
+			<li><a href="https://docs.preproduct.io/troubleshooting" target="_blank">' . __('Troubleshooting Guide', 'preproduct-smarter-pre-order-and-deposit') . '</a></li>
 		</ul>
-		<h4>' . __('Get Help:', 'preproduct') . '</h4>
+		<h4>' . __('Get Help:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<ul>
-			<li><strong>' . __('Email Support:', 'preproduct') . '</strong> <a href="mailto:support@preproduct.io">support@preproduct.io</a></li>
-			<li><strong>' . __('Plugin Support:', 'preproduct') . '</strong> <a href="https://preproduct.io/support" target="_blank">preproduct.io/support</a></li>
+			<li><strong>' . __('Email Support:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> <a href="mailto:support@preproduct.io">support@preproduct.io</a></li>
+			<li><strong>' . __('Plugin Support:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> <a href="https://preproduct.io/support" target="_blank">preproduct.io/support</a></li>
 		</ul>
-		<h4>' . __('System Information:', 'preproduct') . '</h4>
+		<h4>' . __('System Information:', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<ul>
-			<li><strong>' . __('Plugin Version:', 'preproduct') . '</strong> ' . PREPRODUCT_VERSION . '</li>
-			<li><strong>' . __('WordPress Version:', 'preproduct') . '</strong> ' . get_bloginfo('version') . '</li>
-			<li><strong>' . __('WooCommerce Version:', 'preproduct') . '</strong> ' . (defined('WC_VERSION') ? WC_VERSION : __('Not installed', 'preproduct')) . '</li>
-			<li><strong>' . __('PHP Version:', 'preproduct') . '</strong> ' . PHP_VERSION . '</li>
+			<li><strong>' . __('Plugin Version:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> ' . PREPRODUCT_VERSION . '</li>
+			<li><strong>' . __('WordPress Version:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> ' . get_bloginfo('version') . '</li>
+			<li><strong>' . __('WooCommerce Version:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> ' . (defined('WC_VERSION') ? WC_VERSION : __('Not installed', 'preproduct-smarter-pre-order-and-deposit')) . '</li>
+			<li><strong>' . __('PHP Version:', 'preproduct-smarter-pre-order-and-deposit') . '</strong> ' . PHP_VERSION . '</li>
 		</ul>';
 	}
 	
@@ -283,13 +283,13 @@ class PreProduct_Admin_Page
 	 */
 	private function get_help_sidebar()
 	{
-		return '<h4>' . __('Quick Links', 'preproduct') . '</h4>
+		return '<h4>' . __('Quick Links', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<ul>
-			<li><a href="https://preproduct.io" target="_blank">' . __('PreProduct Website', 'preproduct') . '</a></li>
-			<li><a href="https://docs.preproduct.io" target="_blank">' . __('Documentation', 'preproduct') . '</a></li>
-			<li><a href="https://preproduct.io/support" target="_blank">' . __('Support', 'preproduct') . '</a></li>
+			<li><a href="https://preproduct.io" target="_blank">' . __('PreProduct Website', 'preproduct-smarter-pre-order-and-deposit') . '</a></li>
+			<li><a href="https://docs.preproduct.io" target="_blank">' . __('Documentation', 'preproduct-smarter-pre-order-and-deposit') . '</a></li>
+			<li><a href="https://preproduct.io/support" target="_blank">' . __('Support', 'preproduct-smarter-pre-order-and-deposit') . '</a></li>
 		</ul>
-		<h4>' . __('Plugin Version', 'preproduct') . '</h4>
+		<h4>' . __('Plugin Version', 'preproduct-smarter-pre-order-and-deposit') . '</h4>
 		<p>' . PREPRODUCT_VERSION . '</p>';
 	}
 } 

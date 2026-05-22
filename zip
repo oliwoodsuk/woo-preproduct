@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # WooPreProduct Zip Script
-# 
+#
 # Creates a clean zip archive of the project excluding files based on .distignore patterns.
-# This script reads .distignore file and converts patterns to zip exclusions.
+# The zip wraps everything in a single top-level folder matching the plugin slug, so
+# WordPress installs it into the correctly-named plugin directory.
+
+SLUG="preproduct-smarter-pre-order-and-deposit"
 
 # Check if .distignore file exists
 if [ ! -f ".distignore" ]; then
@@ -11,62 +14,73 @@ if [ ! -f ".distignore" ]; then
     exit 1
 fi
 
-echo "Creating preproduct.zip using .distignore patterns..."
+# Sanity check: current folder name should match the slug so paths line up
+CURRENT_FOLDER=$(basename "$PWD")
+if [ "$CURRENT_FOLDER" != "$SLUG" ]; then
+    echo "Warning: current folder is '$CURRENT_FOLDER' but slug is '$SLUG'."
+    echo "         Rename the folder to '$SLUG' for the zip to nest correctly."
+    exit 1
+fi
+
+echo "Creating $SLUG.zip using .distignore patterns..."
 echo "Reading exclusion patterns from .distignore..."
 
-# Create temporary file for zip exclusions
+# Create temporary file for zip exclusions. Patterns are prefixed with the slug
+# because zip is run from the parent directory and archive paths begin with the
+# slug folder name.
 TEMP_EXCLUDE_FILE=$(mktemp)
 
-# Read .distignore file and write patterns to temp file
 while IFS= read -r line; do
     # Skip empty lines and comments
     if [[ -n "$line" && ! "$line" =~ ^#.*$ ]]; then
-        # Skip any pattern that would exclude /admin or its contents
+        # Always include /admin even if .distignore would exclude it
         if [[ "$line" =~ ^/?admin(/.*)?$ ]] || [[ "$line" =~ ^admin(/.*)?$ ]]; then
-            # Skip this line to always include /admin
             continue
         fi
-        # Convert .distignore patterns to zip exclusion format
-        # Remove trailing slashes for directories
+
+        # Strip trailing slash for the base pattern
         pattern="${line%/}"
-        
-        # For directories (with trailing slash), exclude both the directory and its contents
-        if [[ "$line" =~ .*/$  ]]; then
-            echo "$pattern" >> "$TEMP_EXCLUDE_FILE"
-            echo "${pattern}/*" >> "$TEMP_EXCLUDE_FILE"
+
+        if [[ "$line" =~ .*/$ ]]; then
+            # Directory pattern — exclude the dir and its contents
+            echo "$SLUG/$pattern" >> "$TEMP_EXCLUDE_FILE"
+            echo "$SLUG/${pattern}/*" >> "$TEMP_EXCLUDE_FILE"
         else
-            # For files or patterns without trailing slash, add as-is
-            echo "$pattern" >> "$TEMP_EXCLUDE_FILE"
+            # File or glob pattern — add as-is, prefixed with slug
+            echo "$SLUG/$pattern" >> "$TEMP_EXCLUDE_FILE"
+            # Also match the pattern anywhere in the tree (covers things like *.bak)
+            echo "$SLUG/*/$pattern" >> "$TEMP_EXCLUDE_FILE"
         fi
     fi
 done < .distignore
 
-# Always exclude some OS-specific files regardless of .distignore
-# Always exclude some OS-specific and hidden files regardless of .distignore
-echo ".*" >> "$TEMP_EXCLUDE_FILE"              # All hidden files in root
-echo "*/.*" >> "$TEMP_EXCLUDE_FILE"            # All hidden files in subdirectories
-echo "*.DS_Store" >> "$TEMP_EXCLUDE_FILE"
-echo "__MACOSX" >> "$TEMP_EXCLUDE_FILE"
-echo ".DS_Store" >> "$TEMP_EXCLUDE_FILE"
-echo "build-deployment.php" >> "$TEMP_EXCLUDE_FILE"
-echo "*.gitkeep" >> "$TEMP_EXCLUDE_FILE"
+# Always exclude OS-specific and hidden files
+echo "$SLUG/.*"           >> "$TEMP_EXCLUDE_FILE"   # hidden files in plugin root
+echo "$SLUG/*/.*"         >> "$TEMP_EXCLUDE_FILE"   # hidden files in subdirectories
+echo "$SLUG/**/.DS_Store" >> "$TEMP_EXCLUDE_FILE"
+echo "$SLUG/__MACOSX"     >> "$TEMP_EXCLUDE_FILE"
+echo "$SLUG/__MACOSX/*"   >> "$TEMP_EXCLUDE_FILE"
+echo "$SLUG/build-deployment.php" >> "$TEMP_EXCLUDE_FILE"
+echo "$SLUG/*.gitkeep"    >> "$TEMP_EXCLUDE_FILE"
 
-# Create the zip archive using the exclusion file
+# Build the zip from the parent directory so the slug folder is included
+# as the top-level directory inside the archive.
 echo "Building archive with exclusions..."
-zip -r ../preproduct-pre-orders-and-deposits.zip . -x@"$TEMP_EXCLUDE_FILE"
+cd ..
+rm -f "$SLUG.zip"
+zip -r "$SLUG.zip" "$SLUG" -x@"$TEMP_EXCLUDE_FILE"
+ZIP_STATUS=$?
 
 # Clean up temp file
 rm -f "$TEMP_EXCLUDE_FILE"
 
-if [ $? -eq 0 ]; then
-    echo "✓ Zip archive created successfully in ../preproduct-pre-orders-and-deposits.zip"
-    echo "✓ Files excluded based on .distignore patterns"
-    
-    # Show some stats
+if [ $ZIP_STATUS -eq 0 ]; then
+    echo "✓ Zip archive created: ../$SLUG.zip"
+    echo "✓ Top-level folder inside the zip: $SLUG/"
     echo ""
-    echo "Archive contents:"
-    unzip -l ../preproduct-pre-orders-and-deposits.zip | tail -2
+    echo "Archive summary:"
+    unzip -l "$SLUG.zip" | tail -5
 else
     echo "✗ Error creating zip archive"
     exit 1
-fi 
+fi
